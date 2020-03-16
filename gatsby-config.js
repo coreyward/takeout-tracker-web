@@ -1,0 +1,39 @@
+require("dotenv").config()
+
+module.exports = {
+  plugins: [
+    "gatsby-plugin-emotion",
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-svgr",
+    {
+      resolve: "gatsby-plugin-env-variables",
+      options: {
+        whitelist: ["SANITY_PROJECT_ID", "SANITY_DATASET"],
+      },
+    },
+    {
+      resolve: "gatsby-source-sanity",
+      options: {
+        projectId: process.env.SANITY_PROJECT_ID,
+        dataset: process.env.SANITY_DATASET,
+        token: process.env.SANITY_TOKEN,
+        overlayDrafts: process.env.NODE_ENV !== "production",
+        watchMode: process.env.NODE_ENV !== "production",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-web-font-loader",
+      options: {
+        google: {
+          families: ["Barlow:100,200,300,400,400italic,500,600,700"],
+        },
+      },
+    },
+    process.env.GOOGLE_ANALYTICS_ID && {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+  ].filter(x => x),
+}

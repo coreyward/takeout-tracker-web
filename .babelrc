@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+  "presets": [
+    [
+      "@babel/preset-react",
+      {
+        "targets": {
+          "browsers": [">5%", "not dead"]
+        }
+      }
+    ],
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs",
+        "targets": {
+          "node": "12",
+          "chrome": "80",
+          "safari": "13",
+          "firefox": "73"
+        }
+      }
+    ]
+  ]
+}

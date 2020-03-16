@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "context/*": ["src/context/*"],
+      "functions/*": ["src/functions/*"],
+      "hooks/*": ["src/hooks/*"],
+      "images/*": ["src/images/*"],
+      "lib/*": ["src/lib/*"],
+      "styles/*": ["src/styles/*"]
+    },
+    "target": "es6",
+    "moduleResolution": "node",
+    "jsx": "react"
+  }
+}
