@@ -8,12 +8,12 @@ const breakpoints = {
 }
 
 const colors = {
-  n10: "#1D1D1D",
-  n20: "#313131",
-  n40: "#696969",
-  n50: "#848484",
-  n70: "#B5B5B5",
-  n90: "#E7E7E7",
+  n10: "#08121E",
+  n20: "#182C44",
+  n40: "#435770",
+  n50: "#728194",
+  n70: "#A1ABB7",
+  n80: "#D0D5DB",
 
   green: "#4BD37B",
   red: "#AE2929",
@@ -43,10 +43,10 @@ export const globalStyles = [
       fontFamily: fontFamily,
       fontStyle: "normal",
       fontSize: "var(--text)",
-      lineHeight: 1.4,
+      lineHeight: 1.25,
       wordBreak: "break-word",
       boxSizing: "border-box",
-      color: colors.n70,
+      color: colors.n50,
       background: colors.n10,
 
       // Improve browser font rendering

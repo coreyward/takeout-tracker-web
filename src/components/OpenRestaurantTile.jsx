@@ -32,6 +32,7 @@ const OpenRestaurantTile = ({
     <div
       css={{
         background: theme.n20,
+        color: theme.n70,
         padding: 24,
         borderRadius: 3,
         fontSize: 12,
@@ -39,7 +40,7 @@ const OpenRestaurantTile = ({
     >
       <h3
         css={{
-          color: theme.n90,
+          color: theme.n80,
           fontSize: 16,
           fontWeight: 500,
           marginBottom: 16,
@@ -124,7 +125,7 @@ const deliveryOptions = [
 
 const IconRow = ({ icon: Icon, children, className }) => (
   <div css={{ display: "flex", marginBottom: 8 }} className={className}>
-    <Icon css={{ marginRight: 8, flex: "0 0 16px" }} />
+    <Icon css={{ color: theme.n50, marginRight: 8, flex: "0 0 16px" }} />
     <div>{children}</div>
   </div>
 )

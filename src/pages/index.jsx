@@ -8,7 +8,7 @@ import OpenRestaurantTile from "components/OpenRestaurantTile"
 const Home = ({ data }) => {
   return (
     <Layout css={{ padding: 24 }}>
-      <h1 css={{ color: theme.n90 }}>
+      <h1 css={{ color: theme.n80 }}>
         Austin Restaurant Takeout Tracker — covid-19
       </h1>
 
