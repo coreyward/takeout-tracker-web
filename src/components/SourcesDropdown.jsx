@@ -64,7 +64,11 @@ const SourcesDropdown = ({ urls, notes }) => {
                 borderRadius: "0 0 5px 5px",
               }}
             >
-              {notes && <IconRow icon={Icons.Book}>{notes}</IconRow>}
+              {notes && (
+                <IconRow icon={Icons.Info} css={{ lineHeight: 1.4 }}>
+                  {notes}
+                </IconRow>
+              )}
 
               <ul css={{ margin: 0, padding: 0, listStyle: "none" }}>
                 {urls.map((source, index) => (
