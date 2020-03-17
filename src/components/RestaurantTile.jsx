@@ -61,11 +61,13 @@ const RestaurantTile = ({
           </IconRow>
         ) : (
           <>
-            <IconRow icon={icons.clock}>
-              {hours.map((line, index) => (
-                <div key={index}>{line}</div>
-              ))}
-            </IconRow>
+            {hours && hours.length > 0 && (
+              <IconRow icon={icons.clock}>
+                {hours.map((line, index) => (
+                  <div key={index}>{line}</div>
+                ))}
+              </IconRow>
+            )}
             <IconRow icon={icons.dining}>
               {diningModes.length > 0 ? diningModes : "No information"}
             </IconRow>
