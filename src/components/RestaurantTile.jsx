@@ -81,6 +81,49 @@ const RestaurantTile = ({
           <IconRow icon={icons.info}>{policyNotes}</IconRow>
         )}
       </div>
+
+      {!closedForBusiness && (
+        <div>
+          <h4
+            css={{
+              fontWeight: 700,
+              color: theme.n40,
+              letterSpacing: "0.135em",
+              textTransform: "uppercase",
+              marginBottom: 8,
+            }}
+          >
+            Menu / Order
+          </h4>
+
+          <div>
+            {menuUrl && (
+              <IconButton icon={icons.menu} href={menuUrl}>
+                Menu
+              </IconButton>
+            )}
+            {website && (
+              <IconButton icon={icons.website} href={website}>
+                Website
+              </IconButton>
+            )}
+            {orderUrl && (
+              <IconButton icon={icons.cart} href={orderUrl}>
+                Order Online
+              </IconButton>
+            )}
+            {orderPhone && (
+              <IconButton
+                icon={icons.phone}
+                href={`tel:${orderPhone.replace(/[^0-9]/g, "")}`}
+              >
+                {orderPhone}
+              </IconButton>
+            )}
+          </div>
+          {orderingNotes && <IconRow icon={icons.pin}>{orderingNotes}</IconRow>}
+        </div>
+      )}
     </div>
   )
 }
@@ -145,6 +188,33 @@ const IconRow = ({ icon: Icon, children, className }) => (
 
 IconRow.propTypes = {
   icon: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+}
+
+const IconButton = ({ icon: Icon, href, children, className }) => (
+  <a
+    href={href}
+    target={href.startsWith("http") ? "_blank" : "_self"}
+    rel="noopener noreferrer"
+    css={{
+      display: "inline-flex",
+      marginBottom: 8,
+      textDecoration: "none",
+      whiteSpace: "nowrap",
+      alignItems: "center",
+      marginRight: 16,
+    }}
+    className={className}
+  >
+    <Icon css={{ color: theme.n50, marginRight: 8, flex: "0 0 16px" }} />
+    <div css={{ fontWeight: 500, color: theme.n80 }}>{children}</div>
+  </a>
+)
+
+IconButton.propTypes = {
+  icon: PropTypes.func.isRequired,
+  href: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 }
