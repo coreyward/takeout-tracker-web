@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { jsx } from "@emotion/core"
 import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 import icons from "lib/icons"
@@ -121,7 +122,28 @@ const RestaurantTile = ({
               </IconButton>
             )}
           </div>
-          {orderingNotes && <IconRow icon={icons.pin}>{orderingNotes}</IconRow>}
+          {orderingNotes && (
+            <IconRow icon={icons.info}>{orderingNotes}</IconRow>
+          )}
+        </div>
+      )}
+
+      {tags && tags.length > 0 && (
+        <div css={{ display: "flex", marginTop: 16 }}>
+          {tags.map(tag => (
+            <div
+              key={tag}
+              css={{
+                marginRight: 8,
+                marginBottom: 8,
+                padding: "4px 6px",
+                background: "rgba(67, 87, 112, 0.35)",
+                borderRadius: 5,
+              }}
+            >
+              {jsx(icons.tag, { css: { marginRight: 4 } })} {tag}
+            </div>
+          ))}
         </div>
       )}
     </div>
