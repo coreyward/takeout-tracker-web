@@ -5,6 +5,7 @@ import theme from "styles/theme"
 import Layout from "components/Layout"
 import RestaurantTile from "components/RestaurantTile"
 import Checkbox from "components/Checkbox"
+import AnnouncementBanner from "components/AnnouncementBanner"
 
 const Home = ({ data }) => {
   const [showAll, setShowAll] = useState(false)
@@ -15,6 +16,12 @@ const Home = ({ data }) => {
 
   return (
     <Layout css={{ padding: 24 }}>
+      {data.announcement.nodes.length > 0 && (
+        <AnnouncementBanner
+          copy={data.announcement.nodes[0].copy}
+          css={{ margin: `-24px -24px 24px` }}
+        />
+      )}
       <div css={{ ...theme.smallcaps, color: theme.n40, fontSize: 12 }}>
         Austin, TX • covid-19
       </div>
@@ -74,6 +81,11 @@ Home.propTypes = {
     restaurants: PropTypes.shape({
       locations: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     }).isRequired,
+    announcement: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({ copy: PropTypes.string.isRequired })
+      ).isRequired,
+    }),
   }).isRequired,
 }
 
@@ -95,6 +107,16 @@ export const query = graphql`
         tags
         takeoutOptions
         website
+      }
+    }
+
+    announcement: allSanityAnnouncement(
+      filter: { active: { eq: true } }
+      limit: 1
+      sort: { fields: publishedAt, order: DESC }
+    ) {
+      nodes {
+        copy
       }
     }
   }
