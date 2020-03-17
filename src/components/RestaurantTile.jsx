@@ -1,9 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { jsx } from "@emotion/core"
 import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
-import icons from "lib/icons"
+import Icons from "lib/icons"
 
 const RestaurantTile = ({
   closedForBusiness,
@@ -53,33 +52,33 @@ const RestaurantTile = ({
       </h3>
 
       <div css={{ marginBottom: 16 }}>
-        <IconRow icon={icons.checkCircle}>
+        <IconRow icon={Icons.CheckCircle}>
           as of <TimeAgo time={confirmedAt} />
         </IconRow>
         {closedForBusiness ? (
-          <IconRow icon={icons.clock}>
+          <IconRow icon={Icons.Clock}>
             <strong>Closed Temporarily</strong>
           </IconRow>
         ) : (
           <>
             {hours && hours.length > 0 && (
-              <IconRow icon={icons.clock}>
+              <IconRow icon={Icons.Clock}>
                 {hours.map((line, index) => (
                   <div key={index}>{line}</div>
                 ))}
               </IconRow>
             )}
-            <IconRow icon={icons.dining}>
+            <IconRow icon={Icons.Dining}>
               {diningModes.length > 0 ? diningModes : "No information"}
             </IconRow>
-            <IconRow icon={icons.delivery}>
+            <IconRow icon={Icons.Delivery}>
               {deliveryModes.length > 0 ? deliveryModes : "No delivery"}
             </IconRow>
           </>
         )}
 
         {policyNotes && policyNotes.length > 0 && (
-          <IconRow icon={icons.info}>{policyNotes}</IconRow>
+          <IconRow icon={Icons.Info}>{policyNotes}</IconRow>
         )}
       </div>
 
@@ -99,23 +98,23 @@ const RestaurantTile = ({
 
           <div>
             {menuUrl && (
-              <IconButton icon={icons.menu} href={menuUrl}>
+              <IconButton icon={Icons.Menu} href={menuUrl}>
                 Menu
               </IconButton>
             )}
             {website && (
-              <IconButton icon={icons.website} href={website}>
+              <IconButton icon={Icons.Website} href={website}>
                 Website
               </IconButton>
             )}
             {orderUrl && (
-              <IconButton icon={icons.cart} href={orderUrl}>
+              <IconButton icon={Icons.Cart} href={orderUrl}>
                 Order Online
               </IconButton>
             )}
             {orderPhone && (
               <IconButton
-                icon={icons.phone}
+                icon={Icons.Phone}
                 href={`tel:${orderPhone.replace(/[^0-9]/g, "")}`}
               >
                 {orderPhone}
@@ -123,7 +122,7 @@ const RestaurantTile = ({
             )}
           </div>
           {orderingNotes && (
-            <IconRow icon={icons.info}>{orderingNotes}</IconRow>
+            <IconRow icon={Icons.Info}>{orderingNotes}</IconRow>
           )}
         </div>
       )}
@@ -141,7 +140,7 @@ const RestaurantTile = ({
                 borderRadius: 5,
               }}
             >
-              {jsx(icons.tag, { css: { marginRight: 4 } })} {tag}
+              <Icons.Tag css={{ marginRight: 4 }} /> {tag}
             </div>
           ))}
         </div>
