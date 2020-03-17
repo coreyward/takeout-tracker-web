@@ -41,6 +41,7 @@
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-sanity": "^5.0.1",
     "markdown-to-jsx": "^6.9.4",
+    "moment": "^2.24.0",
     "react": "^16.8",
     "react-dom": "^16.8",
     "react-helmet": "^5.2.0"
