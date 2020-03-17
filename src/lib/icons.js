@@ -5,6 +5,7 @@ import { ReactComponent as Clock } from "images/Clock.svg"
 import { ReactComponent as Delivery } from "images/Delivery.svg"
 import { ReactComponent as Dining } from "images/Dining.svg"
 import { ReactComponent as Info } from "images/Info.svg"
+import { ReactComponent as Link } from "images/Link.svg"
 import { ReactComponent as Menu } from "images/Menu.svg"
 import { ReactComponent as Phone } from "images/Phone.svg"
 import { ReactComponent as Pin } from "images/Pin.svg"
@@ -19,6 +20,7 @@ const Icons = {
   Delivery,
   Dining,
   Info,
+  Link,
   Menu,
   Phone,
   Pin,
