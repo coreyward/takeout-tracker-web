@@ -5,6 +5,7 @@ import theme from "styles/theme"
 import Icons from "lib/icons"
 import IconRow from "components/IconRow"
 import IconButton from "components/IconButton"
+import SourcesDropdown from "components/SourcesDropdown"
 
 const RestaurantTile = ({
   closedForBusiness,
@@ -16,6 +17,7 @@ const RestaurantTile = ({
   orderPhone,
   orderUrl,
   policyNotes,
+  sourceNotes,
   sourceUrls,
   tags,
   takeoutOptions,
@@ -34,6 +36,7 @@ const RestaurantTile = ({
   return (
     <div
       css={{
+        position: "relative",
         background: closedForBusiness ? "#122031" : theme.n20,
         color: theme.n70,
         padding: 24,
@@ -47,11 +50,14 @@ const RestaurantTile = ({
           color: theme.n80,
           fontSize: 16,
           fontWeight: 500,
+          marginRight: 36,
           marginBottom: 16,
         }}
       >
         {name}
       </h3>
+
+      <SourcesDropdown urls={sourceUrls} notes={sourceNotes} />
 
       <div css={{ marginBottom: 16 }}>
         <IconRow icon={Icons.CheckCircle}>
@@ -163,6 +169,7 @@ RestaurantTile.propTypes = {
   orderPhone: PropTypes.string,
   orderUrl: PropTypes.string,
   policyNotes: PropTypes.string,
+  sourceNotes: PropTypes.string,
   sourceUrls: PropTypes.arrayOf(PropTypes.string),
   tags: PropTypes.arrayOf(PropTypes.string),
   takeoutOptions: PropTypes.arrayOf(

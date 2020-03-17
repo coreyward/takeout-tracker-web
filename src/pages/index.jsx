@@ -103,6 +103,7 @@ export const query = graphql`
         orderPhone
         orderUrl
         policyNotes
+        sourceNotes
         sourceUrls
         tags
         takeoutOptions
