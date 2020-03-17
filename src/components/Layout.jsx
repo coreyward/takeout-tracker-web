@@ -21,6 +21,7 @@ const Layout = ({ title, children, className }) => {
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <main className={className}>{children}</main>
