@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 import Icons from "lib/icons"
+import IconRow from "components/IconRow"
+import IconButton from "components/IconButton"
 
 const RestaurantTile = ({
   closedForBusiness,
@@ -199,43 +201,3 @@ const deliveryOptions = [
   "delivery-grubhub",
   "delivery-ubereats",
 ]
-
-const IconRow = ({ icon: Icon, children, className }) => (
-  <div css={{ display: "flex", marginBottom: 8 }} className={className}>
-    <Icon css={{ color: theme.n50, marginRight: 8, flex: "0 0 16px" }} />
-    <div>{children}</div>
-  </div>
-)
-
-IconRow.propTypes = {
-  icon: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-}
-
-const IconButton = ({ icon: Icon, href, children, className }) => (
-  <a
-    href={href}
-    target={href.startsWith("http") ? "_blank" : "_self"}
-    rel="noopener noreferrer"
-    css={{
-      display: "inline-flex",
-      marginBottom: 8,
-      textDecoration: "none",
-      whiteSpace: "nowrap",
-      alignItems: "center",
-      marginRight: 16,
-    }}
-    className={className}
-  >
-    <Icon css={{ color: theme.n50, marginRight: 8, flex: "0 0 16px" }} />
-    <div css={{ fontWeight: 500, color: theme.n80 }}>{children}</div>
-  </a>
-)
-
-IconButton.propTypes = {
-  icon: PropTypes.func.isRequired,
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-}
