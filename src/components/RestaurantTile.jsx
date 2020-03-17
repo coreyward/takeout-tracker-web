@@ -4,7 +4,8 @@ import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 import icons from "lib/icons"
 
-const OpenRestaurantTile = ({
+const RestaurantTile = ({
+  closedForBusiness,
   confirmedAt,
   hours,
   menuUrl,
@@ -31,11 +32,12 @@ const OpenRestaurantTile = ({
   return (
     <div
       css={{
-        background: theme.n20,
+        background: closedForBusiness ? "#122031" : theme.n20,
         color: theme.n70,
         padding: 24,
         borderRadius: 3,
         fontSize: 12,
+        opacity: closedForBusiness ? 0.75 : 1,
       }}
     >
       <h3
@@ -53,17 +55,25 @@ const OpenRestaurantTile = ({
         <IconRow icon={icons.checkCircle}>
           as of <TimeAgo time={confirmedAt} />
         </IconRow>
-        <IconRow icon={icons.clock}>
-          {hours.map((line, index) => (
-            <div key={index}>{line}</div>
-          ))}
-        </IconRow>
-        <IconRow icon={icons.dining}>
-          {diningModes.length > 0 ? diningModes : "No information"}
-        </IconRow>
-        <IconRow icon={icons.delivery}>
-          {deliveryModes.length > 0 ? deliveryModes : "No delivery"}
-        </IconRow>
+        {closedForBusiness ? (
+          <IconRow icon={icons.clock}>
+            <strong>Closed Temporarily</strong>
+          </IconRow>
+        ) : (
+          <>
+            <IconRow icon={icons.clock}>
+              {hours.map((line, index) => (
+                <div key={index}>{line}</div>
+              ))}
+            </IconRow>
+            <IconRow icon={icons.dining}>
+              {diningModes.length > 0 ? diningModes : "No information"}
+            </IconRow>
+            <IconRow icon={icons.delivery}>
+              {deliveryModes.length > 0 ? deliveryModes : "No delivery"}
+            </IconRow>
+          </>
+        )}
 
         {policyNotes && policyNotes.length > 0 && (
           <IconRow icon={icons.info}>{policyNotes}</IconRow>
@@ -73,9 +83,10 @@ const OpenRestaurantTile = ({
   )
 }
 
-export default OpenRestaurantTile
+export default RestaurantTile
 
-OpenRestaurantTile.propTypes = {
+RestaurantTile.propTypes = {
+  closedForBusiness: PropTypes.bool.isRequired,
   confirmedAt: PropTypes.string.isRequired,
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,

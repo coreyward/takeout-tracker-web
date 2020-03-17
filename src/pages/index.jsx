@@ -1,25 +1,56 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import theme from "styles/theme"
 import Layout from "components/Layout"
-import OpenRestaurantTile from "components/OpenRestaurantTile"
+import RestaurantTile from "components/RestaurantTile"
+import Checkbox from "components/Checkbox"
 
 const Home = ({ data }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  const restaurants = showAll
+    ? data.restaurants.locations
+    : data.restaurants.locations.filter(location => !location.closedForBusiness)
+
   return (
     <Layout css={{ padding: 24 }}>
-      <h1 css={{ color: theme.n80 }}>
-        Austin Restaurant Takeout Tracker — covid-19
+      <div css={{ ...theme.smallcaps, color: theme.n40, fontSize: 12 }}>
+        Austin, TX • covid-19
+      </div>
+      <h1 css={{ color: theme.n80, fontSize: 24 }}>
+        Restaurant Takeout Tracker
       </h1>
 
-      <p>
+      <p css={{ lineHeight: 1.4, margin: "8px 0 32px", maxWidth: 600 }}>
         This project aims to track restaurants that are open during the covid-19
         health crisis. Please patronize them, tip well, and be patient and
         understanding about any shortages or mishaps—let’s all make this a
         little easier by being a little nicer.
       </p>
 
-      <h2>Restaurants that are Open</h2>
+      <div css={{ marginBottom: 16 }}>
+        <div
+          css={{
+            ...theme.smallcaps,
+            color: theme.n40,
+            fontSize: 10,
+            marginBottom: 8,
+          }}
+        >
+          Filters
+        </div>
+
+        <div css={{ display: "flex" }}>
+          <Checkbox
+            onChange={() => setShowAll(prev => !prev)}
+            checked={!showAll}
+            css={{ color: theme.n40 }}
+          >
+            Only Show Open Restaurants
+          </Checkbox>
+        </div>
+      </div>
 
       <div
         css={{
@@ -28,8 +59,8 @@ const Home = ({ data }) => {
           gap: 24,
         }}
       >
-        {data.openRestaurants.locations.map(location => (
-          <OpenRestaurantTile key={location._id} {...location} />
+        {restaurants.map(location => (
+          <RestaurantTile key={location._id} {...location} />
         ))}
       </div>
     </Layout>
@@ -40,7 +71,7 @@ export default Home
 
 Home.propTypes = {
   data: PropTypes.shape({
-    openRestaurants: PropTypes.shape({
+    restaurants: PropTypes.shape({
       locations: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     }).isRequired,
   }).isRequired,
@@ -48,12 +79,10 @@ Home.propTypes = {
 
 export const query = graphql`
   {
-    openRestaurants: allSanityRestaurant(
-      filter: { closedForBusiness: { eq: false } }
-      sort: { fields: title }
-    ) {
+    restaurants: allSanityRestaurant(sort: { fields: title }) {
       locations: nodes {
         _id
+        closedForBusiness
         confirmedAt
         hours
         menuUrl
@@ -65,21 +94,6 @@ export const query = graphql`
         sourceUrls
         tags
         takeoutOptions
-        website
-      }
-    }
-
-    closedRestaurants: allSanityRestaurant(
-      filter: { closedForBusiness: { eq: true } }
-      sort: { fields: title }
-    ) {
-      locations: nodes {
-        _id
-        confirmedAt
-        name: title
-        policyNotes
-        sourceUrls
-        tags
         website
       }
     }

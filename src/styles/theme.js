@@ -24,6 +24,14 @@ const fontFamily = "Roboto, Helvetica, sans-serif"
 export default {
   ...colors,
   ...breakpoints,
+
+  smallcaps: {
+    fontWeight: 500,
+    textTransform: "uppercase",
+    fontFeatureSettings:
+      "'pnum' on, 'lnum' on, 'cpsp' on, 'ss06' on, 'ss07' on",
+  },
+
   expandQueries: (styles, breaks) =>
     expandQueries(
       styles,
