@@ -1,19 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import theme from "styles/theme"
 import Layout from "components/Layout"
-import RestaurantTile from "components/RestaurantTile"
-import Checkbox from "components/Checkbox"
 import AnnouncementBanner from "components/AnnouncementBanner"
+import RestaurantsViewer from "components/RestaurantsViewer"
 
 const Home = ({ data }) => {
-  const [showAll, setShowAll] = useState(false)
-
-  const restaurants = showAll
-    ? data.restaurants.locations
-    : data.restaurants.locations.filter(location => !location.closedForBusiness)
-
   return (
     <Layout css={{ padding: 24 }}>
       {data.announcement.nodes.length > 0 && (
@@ -36,40 +29,7 @@ const Home = ({ data }) => {
         little easier by being a little nicer.
       </p>
 
-      <div css={{ marginBottom: 16 }}>
-        <div
-          css={{
-            ...theme.smallcaps,
-            color: theme.n40,
-            fontSize: 10,
-            marginBottom: 8,
-          }}
-        >
-          Filters
-        </div>
-
-        <div css={{ display: "flex" }}>
-          <Checkbox
-            onChange={() => setShowAll(prev => !prev)}
-            checked={!showAll}
-            css={{ color: theme.n40 }}
-          >
-            Only Show Open Restaurants
-          </Checkbox>
-        </div>
-      </div>
-
-      <div
-        css={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(260px, auto))",
-          gap: 24,
-        }}
-      >
-        {restaurants.map(location => (
-          <RestaurantTile key={location._id} {...location} />
-        ))}
-      </div>
+      <RestaurantsViewer restaurants={data.restaurants.locations} />
     </Layout>
   )
 }
