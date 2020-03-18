@@ -136,7 +136,7 @@ const RestaurantTile = ({
       )}
 
       {tags && tags.length > 0 && (
-        <div css={{ display: "flex", marginTop: 16 }}>
+        <div css={{ display: "flex", marginTop: 16, flexWrap: "wrap" }}>
           {tags.map(tag => (
             <div
               key={tag}
