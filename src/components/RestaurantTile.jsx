@@ -146,6 +146,8 @@ const RestaurantTile = ({
                 padding: "4px 6px",
                 background: "rgba(67, 87, 112, 0.35)",
                 borderRadius: 5,
+                fontSize: 10,
+                textTransform: "lowercase",
               }}
             >
               <Icons.Tag css={{ marginRight: 4 }} /> {tag}
