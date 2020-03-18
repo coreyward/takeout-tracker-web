@@ -33,7 +33,15 @@ const AnnouncementBanner = ({ copy, className }) => (
         d="M8.5 14.67a6.67 6.67 0 100-13.34 6.67 6.67 0 000 13.34zM8.5 5.33V8M8.5 10.67h0"
       />
     </svg>
-    <Markdown>{copy}</Markdown>
+    <Markdown
+      options={{
+        overrides: {
+          a: ExternalLink,
+        },
+      }}
+    >
+      {copy}
+    </Markdown>
   </div>
 )
 
@@ -43,3 +51,7 @@ AnnouncementBanner.propTypes = {
   copy: PropTypes.string.isRequired,
   className: PropTypes.string,
 }
+
+const ExternalLink = props => (
+  <a {...props} target="_blank" rel="noopener noreferrer" />
+)
