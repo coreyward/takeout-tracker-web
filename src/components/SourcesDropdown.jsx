@@ -4,13 +4,18 @@ import theme from "styles/theme"
 import Icons from "lib/icons"
 import IconRow from "components/IconRow"
 import IconButton from "components/IconButton"
+import useOnClickOutside from "hooks/useOnClickOutside"
 
 const SourcesDropdown = ({ urls, notes }) => {
   const [showSources, setShowSources] = useState(false)
+  const ref = useOnClickOutside(() => {
+    setShowSources(false)
+  }, showSources)
 
   return (
     (notes || urls?.length > 0) && (
       <div
+        ref={ref}
         css={{
           position: "absolute",
           left: 8,
