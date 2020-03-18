@@ -5,6 +5,7 @@ import theme from "styles/theme"
 import Layout from "components/Layout"
 import AnnouncementBanner from "components/AnnouncementBanner"
 import RestaurantsViewer from "components/RestaurantsViewer"
+import UnverifiedRestaurants from "components/UnverifiedRestaurants"
 
 const Home = ({ data }) => {
   return (
@@ -30,6 +31,10 @@ const Home = ({ data }) => {
       </p>
 
       <RestaurantsViewer restaurants={data.restaurants.locations} />
+
+      <UnverifiedRestaurants
+        restaurants={data.unverifiedRestaurants.locations}
+      />
     </Layout>
   )
 }
@@ -39,6 +44,9 @@ export default Home
 Home.propTypes = {
   data: PropTypes.shape({
     restaurants: PropTypes.shape({
+      locations: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    }).isRequired,
+    unverifiedRestaurants: PropTypes.shape({
       locations: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     }).isRequired,
     announcement: PropTypes.shape({
@@ -51,7 +59,10 @@ Home.propTypes = {
 
 export const query = graphql`
   {
-    restaurants: allSanityRestaurant(sort: { fields: title }) {
+    restaurants: allSanityRestaurant(
+      filter: { unverified: { eq: false } }
+      sort: { fields: title }
+    ) {
       locations: nodes {
         _id
         closedForBusiness
@@ -68,6 +79,19 @@ export const query = graphql`
         tags
         takeoutOptions
         website
+      }
+    }
+
+    unverifiedRestaurants: allSanityRestaurant(
+      filter: { unverified: { eq: true } }
+      sort: { fields: title }
+    ) {
+      locations: nodes {
+        _id
+        name: title
+        confirmedAt
+        takeoutOptions
+        tags
       }
     }
 
