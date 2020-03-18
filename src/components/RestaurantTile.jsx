@@ -6,6 +6,7 @@ import Icons from "lib/icons"
 import IconRow from "components/IconRow"
 import IconButton from "components/IconButton"
 import SourcesDropdown from "components/SourcesDropdown"
+import Tags from "components/Tags"
 
 const RestaurantTile = ({
   closedForBusiness,
@@ -135,26 +136,7 @@ const RestaurantTile = ({
         </div>
       )}
 
-      {tags && tags.length > 0 && (
-        <div css={{ display: "flex", marginTop: 16, flexWrap: "wrap" }}>
-          {tags.map(tag => (
-            <div
-              key={tag}
-              css={{
-                marginRight: 8,
-                marginBottom: 8,
-                padding: "4px 6px",
-                background: "rgba(67, 87, 112, 0.35)",
-                borderRadius: 5,
-                fontSize: 10,
-                textTransform: "lowercase",
-              }}
-            >
-              <Icons.Tag css={{ marginRight: 4 }} /> {tag}
-            </div>
-          ))}
-        </div>
-      )}
+      {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
     </div>
   )
 }
