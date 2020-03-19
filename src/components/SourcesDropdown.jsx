@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
 import Icons from "lib/icons"
-import IconRow from "components/IconRow"
-import IconButton from "components/IconButton"
+import SourcesList from "components/SourcesList"
 import useOnClickOutside from "hooks/useOnClickOutside"
 
 const SourcesDropdown = ({ urls, notes, className }) => {
@@ -58,52 +57,16 @@ const SourcesDropdown = ({ urls, notes, className }) => {
               Sources
             </h3>
 
-            <div
+            <SourcesList
+              notes={notes}
+              urls={urls}
               css={{
                 padding: 16,
                 paddingBottom: 8, // offset to accomodate margin-bottom on IconRow and IconButton
                 background: "#111A24",
                 borderRadius: "0 0 5px 5px",
               }}
-            >
-              {notes && (
-                <IconRow icon={Icons.Info} css={{ lineHeight: 1.4 }}>
-                  {notes}
-                </IconRow>
-              )}
-
-              <ul css={{ margin: 0, padding: 0, listStyle: "none" }}>
-                {urls.map((source, index) => (
-                  <li
-                    key={index}
-                    css={{
-                      margin: 0,
-                      display: "block",
-                    }}
-                  >
-                    <IconButton
-                      icon={Icons.Link}
-                      href={source}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      css={{
-                        display: "flex",
-                        whiteSpace: "nowrap",
-                        textDecoration: "none",
-                        marginRight: 0,
-                      }}
-                      childStyles={{
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        width: "100%",
-                      }}
-                    >
-                      {source}
-                    </IconButton>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            />
           </div>
         )}
       </div>
