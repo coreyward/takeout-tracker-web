@@ -8,6 +8,11 @@ import IconButton from "components/IconButton"
 import SourcesDropdown from "components/SourcesDropdown"
 import Tags from "components/Tags"
 
+import moment from "moment"
+
+/* SVGs */
+import { CheckCircle } from "./svg"
+
 const RestaurantTile = ({
   closedForBusiness,
   confirmedAt,
@@ -33,6 +38,18 @@ const RestaurantTile = ({
     .filter(opt => deliveryOptions.includes(opt))
     .map(opt => serviceLabels[opt])
     .join(" or ")
+
+  const controlledCheckboxIcon = () => {
+    return (
+      <CheckCircle
+        fill={
+          moment().diff(confirmedAt, "hours") > 48
+            ? `rgba(${theme.rgbGreen}, .25)`
+            : `rgba(${theme.rgbGreen}, 1)`
+        }
+      />
+    )
+  }
 
   return (
     <div
@@ -61,7 +78,10 @@ const RestaurantTile = ({
       <SourcesDropdown urls={sourceUrls} notes={sourceNotes} />
 
       <div css={{ marginBottom: 16 }}>
-        <IconRow icon={Icons.CheckCircle}>
+        <IconRow
+          icon={Icons.CheckCircle}
+          controlledIcon={controlledCheckboxIcon()}
+        >
           as of <TimeAgo time={confirmedAt} />
         </IconRow>
         {closedForBusiness ? (
