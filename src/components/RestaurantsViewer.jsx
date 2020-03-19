@@ -58,6 +58,10 @@ const RestaurantsViewer = ({ restaurants }) => {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           gap: 24,
+          [theme.mobile]: {
+            gridTemplateColumns: "1fr",
+            gap: 16,
+          },
         }}
       >
         {filteredRestaurants.map(location => (

@@ -9,11 +9,16 @@ import UnverifiedRestaurants from "components/UnverifiedRestaurants"
 
 const Home = ({ data }) => {
   return (
-    <Layout css={{ padding: 24 }}>
+    <Layout css={{ padding: 24, [theme.mobile]: { padding: 16 } }}>
       {data.announcement.nodes.length > 0 && (
         <AnnouncementBanner
           copy={data.announcement.nodes[0].copy}
-          css={{ margin: `-24px -24px 24px` }}
+          css={{
+            margin: `-24px -24px 24px`,
+            [theme.mobile]: {
+              margin: `-16px -16px 16px`,
+            },
+          }}
         />
       )}
       <div css={{ ...theme.smallcaps, color: theme.n40, fontSize: 12 }}>

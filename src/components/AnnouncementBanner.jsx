@@ -14,6 +14,9 @@ const AnnouncementBanner = ({ copy, className }) => (
       textAlign: "center",
       lineHeight: 1.4,
       fontSize: 12,
+      [theme.mobile]: {
+        textAlign: "left",
+      },
     }}
     className={className}
   >
