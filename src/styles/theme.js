@@ -25,6 +25,16 @@ export default {
   ...colors,
   ...breakpoints,
 
+  t4: {
+    fontSize: 12,
+    fontWeight: 700,
+    textTransform: "uppercase",
+    fontFeatureSettings:
+      "'pnum' on, 'lnum' on, 'cpsp' on, 'ss06' on, 'ss07' on",
+    letterSpacing: "0.135em",
+    marginBottom: 8,
+  },
+
   smallcaps: {
     fontWeight: 500,
     textTransform: "uppercase",

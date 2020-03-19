@@ -99,11 +99,8 @@ const RestaurantTile = ({
         <div>
           <h4
             css={{
-              fontWeight: 700,
+              ...theme.t4,
               color: theme.n40,
-              letterSpacing: "0.135em",
-              textTransform: "uppercase",
-              marginBottom: 8,
             }}
           >
             Menu / Order
