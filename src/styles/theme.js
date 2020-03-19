@@ -17,6 +17,9 @@ const colors = {
 
   green: "#4BD37B",
   red: "#AE2929",
+
+  rgbGreen: "75, 211, 123",
+  rgbYellow: "254, 252, 191",
 }
 
 const fontFamily = "Roboto, Helvetica, sans-serif"
