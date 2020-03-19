@@ -57,7 +57,7 @@ const RestaurantsViewer = ({ restaurants }) => {
         css={{
           position: "relative",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(260px, auto))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           gap: 24,
           maxHeight: showAll ? "none" : 800,
           overflow: "hidden",
