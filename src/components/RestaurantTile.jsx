@@ -58,7 +58,11 @@ const RestaurantTile = ({
         {name}
       </h3>
 
-      <SourcesDropdown urls={sourceUrls} notes={sourceNotes} />
+      <SourcesDropdown
+        urls={sourceUrls}
+        notes={sourceNotes}
+        css={{ position: "absolute", left: 8, right: 8, top: 14 }}
+      />
 
       <div css={{ marginBottom: 16 }}>
         <IconRow icon={Icons.CheckCircle}>

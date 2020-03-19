@@ -6,7 +6,7 @@ import IconRow from "components/IconRow"
 import IconButton from "components/IconButton"
 import useOnClickOutside from "hooks/useOnClickOutside"
 
-const SourcesDropdown = ({ urls, notes }) => {
+const SourcesDropdown = ({ urls, notes, className }) => {
   const [showSources, setShowSources] = useState(false)
   const ref = useOnClickOutside(() => {
     setShowSources(false)
@@ -17,15 +17,12 @@ const SourcesDropdown = ({ urls, notes }) => {
       <div
         ref={ref}
         css={{
-          position: "absolute",
-          left: 8,
-          right: 8,
-          top: 14,
           filter: "drop-shadow(1px 2px 3px rgba(12, 27, 46, 0.69))",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
         }}
+        className={className}
       >
         <div
           onClick={() => {
@@ -119,4 +116,5 @@ export default SourcesDropdown
 SourcesDropdown.propTypes = {
   urls: PropTypes.array,
   notes: PropTypes.string,
+  className: PropTypes.string,
 }
