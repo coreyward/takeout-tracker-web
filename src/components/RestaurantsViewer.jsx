@@ -4,6 +4,7 @@ import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
 import Checkbox from "components/Checkbox"
 import RestaurantCard from "components/RestaurantCard"
+import ModeSelector, { MODES } from "components/ModeSelector"
 
 const filters = {
   limitTo: n => list => list.slice(0, n),
@@ -15,10 +16,14 @@ const applyFilters = (list, filters) =>
 
 const RestaurantsViewer = ({ restaurants }) => {
   const [includeClosed, setIncludeClosed] = useState(false)
+  const [mode, setMode] = useState(MODES.CARD)
 
   const filteredRestaurants = applyFilters(restaurants, [
     !includeClosed && filters.hideClosed,
   ])
+
+  const RestaurantComponent =
+    mode === MODES.CARD ? RestaurantCard : RestaurantTile
 
   return (
     <>
@@ -29,26 +34,54 @@ const RestaurantsViewer = ({ restaurants }) => {
         </small>
       </h2>
 
-      <div css={{ marginBottom: 16 }}>
-        <div
-          css={{
-            ...theme.smallcaps,
-            color: theme.n40,
-            fontSize: 10,
-            marginBottom: 8,
-          }}
-        >
-          Filters
+      <div
+        css={{
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <div
+            css={{
+              ...theme.smallcaps,
+              color: theme.n40,
+              fontSize: 10,
+              marginBottom: 8,
+            }}
+          >
+            Filters
+          </div>
+
+          <div css={{ display: "flex" }}>
+            <Checkbox
+              onChange={() => setIncludeClosed(prev => !prev)}
+              checked={!includeClosed}
+              css={{ color: theme.n40 }}
+            >
+              Offering Takeout/Delivery
+            </Checkbox>
+          </div>
         </div>
 
-        <div css={{ display: "flex" }}>
-          <Checkbox
-            onChange={() => setIncludeClosed(prev => !prev)}
-            checked={!includeClosed}
-            css={{ color: theme.n40 }}
+        <div
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+          }}
+        >
+          <div
+            css={{
+              ...theme.smallcaps,
+              color: theme.n40,
+              fontSize: 10,
+              marginBottom: 8,
+            }}
           >
-            Offering Takeout/Delivery
-          </Checkbox>
+            View Mode
+          </div>
+          <ModeSelector activeMode={mode} setMode={setMode} />
         </div>
       </div>
 
@@ -65,7 +98,7 @@ const RestaurantsViewer = ({ restaurants }) => {
         }}
       >
         {filteredRestaurants.map(location => (
-          <RestaurantTile key={location._id} {...location} />
+          <RestaurantComponent key={location._id} {...location} />
         ))}
       </div>
     </>
