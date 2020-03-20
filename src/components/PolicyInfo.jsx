@@ -59,9 +59,9 @@ const PolicyInfo = ({
 export default PolicyInfo
 
 PolicyInfo.propTypes = {
-  closedForBusiness: PropTypes.string,
+  closedForBusiness: PropTypes.bool,
   confirmedAt: PropTypes.string,
-  hours: PropTypes.string,
+  hours: PropTypes.arrayOf(PropTypes.string),
   takeoutOptions: PropTypes.arrayOf(PropTypes.string),
   policyNotes: PropTypes.string,
   className: PropTypes.string,
