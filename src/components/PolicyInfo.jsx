@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import moment from "moment"
+import { Tooltip } from "@material-ui/core"
 import IconRow from "components/IconRow"
 import Icons from "lib/icons"
 import TimeAgo from "components/TimeAgo"
@@ -25,15 +26,33 @@ const PolicyInfo = ({
     .join(" or ")
 
   const hoursAgo = Math.abs(moment(confirmedAt).diff(moment(), "hours"))
-  const [iconColor] = Object.entries(stalenessColors)
+  const [iconColor, staleBreakpount] = Object.entries(stalenessColors)
     .reverse()
     .find(([_c, cutoff]) => hoursAgo >= cutoff)
 
   return (
     <div className={className}>
-      <IconRow icon={Icons.CheckCircle} iconColor={iconColor}>
+      <IconRow
+        icon={props => (
+          <Tooltip
+            title={
+              staleBreakpount === 0
+                ? "Recently confirmed"
+                : `Last confirmed over ${staleBreakpount}hrs ago`
+            }
+            placement="top"
+            arrow
+          >
+            <div {...props}>
+              <Icons.CheckCircle />
+            </div>
+          </Tooltip>
+        )}
+        iconColor={iconColor}
+      >
         as of <TimeAgo time={confirmedAt} />
       </IconRow>
+
       {closedForBusiness ? (
         <IconRow icon={Icons.Clock}>
           <strong>Closed Temporarily</strong>
