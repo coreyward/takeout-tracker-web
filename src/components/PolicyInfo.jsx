@@ -1,8 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
+import moment from "moment"
 import IconRow from "components/IconRow"
 import Icons from "lib/icons"
 import TimeAgo from "components/TimeAgo"
+import theme from "styles/theme"
 
 const PolicyInfo = ({
   closedForBusiness,
@@ -22,9 +24,14 @@ const PolicyInfo = ({
     .map(opt => serviceLabels[opt])
     .join(" or ")
 
+  const hoursAgo = Math.abs(moment(confirmedAt).diff(moment(), "hours"))
+  const [iconColor] = Object.entries(stalenessColors)
+    .reverse()
+    .find(([_c, cutoff]) => hoursAgo >= cutoff)
+
   return (
     <div className={className}>
-      <IconRow icon={Icons.CheckCircle}>
+      <IconRow icon={Icons.CheckCircle} iconColor={iconColor}>
         as of <TimeAgo time={confirmedAt} />
       </IconRow>
       {closedForBusiness ? (
@@ -65,6 +72,13 @@ PolicyInfo.propTypes = {
   takeoutOptions: PropTypes.arrayOf(PropTypes.string),
   policyNotes: PropTypes.string,
   className: PropTypes.string,
+}
+
+const stalenessColors = {
+  [theme.green]: 0,
+  inherit: 30,
+  "#D3AD4B": 48,
+  "#D14C5C": 72,
 }
 
 export const serviceLabels = {
