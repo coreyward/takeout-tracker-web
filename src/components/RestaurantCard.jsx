@@ -82,8 +82,10 @@ const RestaurantCard = ({
           <StatusIcons
             closedForBusiness={closedForBusiness}
             offersDelivery={
-              takeoutOptions &&
-              takeoutOptions.find(x => deliveryOptions.includes(x))
+              !!(
+                takeoutOptions &&
+                takeoutOptions.find(x => deliveryOptions.includes(x))
+              )
             }
             acceptsOnlineOrders={!!orderUrl}
             acceptsPhoneOrders={!!orderPhone}
