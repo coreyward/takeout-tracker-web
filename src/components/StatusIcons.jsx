@@ -8,9 +8,16 @@ const StatusIcons = ({
   acceptsOnlineOrders,
   acceptsPhoneOrders,
   closedForBusiness,
+  userReported,
   className,
 }) => (
   <div css={{ display: "flex" }} className={className}>
+    {userReported && (
+      <Indicator
+        tip="User Reported — Information has not been confirmed"
+        icon={Icons.Warning}
+      />
+    )}
     {closedForBusiness ? (
       <Indicator tip="Temporarily Closed" icon={Icons.Closed} />
     ) : (
@@ -36,6 +43,7 @@ StatusIcons.propTypes = {
   acceptsOnlineOrders: PropTypes.bool,
   acceptsPhoneOrders: PropTypes.bool,
   closedForBusiness: PropTypes.bool,
+  userReported: PropTypes.bool,
   className: PropTypes.string,
 }
 

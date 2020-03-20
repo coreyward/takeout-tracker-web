@@ -4,7 +4,6 @@ import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 import Icons from "lib/icons"
 import IconRow from "components/IconRow"
-import IconButton from "components/IconButton"
 import SourcesDropdown from "components/SourcesDropdown"
 import Tags from "components/Tags"
 import OrderInfo from "components/OrderInfo"
@@ -23,6 +22,7 @@ const RestaurantTile = ({
   sourceUrls,
   tags,
   takeoutOptions,
+  unverified,
   website,
 }) => {
   const diningModes = takeoutOptions
@@ -106,6 +106,12 @@ const RestaurantTile = ({
         />
       )}
 
+      {unverified && (
+        <IconRow icon={Icons.Info}>
+          Includes user-reported data (unverified)
+        </IconRow>
+      )}
+
       {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
     </div>
   )
@@ -139,6 +145,7 @@ RestaurantTile.propTypes = {
       "delivery-ubereats",
     ])
   ),
+  unverified: PropTypes.bool,
   website: PropTypes.string,
 }
 

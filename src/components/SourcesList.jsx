@@ -52,6 +52,6 @@ export default SourcesList
 
 SourcesList.propTypes = {
   urls: PropTypes.array,
-  notes: PropTypes.string,
+  notes: PropTypes.node,
   className: PropTypes.string,
 }

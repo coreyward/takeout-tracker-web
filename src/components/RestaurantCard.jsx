@@ -4,7 +4,6 @@ import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 import Icons from "lib/icons"
 import IconRow from "components/IconRow"
-import IconButton from "components/IconButton"
 import Tags from "components/Tags"
 import SourcesList from "components/SourcesList"
 import StatusIcons from "components/StatusIcons"
@@ -25,6 +24,7 @@ const RestaurantCard = ({
   sourceUrls,
   tags,
   takeoutOptions,
+  unverified,
   website,
 }) => {
   const [open, setOpen] = useState(false)
@@ -96,6 +96,7 @@ const RestaurantCard = ({
             offersDelivery={deliveryModes.length > 0}
             acceptsOnlineOrders={!!orderUrl}
             acceptsPhoneOrders={!!orderPhone}
+            userReported={unverified}
             css={{ marginTop: 2, color: theme.n40 }}
           />
         </div>
@@ -157,10 +158,21 @@ const RestaurantCard = ({
             />
           )}
 
-          {(sourceUrls?.length > 0 || sourceNotes) && (
+          {(sourceUrls?.length > 0 || sourceNotes || unverified) && (
             <div css={{ marginTop: 16 }}>
               <h4 css={{ ...theme.t4, color: theme.n40 }}>Sources</h4>
-              <SourcesList urls={sourceUrls} notes={sourceNotes} />
+              <SourcesList
+                urls={sourceUrls}
+                notes={
+                  unverified ? (
+                    <div>
+                      {sourceNotes} Includes user-reported data (unverified).
+                    </div>
+                  ) : (
+                    sourceNotes
+                  )
+                }
+              />
             </div>
           )}
         </div>
@@ -197,6 +209,7 @@ RestaurantCard.propTypes = {
       "delivery-ubereats",
     ])
   ),
+  unverified: PropTypes.bool,
   website: PropTypes.string,
 }
 

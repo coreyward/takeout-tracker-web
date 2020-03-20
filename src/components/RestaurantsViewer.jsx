@@ -27,13 +27,6 @@ const RestaurantsViewer = ({ restaurants }) => {
 
   return (
     <>
-      <h2 css={{ fontWeight: 500, marginBottom: 24, color: theme.n70 }}>
-        Verified Restaurants
-        <small css={{ color: theme.n50, marginLeft: 8 }}>
-          ({restaurants.length})
-        </small>
-      </h2>
-
       <div
         css={{
           marginBottom: 16,
