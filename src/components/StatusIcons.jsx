@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Tooltip from "@material-ui/core/Tooltip"
 import Icons from "lib/icons"
 
 const StatusIcons = ({
@@ -9,14 +10,20 @@ const StatusIcons = ({
   closedForBusiness,
   className,
 }) => (
-  <div css={{ display: "flex", svg: { marginLeft: 8 } }} className={className}>
+  <div css={{ display: "flex" }} className={className}>
     {closedForBusiness ? (
-      <Icons.Closed />
+      <Indicator tip="Temporarily Closed" icon={Icons.Closed} />
     ) : (
       <>
-        {offersDelivery && <Icons.Delivery />}
-        {acceptsOnlineOrders && <Icons.Cart />}
-        {acceptsPhoneOrders && <Icons.Phone />}
+        {offersDelivery && (
+          <Indicator tip="Delivery Available" icon={Icons.Delivery} />
+        )}
+        {acceptsOnlineOrders && (
+          <Indicator tip="Order Online" icon={Icons.Cart} />
+        )}
+        {acceptsPhoneOrders && (
+          <Indicator tip="Order by Phone" icon={Icons.Phone} />
+        )}
       </>
     )}
   </div>
@@ -30,4 +37,17 @@ StatusIcons.propTypes = {
   acceptsPhoneOrders: PropTypes.bool,
   closedForBusiness: PropTypes.bool,
   className: PropTypes.string,
+}
+
+const Indicator = ({ tip, icon: Icon }) => (
+  <Tooltip title={tip} arrow placement="top">
+    <div css={{ marginLeft: 8 }}>
+      <Icon />
+    </div>
+  </Tooltip>
+)
+
+Indicator.propTypes = {
+  tip: PropTypes.string.isRequired,
+  icon: PropTypes.func.isRequired,
 }

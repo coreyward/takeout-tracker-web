@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
+    "@material-ui/core": "^4.9.7",
     "@sanity/block-content-to-react": "^2.0.6",
     "@sanity/client": "^0.147.3",
     "@sanity/image-url": "^0.140.17",
