@@ -1,14 +1,12 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
-import Icons from "lib/icons"
-import IconRow from "components/IconRow"
 import Tags from "components/Tags"
 import SourcesList from "components/SourcesList"
 import StatusIcons from "components/StatusIcons"
 import useOnClickOutside from "hooks/useOnClickOutside"
 import OrderInfo from "components/OrderInfo"
+import PolicyInfo, { deliveryOptions } from "components/PolicyInfo"
 
 const RestaurantCard = ({
   closedForBusiness,
@@ -32,16 +30,6 @@ const RestaurantCard = ({
   const ref = useOnClickOutside(() => {
     setOpen(false)
   }, open)
-
-  const diningModes = takeoutOptions
-    .filter(opt => !deliveryOptions.includes(opt))
-    .map(opt => serviceLabels[opt])
-    .join(", ")
-
-  const deliveryModes = takeoutOptions
-    .filter(opt => deliveryOptions.includes(opt))
-    .map(opt => serviceLabels[opt])
-    .join(" or ")
 
   return (
     <div
@@ -93,7 +81,10 @@ const RestaurantCard = ({
 
           <StatusIcons
             closedForBusiness={closedForBusiness}
-            offersDelivery={deliveryModes.length > 0}
+            offersDelivery={
+              takeoutOptions &&
+              takeoutOptions.find(x => deliveryOptions.includes(x))
+            }
             acceptsOnlineOrders={!!orderUrl}
             acceptsPhoneOrders={!!orderPhone}
             userReported={unverified}
@@ -117,36 +108,14 @@ const RestaurantCard = ({
             borderRadius: "0 0 5px 5px",
           }}
         >
-          <div css={{ marginBottom: 16 }}>
-            <IconRow icon={Icons.CheckCircle}>
-              as of <TimeAgo time={confirmedAt} />
-            </IconRow>
-            {closedForBusiness ? (
-              <IconRow icon={Icons.Clock}>
-                <strong>Closed Temporarily</strong>
-              </IconRow>
-            ) : (
-              <>
-                {hours && hours.length > 0 && (
-                  <IconRow icon={Icons.Clock}>
-                    {hours.map((line, index) => (
-                      <div key={index}>{line}</div>
-                    ))}
-                  </IconRow>
-                )}
-                <IconRow icon={Icons.Dining}>
-                  {diningModes.length > 0 ? diningModes : "No information"}
-                </IconRow>
-                <IconRow icon={Icons.Delivery}>
-                  {deliveryModes.length > 0 ? deliveryModes : "No delivery"}
-                </IconRow>
-              </>
-            )}
-
-            {policyNotes && policyNotes.length > 0 && (
-              <IconRow icon={Icons.Info}>{policyNotes}</IconRow>
-            )}
-          </div>
+          <PolicyInfo
+            css={{ marginBottom: 16 }}
+            closedForBusiness={closedForBusiness}
+            confirmedAt={confirmedAt}
+            hours={hours}
+            takeoutOptions={takeoutOptions}
+            policyNotes={policyNotes}
+          />
 
           {!closedForBusiness && (
             <OrderInfo
@@ -212,24 +181,3 @@ RestaurantCard.propTypes = {
   unverified: PropTypes.bool,
   website: PropTypes.string,
 }
-
-const serviceLabels = {
-  "dine-in": "Dine-In",
-  takeout: "Takeout",
-  curbside: "Curbside Takeout",
-  delivery: "By Restaurant",
-  "delivery-favor": "Favor",
-  "delivery-doordash": "DoorDash",
-  "delivery-postmates": "Postmates",
-  "delivery-grubhub": "GrubHub",
-  "delivery-ubereats": "UberEats",
-}
-
-const deliveryOptions = [
-  "delivery",
-  "delivery-favor",
-  "delivery-doordash",
-  "delivery-postmates",
-  "delivery-grubhub",
-  "delivery-ubereats",
-]
