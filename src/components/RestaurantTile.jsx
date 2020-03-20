@@ -7,6 +7,7 @@ import IconRow from "components/IconRow"
 import IconButton from "components/IconButton"
 import SourcesDropdown from "components/SourcesDropdown"
 import Tags from "components/Tags"
+import OrderInfo from "components/OrderInfo"
 
 const RestaurantTile = ({
   closedForBusiness,
@@ -96,45 +97,13 @@ const RestaurantTile = ({
       </div>
 
       {!closedForBusiness && (
-        <div>
-          <h4
-            css={{
-              ...theme.t4,
-              color: theme.n40,
-            }}
-          >
-            Menu / Order
-          </h4>
-
-          <div>
-            {menuUrl && (
-              <IconButton icon={Icons.Menu} href={menuUrl}>
-                Menu
-              </IconButton>
-            )}
-            {website && (
-              <IconButton icon={Icons.Website} href={website}>
-                Website
-              </IconButton>
-            )}
-            {orderUrl && (
-              <IconButton icon={Icons.Cart} href={orderUrl}>
-                Order Online
-              </IconButton>
-            )}
-            {orderPhone && (
-              <IconButton
-                icon={Icons.Phone}
-                href={`tel:${orderPhone.replace(/[^0-9]/g, "")}`}
-              >
-                {orderPhone}
-              </IconButton>
-            )}
-          </div>
-          {orderingNotes && (
-            <IconRow icon={Icons.Info}>{orderingNotes}</IconRow>
-          )}
-        </div>
+        <OrderInfo
+          menuUrl={menuUrl}
+          website={website}
+          orderUrl={orderUrl}
+          orderPhone={orderPhone}
+          orderingNotes={orderingNotes}
+        />
       )}
 
       {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
