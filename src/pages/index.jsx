@@ -5,6 +5,7 @@ import theme from "styles/theme"
 import Layout from "components/Layout"
 import AnnouncementBanner from "components/AnnouncementBanner"
 import RestaurantsViewer from "components/RestaurantsViewer"
+import Icons from "lib/icons"
 
 const Home = ({ data }) => {
   return (
@@ -20,6 +21,21 @@ const Home = ({ data }) => {
           }}
         />
       )}
+
+      <a
+        href="https://www.instagram.com/takeouttracker"
+        target="_blank"
+        rel="noopener noreferrer"
+        css={{
+          float: "right",
+          color: theme.n40,
+          transition: "color 250ms",
+          ":hover": { color: theme.n70 },
+        }}
+      >
+        <Icons.Instagram />
+      </a>
+
       <div css={{ ...theme.smallcaps, color: theme.n40, fontSize: 12 }}>
         Austin, TX • covid-19
       </div>
