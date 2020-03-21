@@ -11,7 +11,9 @@ const IconButton = ({
 }) => (
   <a
     href={href}
-    target={href.startsWith("http") ? "_blank" : "_self"}
+    target={
+      href.startsWith("http") || href.startsWith("mailto") ? "_blank" : "_self"
+    }
     rel="noopener noreferrer"
     css={{
       display: "inline-flex",
