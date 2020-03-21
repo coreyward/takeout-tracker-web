@@ -12,7 +12,9 @@ const colors = {
 const OpenStatusIndicator = ({ hours, className }) => {
   // Don't show status for unrecognizable hours strings
   if (!hours.some(hrs => /\d/.test(hrs))) return null
+
   const open = hoursCover(hours)
+  const indicatorColor = open ? colors.open : colors.closed
 
   return (
     <Tooltip
@@ -22,14 +24,13 @@ const OpenStatusIndicator = ({ hours, className }) => {
     >
       <div
         css={{
-          "--indicatorColor": open ? colors.open : colors.closed,
           display: "inline-block",
           verticalAlign: "middle",
           marginLeft: "0.5em",
           width: 5,
           height: 5,
-          background: "var(--indicatorColor)",
-          boxShadow: "0px 0px 4px var(--indicatorColor)",
+          background: indicatorColor,
+          boxShadow: `0px 0px 4px ${indicatorColor}`,
           borderRadius: 3,
         }}
         className={className}
