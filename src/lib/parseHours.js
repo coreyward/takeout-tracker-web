@@ -78,7 +78,7 @@ export const hoursCover = (hours, targetDate = new Date()) => {
     entry =>
       entry.weekday === targetDate.getDay() &&
       entry.startTime <= targetTime &&
-      (typeof entry.endTime === "undefined" || entry.endTime >= targetTime)
+      (typeof entry.endTime === "undefined" || entry.endTime > targetTime)
   )
 }
 

@@ -170,4 +170,21 @@ describe("hoursCover", () => {
   test("negative for “closed”", () => {
     expect(hoursCover(["Sat: CLOSED"], saturdayAt1am)).toBeFalsy()
   })
+
+  test("time ending at midnight", () => {
+    expect(hoursCover(["9pm–12am"], fridayAt10pm)).toBeTruthy()
+    expect(hoursCover(["9pm–12am"], saturdayAt1am)).toBeFalsy()
+  })
+
+  test("multiple hours ranges work", () => {
+    const range = ["2pm–3:15pm", "11pm–2am"]
+
+    expect(hoursCover(range, tuesdayAt3pm)).toBeTruthy()
+    expect(hoursCover(range, fridayAt10pm)).toBeFalsy()
+    expect(hoursCover(range, saturdayAt1am)).toBeTruthy()
+  })
+
+  test("exclusive of closing-at time", () => {
+    expect(hoursCover(["1pm–3pm"], tuesdayAt3pm)).toBeFalsy()
+  })
 })
