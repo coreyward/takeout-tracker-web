@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { hoursCover } from "lib/parseHours"
 import theme from "styles/theme"
@@ -10,10 +10,29 @@ const colors = {
 }
 
 const OpenStatusIndicator = ({ hours, className }) => {
-  // Don't show status for unrecognizable hours strings
-  if (!hours.some(hrs => /\d/.test(hrs))) return null
+  const [open, setOpen] = useState()
 
-  const open = hoursCover(hours)
+  useEffect(() => {
+    // Don't show status for unrecognizable hours strings
+    if (!hours.some(hrs => /\d/.test(hrs))) return
+
+    const refreshStatus = () => setOpen(hoursCover(hours))
+
+    // Initial state
+    refreshStatus()
+
+    const timer = window.setInterval(
+      refreshStatus,
+      5 * 60 * 1000 + Math.round(Math.random() * 500)
+    )
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [hours])
+
+  if (typeof open === "undefined") return null
+
   const indicatorColor = open ? colors.open : colors.closed
 
   return (
