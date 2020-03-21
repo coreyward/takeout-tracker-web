@@ -8,80 +8,84 @@ import Tags from "components/Tags"
 import OrderInfo from "components/OrderInfo"
 import PolicyInfo from "components/PolicyInfo"
 
-const RestaurantTile = ({
-  closedForBusiness,
-  confirmedAt,
-  hours,
-  menuUrl,
-  name,
-  orderingNotes,
-  orderPhone,
-  orderUrl,
-  policyNotes,
-  sourceNotes,
-  sourceUrls,
-  tags,
-  takeoutOptions,
-  unverified,
-  website,
-}) => (
-  <div
-    css={{
-      position: "relative",
-      background: closedForBusiness ? "#122031" : theme.n20,
-      color: theme.n70,
-      padding: 24,
-      borderRadius: 3,
-      fontSize: 12,
-      opacity: closedForBusiness ? 0.75 : 1,
-    }}
-  >
-    <h3
+const RestaurantTile = React.memo(
+  ({
+    closedForBusiness,
+    confirmedAt,
+    hours,
+    menuUrl,
+    name,
+    orderingNotes,
+    orderPhone,
+    orderUrl,
+    policyNotes,
+    sourceNotes,
+    sourceUrls,
+    tags,
+    takeoutOptions,
+    unverified,
+    website,
+  }) => (
+    <div
       css={{
-        color: theme.n80,
-        fontSize: 16,
-        fontWeight: 500,
-        marginRight: 36,
-        marginBottom: 16,
+        position: "relative",
+        background: closedForBusiness ? "#122031" : theme.n20,
+        color: theme.n70,
+        padding: 24,
+        borderRadius: 3,
+        fontSize: 12,
+        opacity: closedForBusiness ? 0.75 : 1,
       }}
     >
-      {name}
-    </h3>
+      <h3
+        css={{
+          color: theme.n80,
+          fontSize: 16,
+          fontWeight: 500,
+          marginRight: 36,
+          marginBottom: 16,
+        }}
+      >
+        {name}
+      </h3>
 
-    <SourcesDropdown
-      urls={sourceUrls}
-      notes={sourceNotes}
-      css={{ position: "absolute", left: 8, right: 8, top: 14 }}
-    />
-
-    <PolicyInfo
-      css={{ marginBottom: 16 }}
-      closedForBusiness={closedForBusiness}
-      confirmedAt={confirmedAt}
-      hours={hours}
-      takeoutOptions={takeoutOptions}
-      policyNotes={policyNotes}
-    />
-
-    {!closedForBusiness && (
-      <OrderInfo
-        menuUrl={menuUrl}
-        website={website}
-        orderUrl={orderUrl}
-        orderPhone={orderPhone}
-        orderingNotes={orderingNotes}
+      <SourcesDropdown
+        urls={sourceUrls}
+        notes={sourceNotes}
+        css={{ position: "absolute", left: 8, right: 8, top: 14 }}
       />
-    )}
 
-    {unverified && (
-      <IconRow icon={Icons.Info}>
-        Includes user-reported data (unverified)
-      </IconRow>
-    )}
+      <PolicyInfo
+        css={{ marginBottom: 16 }}
+        closedForBusiness={closedForBusiness}
+        confirmedAt={confirmedAt}
+        hours={hours}
+        takeoutOptions={takeoutOptions}
+        policyNotes={policyNotes}
+      />
 
-    {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
-  </div>
+      {!closedForBusiness && (
+        <OrderInfo
+          menuUrl={menuUrl}
+          website={website}
+          orderUrl={orderUrl}
+          orderPhone={orderPhone}
+          orderingNotes={orderingNotes}
+        />
+      )}
+
+      {unverified && (
+        <IconRow icon={Icons.Info}>
+          Includes user-reported data (unverified)
+        </IconRow>
+      )}
+
+      {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
+    </div>
+  )
 )
+
+RestaurantTile.displayName = "RestaurantTile"
 
 export default RestaurantTile
 

@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Icons from "lib/icons"
 
-const Tags = ({ tags, className }) => (
+const Tags = React.memo(({ tags, className }) => (
   <div css={{ display: "flex", flexWrap: "wrap" }} className={className}>
     {tags.map(tag => (
       <div
@@ -21,7 +21,9 @@ const Tags = ({ tags, className }) => (
       </div>
     ))}
   </div>
-)
+))
+
+Tags.displayName = "Tags"
 
 export default Tags
 
