@@ -7,6 +7,7 @@ import StatusIcons from "components/StatusIcons"
 import useOnClickOutside from "hooks/useOnClickOutside"
 import OrderInfo from "components/OrderInfo"
 import PolicyInfo, { deliveryOptions } from "components/PolicyInfo"
+import OpenStatusIndicator from "components/OpenStatusIndicator"
 
 const RestaurantCard = ({
   closedForBusiness,
@@ -77,6 +78,7 @@ const RestaurantCard = ({
             }}
           >
             {name}
+            <OpenStatusIndicator hours={hours} />
           </h3>
 
           <StatusIcons
