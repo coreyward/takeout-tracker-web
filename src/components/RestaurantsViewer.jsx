@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useReducer } from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
@@ -14,16 +14,46 @@ const filters = {
 const applyFilters = (list, filters) =>
   filters.filter(x => x).reduce((results, filter) => filter(results), list)
 
+const reducer = (state, { action, value, ...props }) => {
+  switch (action) {
+    case "setViewMode":
+      return {
+        ...state,
+        mode: value,
+      }
+
+    case "toggleFilter":
+      const filters = new Set(state.filters)
+
+      if (filters.has(value)) {
+        filters.delete(value)
+      } else {
+        filters.add(value)
+      }
+
+      return {
+        ...state,
+        filters,
+      }
+    default:
+      return state
+  }
+}
+
+const initialState = {
+  filters: new Set(["hideClosed"]),
+  mode: MODES.CARD,
+}
+
 const RestaurantsViewer = ({ restaurants }) => {
-  const [includeClosed, setIncludeClosed] = useState(false)
-  const [mode, setMode] = useState(MODES.CARD)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const filteredRestaurants = applyFilters(restaurants, [
-    !includeClosed && filters.hideClosed,
+    state.filters.has("hideClosed") && filters.hideClosed,
   ])
 
   const RestaurantComponent =
-    mode === MODES.CARD ? RestaurantCard : RestaurantTile
+    state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
 
   return (
     <>
@@ -48,8 +78,10 @@ const RestaurantsViewer = ({ restaurants }) => {
 
           <div css={{ display: "flex" }}>
             <Checkbox
-              onChange={() => setIncludeClosed(prev => !prev)}
-              checked={!includeClosed}
+              onChange={() =>
+                dispatch({ action: "toggleFilter", value: "hideClosed" })
+              }
+              checked={state.filters.has("hideClosed")}
               css={{ color: theme.n40 }}
             >
               Offering Takeout/Delivery
@@ -74,7 +106,10 @@ const RestaurantsViewer = ({ restaurants }) => {
           >
             View Mode
           </div>
-          <ModeSelector activeMode={mode} setMode={setMode} />
+          <ModeSelector
+            activeMode={state.mode}
+            setMode={value => dispatch({ action: "setViewMode", value })}
+          />
         </div>
       </div>
 
