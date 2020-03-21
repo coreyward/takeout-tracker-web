@@ -79,7 +79,7 @@ const RestaurantCard = React.memo(
               }}
             >
               {name}
-              <OpenStatusIndicator hours={hours} />
+              {!closedForBusiness && <OpenStatusIndicator hours={hours} />}
             </h3>
 
             <StatusIcons
