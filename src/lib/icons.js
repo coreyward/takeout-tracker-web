@@ -8,6 +8,7 @@ import { ReactComponent as Delivery } from "images/Delivery.svg"
 import { ReactComponent as Dining } from "images/Dining.svg"
 import { ReactComponent as Info } from "images/Info.svg"
 import { ReactComponent as Instagram } from "images/Instagram.svg"
+import { ReactComponent as LeftChevron } from "images/LeftChevron.svg"
 import { ReactComponent as Link } from "images/Link.svg"
 import { ReactComponent as Menu } from "images/Menu.svg"
 import { ReactComponent as Phone } from "images/Phone.svg"
@@ -28,6 +29,7 @@ const Icons = {
   Dining,
   Info,
   Instagram,
+  LeftChevron,
   Link,
   Menu,
   Phone,

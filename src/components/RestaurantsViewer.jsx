@@ -8,6 +8,7 @@ import RestaurantTile from "components/RestaurantTile"
 import Checkbox from "components/Checkbox"
 import RestaurantCard from "components/RestaurantCard"
 import ModeSelector, { MODES } from "components/ModeSelector"
+import Pagination from "components/Pagination"
 import { hoursCover } from "lib/parseHours"
 
 const RestaurantsViewer = ({ restaurants }) => {
@@ -72,7 +73,7 @@ const RestaurantsViewer = ({ restaurants }) => {
               ref={searchRef}
               type="search"
               placeholder="Search"
-              initialValue={state.searchQuery}
+              defaultValue={state.searchQuery}
               onChange={e => updateSearchQuery()}
               css={{
                 marginRight: 16,
@@ -156,10 +157,23 @@ const RestaurantsViewer = ({ restaurants }) => {
           },
         }}
       >
-        {filteredRestaurants.map(location => (
-          <RestaurantComponent key={location._id} {...location} />
-        ))}
+        {filteredRestaurants
+          .slice((state.page - 1) * state.perPage, state.page * state.perPage)
+          .map(location => (
+            <RestaurantComponent key={location._id} {...location} />
+          ))}
       </div>
+
+      <Pagination
+        currentPage={state.page}
+        perPage={state.perPage}
+        totalCount={filteredRestaurants.length}
+        setPage={n => dispatch({ action: "setPage", value: n })}
+        css={{
+          maxWidth: 225,
+          margin: "24px auto",
+        }}
+      />
     </>
   )
 }
@@ -210,13 +224,28 @@ const reducer = (state, { action, value, ...props }) => {
 
       return {
         ...state,
+        page: 1,
         filters,
       }
 
     case "setSearchQuery":
       return {
         ...state,
+        page: 1,
         searchQuery: value,
+      }
+
+    case "setPage":
+      return {
+        ...state,
+        page: value,
+      }
+
+    case "setPerPage":
+      return {
+        ...state,
+        page: 1,
+        perPage: value,
       }
 
     default:
@@ -228,4 +257,6 @@ const initialState = {
   filters: new Set(["hideClosed"]),
   mode: MODES.CARD,
   searchQuery: "",
+  page: 1,
+  perPage: 30,
 }
