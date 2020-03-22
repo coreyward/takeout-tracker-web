@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import theme from "styles/theme"
 
 const Tick = () => (
   <svg width="10" height="9">
@@ -17,6 +18,11 @@ const Checkbox = ({ children, className, ...props }) => (
       alignItems: "center",
       cursor: "pointer",
       userSelect: "none",
+      color: theme.n40,
+      transition: "color 250ms",
+      ":hover": {
+        color: theme.n50,
+      },
     }}
     className={className}
   >
