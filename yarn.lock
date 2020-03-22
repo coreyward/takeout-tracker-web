@@ -5621,6 +5621,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+fuse.js@^5.0.7-beta:
+  version "5.0.7-beta"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-5.0.7-beta.tgz#4fd33935854967f295dcdc533210100535a879f3"
+  integrity sha512-uiOVaHR69aXAHU1dUvFuOyK2qteiPQ4RJX4I0B1vHzuSCpSLRgzBgGc0XyOlrMIk2hKqJh45VSrnI3WtpvUeAg==
+
 gatsby-cli@^2.10.11:
   version "2.10.11"
   resolved "https://registry.yarnpkg.com/gatsby-cli/-/gatsby-cli-2.10.11.tgz#4a10425c2dbd5eb551c51315f778e24c6b313e1a"

@@ -1,5 +1,6 @@
-import React, { useReducer, useCallback } from "react"
+import React, { useReducer, useMemo, useCallback } from "react"
 import PropTypes from "prop-types"
+import Fuse from "fuse.js"
 import moment from "moment"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
@@ -8,52 +9,19 @@ import RestaurantCard from "components/RestaurantCard"
 import ModeSelector, { MODES } from "components/ModeSelector"
 import { hoursCover } from "lib/parseHours"
 
-const filters = {
-  limitTo: n => list => list.slice(0, n),
-  hideClosed: list => list.filter(entry => !entry.closedForBusiness),
-  currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
-}
-
-const applyFilters = (list, filters) =>
-  filters.filter(x => x).reduce((results, filter) => filter(results), list)
-
-const reducer = (state, { action, value, ...props }) => {
-  switch (action) {
-    case "setViewMode":
-      return {
-        ...state,
-        mode: value,
-      }
-
-    case "toggleFilter":
-      const filters = new Set(state.filters)
-
-      if (filters.has(value)) {
-        filters.delete(value)
-      } else {
-        filters.add(value)
-      }
-
-      return {
-        ...state,
-        filters,
-      }
-    default:
-      return state
-  }
-}
-
-const initialState = {
-  filters: new Set(["hideClosed"]),
-  mode: MODES.CARD,
-}
-
 const RestaurantsViewer = ({ restaurants }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const fuse = useMemo(() => new Fuse(restaurants, fuseConfig), [restaurants])
 
-  const filteredRestaurants = applyFilters(
-    restaurants,
-    Array.from(state.filters).map(filter => filters[filter])
+  const filteredRestaurants = useMemo(
+    () =>
+      applyFilters(
+        state.searchQuery?.length > 0
+          ? fuse.search(state.searchQuery).map(res => res.item)
+          : restaurants,
+        Array.from(state.filters).map(filter => filters[filter])
+      ),
+    [fuse, state.searchQuery, state.filters, restaurants]
   )
 
   const RestaurantComponent =
@@ -80,13 +48,44 @@ const RestaurantsViewer = ({ restaurants }) => {
             Filters
           </div>
 
-          <div css={{ display: "flex" }}>
+          <div
+            css={{
+              display: "flex",
+              [theme.mobile]: { flexDirection: "column" },
+            }}
+          >
+            <input
+              type="search"
+              placeholder="Search"
+              value={state.searchQuery}
+              onChange={e =>
+                dispatch({ action: "setSearchQuery", value: e.target.value })
+              }
+              css={{
+                marginRight: 16,
+                fontSize: 12,
+                fontFamily: "inherit",
+                borderRadius: 10,
+                color: theme.n40,
+                padding: "0.5em 0.8em",
+                outline: 0,
+                border: `1px solid ${theme.n20}`,
+                lineHeight: 1,
+                ":focus": {
+                  border: `1px solid ${theme.n40}`,
+                },
+                "::placeholder": {
+                  color: theme.n40,
+                },
+              }}
+            />
+
             <Checkbox
               onChange={() =>
                 dispatch({ action: "toggleFilter", value: "hideClosed" })
               }
               checked={state.filters.has("hideClosed")}
-              css={{ color: theme.n40 }}
+              css={{ [theme.mobile]: { display: "none" } }}
             >
               Offering Takeout/Delivery
             </Checkbox>
@@ -101,7 +100,7 @@ const RestaurantsViewer = ({ restaurants }) => {
                 []
               )}
               checked={state.filters.has("currentlyOpen")}
-              css={{ color: theme.n40, marginLeft: 8 }}
+              css={{ marginLeft: 8, [theme.mobile]: { margin: "8px 0 0 0" } }}
             >
               Open at {moment().format("h:mma")}
             </Checkbox>
@@ -158,4 +157,62 @@ RestaurantsViewer.propTypes = {
   restaurants: PropTypes.arrayOf(
     PropTypes.shape(RestaurantCard.propTypes).isRequired
   ).isRequired,
+}
+
+const fuseConfig = {
+  shouldSort: true,
+  threshold: 0.5,
+  location: 0,
+  distance: 100,
+  minMatchCharLength: 1,
+  keys: ["name", "tags", "sourceNotes", "orderNotes"],
+}
+
+const filters = {
+  limitTo: n => list => list.slice(0, n),
+  hideClosed: list => list.filter(entry => !entry.closedForBusiness),
+  currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
+  search: query => list => list,
+}
+
+const applyFilters = (list, filters) =>
+  filters.filter(x => x).reduce((results, filter) => filter(results), list)
+
+const reducer = (state, { action, value, ...props }) => {
+  switch (action) {
+    case "setViewMode":
+      return {
+        ...state,
+        mode: value,
+      }
+
+    case "toggleFilter":
+      const filters = new Set(state.filters)
+
+      if (filters.has(value)) {
+        filters.delete(value)
+      } else {
+        filters.add(value)
+      }
+
+      return {
+        ...state,
+        filters,
+      }
+
+    case "setSearchQuery":
+      return {
+        ...state,
+        searchQuery: value,
+      }
+
+    default:
+      return state
+  }
+}
+
+const initialState = {
+  filters: new Set(["hideClosed"]),
+  mode: MODES.CARD,
+  searchQuery: "",
 }
