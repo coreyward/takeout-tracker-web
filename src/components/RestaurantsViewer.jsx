@@ -1,14 +1,17 @@
-import React, { useReducer } from "react"
+import React, { useReducer, useCallback } from "react"
 import PropTypes from "prop-types"
+import moment from "moment"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
 import Checkbox from "components/Checkbox"
 import RestaurantCard from "components/RestaurantCard"
 import ModeSelector, { MODES } from "components/ModeSelector"
+import { hoursCover } from "lib/parseHours"
 
 const filters = {
   limitTo: n => list => list.slice(0, n),
   hideClosed: list => list.filter(entry => !entry.closedForBusiness),
+  currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
 }
 
 const applyFilters = (list, filters) =>
@@ -48,9 +51,10 @@ const initialState = {
 const RestaurantsViewer = ({ restaurants }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const filteredRestaurants = applyFilters(restaurants, [
-    state.filters.has("hideClosed") && filters.hideClosed,
-  ])
+  const filteredRestaurants = applyFilters(
+    restaurants,
+    Array.from(state.filters).map(filter => filters[filter])
+  )
 
   const RestaurantComponent =
     state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
@@ -85,6 +89,21 @@ const RestaurantsViewer = ({ restaurants }) => {
               css={{ color: theme.n40 }}
             >
               Offering Takeout/Delivery
+            </Checkbox>
+
+            <Checkbox
+              onChange={useCallback(
+                () =>
+                  dispatch({
+                    action: "toggleFilter",
+                    value: "currentlyOpen",
+                  }),
+                []
+              )}
+              checked={state.filters.has("currentlyOpen")}
+              css={{ color: theme.n40, marginLeft: 8 }}
+            >
+              Open at {moment().format("h:mma")}
             </Checkbox>
           </div>
         </div>
