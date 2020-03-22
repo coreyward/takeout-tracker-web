@@ -47,6 +47,7 @@
     "gatsby-plugin-svgr": "^2.0.2",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-sanity": "^5.0.1",
+    "lodash-es": "^4.17.15",
     "markdown-to-jsx": "^6.9.4",
     "moment": "^2.24.0",
     "react": "^16.8",

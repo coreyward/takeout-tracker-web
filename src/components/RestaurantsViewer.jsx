@@ -1,7 +1,8 @@
-import React, { useReducer, useMemo, useCallback } from "react"
+import React, { useReducer, useMemo, useCallback, useRef } from "react"
 import PropTypes from "prop-types"
 import Fuse from "fuse.js"
 import moment from "moment"
+import debounce from "lodash-es/debounce"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
 import Checkbox from "components/Checkbox"
@@ -12,6 +13,7 @@ import { hoursCover } from "lib/parseHours"
 const RestaurantsViewer = ({ restaurants }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const fuse = useMemo(() => new Fuse(restaurants, fuseConfig), [restaurants])
+  const searchRef = useRef()
 
   const filteredRestaurants = useMemo(
     () =>
@@ -22,6 +24,18 @@ const RestaurantsViewer = ({ restaurants }) => {
         Array.from(state.filters).map(filter => filters[filter])
       ),
     [fuse, state.searchQuery, state.filters, restaurants]
+  )
+
+  const updateSearchQuery = useCallback(
+    debounce(
+      value =>
+        dispatch({
+          action: "setSearchQuery",
+          value: searchRef.current.value,
+        }),
+      500
+    ),
+    []
   )
 
   const RestaurantComponent =
@@ -55,12 +69,11 @@ const RestaurantsViewer = ({ restaurants }) => {
             }}
           >
             <input
+              ref={searchRef}
               type="search"
               placeholder="Search"
-              value={state.searchQuery}
-              onChange={e =>
-                dispatch({ action: "setSearchQuery", value: e.target.value })
-              }
+              initialValue={state.searchQuery}
+              onChange={e => updateSearchQuery()}
               css={{
                 marginRight: 16,
                 fontSize: 12,
@@ -161,7 +174,7 @@ RestaurantsViewer.propTypes = {
 
 const fuseConfig = {
   shouldSort: true,
-  threshold: 0.5,
+  threshold: 0.4,
   location: 0,
   distance: 100,
   minMatchCharLength: 1,
