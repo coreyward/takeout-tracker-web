@@ -15,7 +15,10 @@ const expandQueries = function recurse(styles, mediaQueries) {
           }
         )
       } else if (typeof values === "object") {
-        output[property] = recurse(values, mediaQueries)
+        output[property] = {
+          ...(output[property] || {}),
+          ...recurse(values, mediaQueries),
+        }
       } else {
         output[property] = values
       }
