@@ -13,12 +13,14 @@ import { hoursCover } from "lib/parseHours"
 
 const RestaurantsViewer = ({
   restaurants,
-  defaultSearchQuery = "",
-  defaultFilters = [],
+  defaultSearchQuery,
+  defaultFilters,
+  defaultViewMode,
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
-    searchQuery: defaultSearchQuery,
+    mode: defaultViewMode || "card",
+    searchQuery: defaultSearchQuery || "",
     filters: new Set(defaultFilters),
   })
   const fuse = useMemo(() => new Fuse(restaurants, fuseConfig), [restaurants])
@@ -192,14 +194,18 @@ const RestaurantsViewer = ({
 
 export default RestaurantsViewer
 
+const filters = {
+  hideClosed: list => list.filter(entry => !entry.closedForBusiness),
+  currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
+}
+
 RestaurantsViewer.propTypes = {
   restaurants: PropTypes.arrayOf(
     PropTypes.shape(RestaurantCard.propTypes).isRequired
   ).isRequired,
   defaultSearchQuery: PropTypes.string,
-  defaultFilters: PropTypes.arrayOf(
-    PropTypes.oneOf(["hideClosed", "currentlyOpen"])
-  ),
+  defaultFilters: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(filters))),
+  defaultViewMode: PropTypes.oneOf(Object.values(MODES)),
 }
 
 const fuseConfig = {
@@ -209,13 +215,6 @@ const fuseConfig = {
   distance: 100,
   minMatchCharLength: 1,
   keys: ["name", "tags", "sourceNotes", "orderNotes"],
-}
-
-const filters = {
-  limitTo: n => list => list.slice(0, n),
-  hideClosed: list => list.filter(entry => !entry.closedForBusiness),
-  currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
-  search: query => list => list,
 }
 
 const applyFilters = (list, filters) =>

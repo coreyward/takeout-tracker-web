@@ -49,6 +49,7 @@ export const query = graphql`
           title
           defaultFilters
           defaultSearchQuery
+          defaultViewMode
         }
       }
     }
