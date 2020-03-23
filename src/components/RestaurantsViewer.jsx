@@ -11,8 +11,16 @@ import ModeSelector, { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import { hoursCover } from "lib/parseHours"
 
-const RestaurantsViewer = ({ restaurants }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+const RestaurantsViewer = ({
+  restaurants,
+  defaultSearchQuery = "",
+  defaultFilters = [],
+}) => {
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    searchQuery: defaultSearchQuery,
+    filters: new Set(defaultFilters),
+  })
   const fuse = useMemo(() => new Fuse(restaurants, fuseConfig), [restaurants])
   const searchRef = useRef()
 
@@ -184,6 +192,10 @@ RestaurantsViewer.propTypes = {
   restaurants: PropTypes.arrayOf(
     PropTypes.shape(RestaurantCard.propTypes).isRequired
   ).isRequired,
+  defaultSearchQuery: PropTypes.string,
+  defaultFilters: PropTypes.arrayOf(
+    PropTypes.oneOf(["hideClosed", "currentlyOpen"])
+  ),
 }
 
 const fuseConfig = {
