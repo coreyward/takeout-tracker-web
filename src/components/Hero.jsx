@@ -36,7 +36,6 @@ const Hero = ({ title, description, background, presentation }) => {
   return (
     <div
       css={theme.expandQueries({
-        margin: "var(--pagePadding) calc(-1 * var(--pagePadding))",
         padding: [64, 48, "48px 24px"],
         minHeight: 375,
         display: "flex",

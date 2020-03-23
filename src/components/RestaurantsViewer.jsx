@@ -54,6 +54,8 @@ const RestaurantsViewer = ({
     <>
       <div
         css={{
+          padding: "var(--pagePadding)",
+          paddingBottom: 0,
           marginBottom: 16,
           display: "flex",
           justifyContent: "space-between",
@@ -159,6 +161,8 @@ const RestaurantsViewer = ({
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           gap: 24,
+          padding: "var(--pagePadding)",
+          paddingTop: 0,
           [theme.mobile]: {
             gridTemplateColumns: "1fr",
             gap: 16,
