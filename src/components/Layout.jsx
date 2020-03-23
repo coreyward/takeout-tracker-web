@@ -7,10 +7,9 @@ import { globalStyles } from "styles/theme"
 import Header from "components/Header"
 import AnnouncementBanner from "components/AnnouncementBanner"
 
-const Layout = ({ title, children, className }) => {
+const Layout = ({ title, description, children, className }) => {
   const metaTitle = `${title ? `${title} - ` : ""}Austin Takeout Tracker`
-  const metaDesc =
-    "This project aims to track restaurants that are open during the covid-19 health crisis."
+  const metaDesc = description
 
   const { announcement } = useStaticQuery(graphql`
     {
@@ -55,6 +54,7 @@ export default Layout
 
 Layout.propTypes = {
   title: PropTypes.string,
+  description: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 }

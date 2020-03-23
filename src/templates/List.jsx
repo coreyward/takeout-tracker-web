@@ -10,6 +10,8 @@ import { MODES } from "components/ModeSelector"
 const List = ({ data: { list } }) => {
   return (
     <Layout
+      title={list.name}
+      description={list.description}
       css={{
         "--pagePadding": "24px",
         [theme.mobile]: { "--pagePadding": "16px" },
