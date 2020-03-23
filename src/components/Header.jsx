@@ -61,9 +61,9 @@ const Header = () => (
       target="_blank"
       rel="noopener noreferrer"
       css={{
-        color: theme.n40,
+        color: theme.n50,
         transition: "color 250ms",
-        ":hover": { color: theme.n70 },
+        ":hover": { color: theme.n80 },
       }}
     >
       <Icons.Instagram css={{ display: "block", width: 24 }} />
