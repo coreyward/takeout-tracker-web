@@ -7,6 +7,7 @@ import SourcesDropdown from "components/SourcesDropdown"
 import Tags from "components/Tags"
 import OrderInfo from "components/OrderInfo"
 import PolicyInfo from "components/PolicyInfo"
+import OpenStatusIndicator from "components/OpenStatusIndicator"
 
 const RestaurantTile = React.memo(
   ({
@@ -47,6 +48,7 @@ const RestaurantTile = React.memo(
         }}
       >
         {name}
+        {!closedForBusiness && <OpenStatusIndicator hours={hours} />}
       </h3>
 
       <SourcesDropdown
