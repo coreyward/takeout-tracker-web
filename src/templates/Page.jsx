@@ -51,6 +51,22 @@ export const query = graphql`
           defaultSearchQuery
           defaultViewMode
         }
+        ... on SanityListCloud {
+          _key
+          _type
+          title
+          description
+          lists {
+            _key: _id
+            name
+            slug {
+              current
+            }
+            background {
+              ...Image
+            }
+          }
+        }
       }
     }
   }

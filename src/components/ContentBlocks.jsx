@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import Hero from "components/Hero"
 import RestaurantsViewer from "components/RestaurantsViewer"
+import ListCloud from "components/ListCloud"
 
 const ContentBlocks = ({ contentBlocks }) => renderContentBlocks(contentBlocks)
 
@@ -25,7 +26,7 @@ export const renderContentBlocks = contentBlocks =>
 /* eslint-disable react/prop-types, react/display-name */
 const connectors = {
   Hero,
-
+  ListCloud,
   RestaurantsViewer: props => {
     const { data } = useStaticQuery(graphql`
       {
