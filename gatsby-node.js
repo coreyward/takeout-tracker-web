@@ -11,14 +11,17 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 }
 
 exports.createPages = ({ graphql, actions }) => {
-  const pageTypes = [{ name: "Page", template: "Page" }]
+  const pageTypes = [
+    { name: "Page", template: "Page" },
+    { name: "List", template: "List" },
+  ]
 
   return Promise.all(
     [
       pageTypes.map(async page => {
         const query = await graphql(`
         {
-          pageData: allSanity${page.name} {
+          pageData: allSanity${page.name} (filter: { slug: { current: { ne: null } } }) {
             nodes {
               id
               slug {
