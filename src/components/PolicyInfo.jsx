@@ -26,9 +26,9 @@ const PolicyInfo = ({
     .join(" or ")
 
   const hoursAgo = Math.abs(moment(confirmedAt).diff(moment(), "hours"))
-  const [iconColor, staleBreakpount] = Object.entries(stalenessColors)
+  const [, staleBreakpount] = Object.entries(stalenessColors)
     .reverse()
-    .find(([_c, cutoff]) => hoursAgo >= cutoff)
+    .find(([, cutoff]) => hoursAgo >= cutoff)
 
   return (
     <div className={className}>
@@ -48,7 +48,6 @@ const PolicyInfo = ({
             </div>
           </Tooltip>
         )}
-        iconColor={iconColor}
       >
         as of <TimeAgo time={confirmedAt} />
       </IconRow>
