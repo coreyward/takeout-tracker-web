@@ -27,7 +27,7 @@ module.exports = {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
         google: {
-          families: ["Roboto:400,400italic,500,700"],
+          families: ["Roboto:400,400italic,500,700,900"],
         },
       },
     },

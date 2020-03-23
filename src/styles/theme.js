@@ -21,10 +21,20 @@ const colors = {
 }
 
 const fontFamily = "Roboto, Helvetica, sans-serif"
+const defaultExpansionBreaks = ["root", breakpoints.tablet, breakpoints.mobile]
 
 export default {
   ...colors,
   ...breakpoints,
+
+  t1: expandQueries(
+    {
+      fontSize: [75, 65, 45],
+      fontWeight: 900,
+      lineHeight: 1.1,
+    },
+    defaultExpansionBreaks
+  ),
 
   t4: {
     fontSize: 12,
@@ -44,10 +54,7 @@ export default {
   },
 
   expandQueries: (styles, breaks) =>
-    expandQueries(
-      styles,
-      breaks || ["root", breakpoints.tablet, breakpoints.mobile]
-    ),
+    expandQueries(styles, breaks || defaultExpansionBreaks),
 }
 
 export const globalStyles = [
