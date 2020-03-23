@@ -4,6 +4,7 @@ import { imageUrl } from "components/Image"
 import Markdown from "markdown-to-jsx"
 import hexToRgb from "lib/hexToRgb"
 import theme from "styles/theme"
+import preventWidows from "lib/preventWidows"
 
 const overlay = `
   linear-gradient(
@@ -26,56 +27,48 @@ const assetUrl = (background, width, height) => {
   return `url(${url})`
 }
 
-const Hero = ({ title, description, background, presentation }) => {
-  const niceTitle = title.includes(" ")
-    ? title.slice(0, title.lastIndexOf(" ")) +
-      " " +
-      title.slice(title.lastIndexOf(" ") + 1)
-    : title
-
-  return (
-    <div
-      css={theme.expandQueries({
-        padding: [64, 48, "48px 24px"],
-        minHeight: 375,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundImage: [overlay, assetUrl(background, 1440, 375)].join(", "),
-        [theme.tablet]: {
-          backgroundImage: [overlay, assetUrl(background, 900, 415)].join(", "),
-        },
-        [theme.mobile]: {
-          backgroundImage: [overlay, assetUrl(background, 540, 475)].join(", "),
-        },
-      })}
+const Hero = ({ title, description, background, presentation }) => (
+  <div
+    css={theme.expandQueries({
+      padding: [64, 48, "48px 24px"],
+      minHeight: 375,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundImage: [overlay, assetUrl(background, 1440, 375)].join(", "),
+      [theme.tablet]: {
+        backgroundImage: [overlay, assetUrl(background, 900, 415)].join(", "),
+      },
+      [theme.mobile]: {
+        backgroundImage: [overlay, assetUrl(background, 540, 475)].join(", "),
+      },
+    })}
+  >
+    <h1
+      css={{
+        ...theme.t1,
+        color: "#fff",
+        maxWidth: presentation === "narrow" ? 480 : 800,
+      }}
     >
-      <h1
-        css={{
-          ...theme.t1,
-          color: "#fff",
-          maxWidth: presentation === "narrow" ? 480 : 800,
-        }}
-      >
-        {niceTitle}
-      </h1>
-      <Markdown
-        css={theme.expandQueries({
-          fontSize: [16, 15, 14],
-          lineHeight: 1.4,
-          color: theme.n70,
-          maxWidth: presentation === "narrow" ? 480 : 600,
-          textShadow: "0 0 2px rgba(0, 0, 0, 0.4)",
-        })}
-        options={{ forceBlock: true }}
-      >
-        {description}
-      </Markdown>
-    </div>
-  )
-}
+      {preventWidows(title)}
+    </h1>
+    <Markdown
+      css={theme.expandQueries({
+        fontSize: [16, 15, 14],
+        lineHeight: 1.4,
+        color: theme.n70,
+        maxWidth: presentation === "narrow" ? 480 : 600,
+        textShadow: "0 0 2px rgba(0, 0, 0, 0.4)",
+      })}
+      options={{ forceBlock: true }}
+    >
+      {description}
+    </Markdown>
+  </div>
+)
 
 export default Hero
 
