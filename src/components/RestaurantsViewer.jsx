@@ -10,12 +10,15 @@ import RestaurantCard from "components/RestaurantCard"
 import ModeSelector, { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import { hoursCover } from "lib/parseHours"
+import { Link } from "gatsby"
 
 const RestaurantsViewer = ({
+  title,
   restaurants,
   defaultSearchQuery,
   defaultFilters,
   defaultViewMode,
+  showingAll,
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
@@ -53,10 +56,9 @@ const RestaurantsViewer = ({
     state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
 
   return (
-    <>
+    <div css={{ padding: "var(--pagePadding)" }} id="restaurants-list">
       <div
         css={{
-          padding: "var(--pagePadding)",
           paddingBottom: 0,
           marginBottom: 16,
           display: "flex",
@@ -157,26 +159,36 @@ const RestaurantsViewer = ({
         </div>
       </div>
 
-      <div
-        css={{
-          position: "relative",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: 24,
-          padding: "var(--pagePadding)",
-          paddingTop: 0,
-          [theme.mobile]: {
-            gridTemplateColumns: "1fr",
-            gap: 16,
-          },
-        }}
-      >
-        {filteredRestaurants
-          .slice((state.page - 1) * state.perPage, state.page * state.perPage)
-          .map(location => (
-            <RestaurantComponent key={location._id} {...location} />
-          ))}
-      </div>
+      {filteredRestaurants.length > 0 ? (
+        <div
+          css={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: 24,
+            [theme.mobile]: {
+              gridTemplateColumns: "1fr",
+              gap: 16,
+            },
+          }}
+        >
+          {filteredRestaurants
+            .slice((state.page - 1) * state.perPage, state.page * state.perPage)
+            .map(location => (
+              <RestaurantComponent key={location._id} {...location} />
+            ))}
+        </div>
+      ) : (
+        <NoResults
+          listTitle={title}
+          searchQuery={state.searchQuery}
+          showingAll={showingAll}
+          resetSearch={() => {
+            dispatch({ action: "setSearchQuery", value: "" })
+            searchRef.current.value = ""
+          }}
+        />
+      )}
 
       <Pagination
         currentPage={state.page}
@@ -188,7 +200,7 @@ const RestaurantsViewer = ({
           margin: "24px auto",
         }}
       />
-    </>
+    </div>
   )
 }
 
@@ -200,12 +212,14 @@ const filters = {
 }
 
 RestaurantsViewer.propTypes = {
+  title: PropTypes.string.isRequired,
   restaurants: PropTypes.arrayOf(
     PropTypes.shape(RestaurantCard.propTypes).isRequired
   ).isRequired,
   defaultSearchQuery: PropTypes.string,
   defaultFilters: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(filters))),
   defaultViewMode: PropTypes.oneOf(Object.values(MODES)),
+  showingAll: PropTypes.bool,
 }
 
 const fuseConfig = {
@@ -274,4 +288,37 @@ const initialState = {
   searchQuery: "",
   page: 1,
   perPage: 30,
+}
+
+const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
+  <div
+    css={{
+      background: theme.n20,
+      padding: "48px 24px",
+      textAlign: "center",
+      borderRadius: 3,
+    }}
+  >
+    <h2 css={{ ...theme.t2 }}>No results found for “{searchQuery}”</h2>
+
+    {!showingAll && (
+      <div css={{ marginTop: 16 }}>
+        Currently only viewing restaurants in {listTitle}.{" "}
+        <Link to="/#restaurants-list">See all restaurants instead.</Link>
+      </div>
+    )}
+
+    <div css={{ marginTop: 16, fontSize: 12 }}>
+      <a href="" onClick={resetSearch}>
+        Reset search
+      </a>
+    </div>
+  </div>
+)
+
+NoResults.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  showingAll: PropTypes.bool.isRequired,
+  listTitle: PropTypes.string.isRequired,
+  resetSearch: PropTypes.func.isRequired,
 }

@@ -9,11 +9,7 @@ import preventWidows from "lib/preventWidows"
 
 const ListCloud = ({ title, description, lists }) => (
   <div css={{ padding: "var(--pagePadding)" }}>
-    <h2
-      css={{ fontSize: 24, fontWeight: 500, color: theme.n80, marginBottom: 8 }}
-    >
-      {title}
-    </h2>
+    <h2 css={{ ...theme.t2, color: theme.n80, marginBottom: 8 }}>{title}</h2>
 
     <Markdown options={{ forceBlock: true }} css={{ margin: 0 }}>
       {description}

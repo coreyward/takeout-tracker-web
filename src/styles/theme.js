@@ -36,6 +36,14 @@ export default {
     defaultExpansionBreaks
   ),
 
+  t2: expandQueries(
+    {
+      fontSize: [24, 22, 20],
+      fontWeight: 500,
+    },
+    defaultExpansionBreaks
+  ),
+
   t4: {
     fontSize: 12,
     fontWeight: 700,

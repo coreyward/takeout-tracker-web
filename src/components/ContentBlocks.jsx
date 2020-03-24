@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import Hero from "components/Hero"
 import RestaurantsViewer from "components/RestaurantsViewer"
 import ListCloud from "components/ListCloud"
+import PageContext from "context/PageContext"
 
 const ContentBlocks = ({ contentBlocks }) => renderContentBlocks(contentBlocks)
 
@@ -27,7 +28,8 @@ export const renderContentBlocks = contentBlocks =>
 const connectors = {
   Hero,
   ListCloud,
-  RestaurantsViewer: props => {
+  RestaurantsViewer: ({ defaultSearchQuery, ...props }) => {
+    const context = useContext(PageContext)
     const { data } = useStaticQuery(graphql`
       {
         data: allSanityRestaurant(sort: { fields: title }) {
@@ -38,7 +40,14 @@ const connectors = {
       }
     `)
 
-    return <RestaurantsViewer restaurants={data.restaurants} {...props} />
+    return (
+      <RestaurantsViewer
+        restaurants={data.restaurants}
+        defaultSearchQuery={context.searchQuery || defaultSearchQuery}
+        showingAll={true}
+        {...props}
+      />
+    )
   },
 }
 

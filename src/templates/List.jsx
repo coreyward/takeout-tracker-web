@@ -24,8 +24,10 @@ const List = ({ data: { list } }) => {
         presentation={list.presentation}
       />
       <RestaurantsViewer
+        title={list.name}
         restaurants={list.restaurants}
         defaultViewMode={MODES.TILE}
+        showingAll={false}
       />
     </Layout>
   )

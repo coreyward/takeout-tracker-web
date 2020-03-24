@@ -4,8 +4,9 @@ import { graphql } from "gatsby"
 import theme from "styles/theme"
 import Layout from "components/Layout"
 import { renderContentBlocks } from "components/ContentBlocks"
+import PageContext from "context/PageContext"
 
-const Home = ({ data: { page } }) => {
+const Page = ({ data: { page }, location: { state } }) => {
   return (
     <Layout
       css={{
@@ -13,18 +14,23 @@ const Home = ({ data: { page } }) => {
         [theme.mobile]: { "--pagePadding": "16px" },
       }}
     >
-      {renderContentBlocks(page.contentBlocks)}
+      <PageContext.Provider value={state}>
+        {renderContentBlocks(page.contentBlocks)}
+      </PageContext.Provider>
     </Layout>
   )
 }
 
-export default Home
+export default Page
 
-Home.propTypes = {
+Page.propTypes = {
   data: PropTypes.shape({
     page: PropTypes.shape({
       contentBlocks: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object,
   }).isRequired,
 }
 
