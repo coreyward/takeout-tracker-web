@@ -86,7 +86,7 @@ const RestaurantsViewer = ({
             <input
               ref={searchRef}
               type="search"
-              placeholder="Search"
+              placeholder={`Search ${title}`}
               defaultValue={state.searchQuery}
               onChange={e => updateSearchQuery()}
               css={{
