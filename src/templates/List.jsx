@@ -26,6 +26,7 @@ const List = ({ data: { list } }) => {
       <RestaurantsViewer
         title={list.name}
         restaurants={list.restaurants}
+        defaultFilters={["hideClosed"]}
         defaultViewMode={MODES.TILE}
         showingAll={false}
       />
