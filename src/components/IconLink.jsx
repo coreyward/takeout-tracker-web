@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
+import ExternalLink from "components/ExternalLink"
 
 const IconLink = ({
   icon: Icon,
@@ -9,7 +10,7 @@ const IconLink = ({
   className,
   childStyles = {},
 }) => (
-  <a
+  <ExternalLink
     href={href}
     target={href.startsWith("http") ? "_blank" : "_self"}
     rel="noopener noreferrer"
@@ -31,7 +32,7 @@ const IconLink = ({
     <div css={childStyles} className="text">
       {children}
     </div>
-  </a>
+  </ExternalLink>
 )
 
 export default IconLink

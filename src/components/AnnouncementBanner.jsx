@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import theme from "styles/theme"
 import Markdown from "markdown-to-jsx"
+import theme from "styles/theme"
+import ExternalLink from "components/ExternalLink"
 
 const AnnouncementBanner = ({ copy, className }) => (
   <div
@@ -54,7 +55,3 @@ AnnouncementBanner.propTypes = {
   copy: PropTypes.string.isRequired,
   className: PropTypes.string,
 }
-
-const ExternalLink = props => (
-  <a {...props} target="_blank" rel="noopener noreferrer" />
-)

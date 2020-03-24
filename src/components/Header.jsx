@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import theme from "styles/theme"
 import logoUrl from "images/logo.svg"
 import Icons from "lib/icons"
+import ExternalLink from "components/ExternalLink"
 
 const Header = () => (
   <header
@@ -71,10 +72,8 @@ const Header = () => (
         },
       }}
     >
-      <a
+      <ExternalLink
         href="https://forms.gle/m4xj7dkCcnQgT6XV7"
-        target="_blank"
-        rel="noopener noreferrer"
         css={{
           [theme.mobile]: {
             display: "none",
@@ -82,15 +81,11 @@ const Header = () => (
         }}
       >
         Submit a Restaurant
-      </a>
+      </ExternalLink>
 
-      <a
-        href="https://www.instagram.com/takeouttracker"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <ExternalLink href="https://www.instagram.com/takeouttracker">
         <Icons.Instagram css={{ display: "block", width: 24 }} />
-      </a>
+      </ExternalLink>
     </div>
   </header>
 )
