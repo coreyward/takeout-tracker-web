@@ -29,7 +29,7 @@ const connectors = {
   Hero,
   ListCloud,
   RestaurantsViewer: ({ defaultSearchQuery, ...props }) => {
-    const context = useContext(PageContext)
+    const context = useContext(PageContext) || {}
     const { data } = useStaticQuery(graphql`
       {
         data: allSanityRestaurant(sort: { fields: title }) {
