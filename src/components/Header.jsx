@@ -56,18 +56,42 @@ const Header = () => (
       </div>
     </div>
 
-    <a
-      href="https://www.instagram.com/takeouttracker"
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       css={{
-        color: theme.n50,
-        transition: "color 250ms",
-        ":hover": { color: theme.n80 },
+        display: "flex",
+        alignItems: "center",
+        a: {
+          ...theme.smallcaps,
+          fontSize: 12,
+          marginLeft: 16,
+          textDecoration: "none",
+          color: theme.n50,
+          transition: "color 250ms",
+          ":hover": { color: theme.n80 },
+        },
       }}
     >
-      <Icons.Instagram css={{ display: "block", width: 24 }} />
-    </a>
+      <a
+        href="https://forms.gle/m4xj7dkCcnQgT6XV7"
+        target="_blank"
+        rel="noopener noreferrer"
+        css={{
+          [theme.mobile]: {
+            display: "none",
+          },
+        }}
+      >
+        Submit a Restaurant
+      </a>
+
+      <a
+        href="https://www.instagram.com/takeouttracker"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icons.Instagram css={{ display: "block", width: 24 }} />
+      </a>
+    </div>
   </header>
 )
 
