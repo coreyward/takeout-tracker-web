@@ -11,6 +11,7 @@ import ModeSelector, { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import { hoursCover } from "lib/parseHours"
 import { Link } from "gatsby"
+import hexToRgb from "lib/hexToRgb"
 
 const RestaurantsViewer = ({
   title,
@@ -59,10 +60,18 @@ const RestaurantsViewer = ({
     <div css={{ padding: "var(--pagePadding)" }} id="restaurants-list">
       <div
         css={{
-          paddingBottom: 0,
-          marginBottom: 16,
+          margin: "0 calc(-1 * var(--pagePadding)) 8px",
+          padding: "16px var(--pagePadding)",
           display: "flex",
           justifyContent: "space-between",
+          position: "sticky",
+          top: 0,
+          background: theme.n10,
+          zIndex: 5,
+          boxShadow: `0 1px 10px ${hexToRgb(theme.n10, 0.5)}`,
+          [theme.mobile]: {
+            padding: "8px var(--pagePadding)",
+          },
         }}
       >
         <div css={{ flex: "1 1 auto", marginRight: 24 }}>
