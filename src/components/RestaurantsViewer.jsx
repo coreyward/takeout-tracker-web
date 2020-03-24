@@ -107,9 +107,8 @@ const RestaurantsViewer = ({
                 "::placeholder": {
                   color: theme.n40,
                 },
-                [theme.mobile]: {
-                  minWidth: "50vw",
-                },
+                [theme.mobile]: { minWidth: "50vw" },
+                [theme.smallMobile]: { minWidth: 160 },
               }}
             />
 
