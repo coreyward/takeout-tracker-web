@@ -4,12 +4,11 @@ import { imageUrl } from "components/Image"
 import Markdown from "markdown-to-jsx"
 import hexToRgb from "lib/hexToRgb"
 import theme from "styles/theme"
-import preventWidows from "lib/preventWidows"
 
 const overlay = `
   linear-gradient(
     to bottom,
-    ${hexToRgb(theme.n10, 0.6)},
+    ${hexToRgb(theme.n10, 0.7)},
     ${hexToRgb(theme.n10, 0.7)} 60%
   )
 `
@@ -53,7 +52,7 @@ const Hero = ({ title, description, background, presentation }) => (
         maxWidth: presentation === "narrow" ? 480 : 800,
       }}
     >
-      {preventWidows(title)}
+      {title}
     </h1>
     <Markdown
       css={theme.expandQueries({

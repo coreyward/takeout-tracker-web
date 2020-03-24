@@ -29,7 +29,7 @@ export default {
 
   t1: expandQueries(
     {
-      fontSize: [75, 65, 45],
+      fontSize: [75, 65, 40],
       fontWeight: 900,
       lineHeight: 1.1,
     },
