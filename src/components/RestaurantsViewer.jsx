@@ -147,7 +147,10 @@ const RestaurantsViewer = ({
                 [theme.mobile]: { margin: "8px 0 0 0" },
               }}
             >
-              Open at {moment().format("h:mma")}
+              Open{" "}
+              {state.filters.has("currentlyOpen")
+                ? `at ${moment().format("h:mma")}`
+                : "now"}
             </Checkbox>
           </div>
         </div>
