@@ -65,7 +65,7 @@ const RestaurantsViewer = ({
           justifyContent: "space-between",
         }}
       >
-        <div>
+        <div css={{ flex: "1 1 auto", marginRight: 24 }}>
           <div
             css={{
               ...theme.smallcaps,
@@ -80,7 +80,7 @@ const RestaurantsViewer = ({
           <div
             css={{
               display: "flex",
-              [theme.mobile]: { flexDirection: "column" },
+              [theme.mobile]: { display: "block" },
             }}
           >
             <input
@@ -90,6 +90,8 @@ const RestaurantsViewer = ({
               defaultValue={state.searchQuery}
               onChange={e => updateSearchQuery()}
               css={{
+                flex: "1 1 300px",
+                maxWidth: 400,
                 marginRight: 16,
                 fontSize: 12,
                 fontFamily: "inherit",
@@ -105,6 +107,9 @@ const RestaurantsViewer = ({
                 "::placeholder": {
                   color: theme.n40,
                 },
+                [theme.mobile]: {
+                  minWidth: "50vw",
+                },
               }}
             />
 
@@ -113,7 +118,7 @@ const RestaurantsViewer = ({
                 dispatch({ action: "toggleFilter", value: "hideClosed" })
               }
               checked={state.filters.has("hideClosed")}
-              css={{ [theme.mobile]: { display: "none" } }}
+              css={{ flex: "0 0 auto", [theme.mobile]: { display: "none" } }}
             >
               Offering Takeout/Delivery
             </Checkbox>
@@ -128,7 +133,11 @@ const RestaurantsViewer = ({
                 []
               )}
               checked={state.filters.has("currentlyOpen")}
-              css={{ marginLeft: 8, [theme.mobile]: { margin: "8px 0 0 0" } }}
+              css={{
+                flex: "0 0 auto",
+                marginLeft: 8,
+                [theme.mobile]: { margin: "8px 0 0 0" },
+              }}
             >
               Open at {moment().format("h:mma")}
             </Checkbox>
