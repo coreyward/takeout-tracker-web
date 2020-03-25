@@ -14,11 +14,9 @@ const overlay = `
 `
 const assetUrl = (background, width, height) => {
   const asset = {
-    asset: {
-      _id: background.asset._id,
-      hotspot: background.hotspot,
-      crop: background.crop,
-    },
+    _id: background.asset._id,
+    hotspot: background.hotspot,
+    crop: background.crop,
   }
 
   const url = imageUrl(asset, { width, height })
