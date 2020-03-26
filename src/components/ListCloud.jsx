@@ -56,16 +56,16 @@ const ListCloud = ({ title, description, lists }) => (
                 filter: "grayscale(0%)",
               },
             },
-            ":nth-child(2n+1)": {
+            ":nth-of-type(2n+1)": {
               "--rotation": "-2deg",
             },
-            ":nth-child(3n+2)": {
+            ":nth-of-type(3n+2)": {
               "--rotation": "2deg",
             },
-            ":nth-child(5n+3)": {
+            ":nth-of-type(5n+3)": {
               "--rotation": "-3deg",
             },
-            ":nth-child(7n+5)": {
+            ":nth-of-type(7n+5)": {
               "--rotation": "3deg",
             },
           }}
