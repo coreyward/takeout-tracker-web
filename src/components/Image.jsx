@@ -16,7 +16,16 @@ export const client = sanityClient({
 })
 export const builder = sanityImageUrl(client)
 
-const Image = ({ asset, hotspot, crop, width, height, size, ...props }) => {
+const Image = ({
+  asset,
+  hotspot,
+  crop,
+  width,
+  height,
+  size,
+  config = {},
+  ...props
+}) => {
   asset = {
     _id: asset._id,
     hotspot,
@@ -62,7 +71,7 @@ const Image = ({ asset, hotspot, crop, width, height, size, ...props }) => {
   }
 
   // Create default src and build srcSet
-  const config = { width, height }
+  config = { ...config, width, height }
   const src = imageUrl(asset, config)
   const srcSet = Object.values(
     [0.5, 0.75, 1, 1.5, 2].reduce((set, dpr) => {
@@ -118,6 +127,8 @@ export const imageUrl = (asset, params = {}) =>
 export default Image
 
 Image.propTypes = {
+  config: PropTypes.object,
+
   hotspot: PropTypes.shape({
     height: PropTypes.number,
     width: PropTypes.number,
