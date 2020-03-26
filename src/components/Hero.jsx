@@ -24,7 +24,7 @@ const assetUrl = (background, width, height) => {
   return `url(${url})`
 }
 
-const Hero = ({ title, description, background, presentation }) => (
+const Hero = ({ title, description, background, presentation, children }) => (
   <div
     css={theme.expandQueries({
       padding: [64, 48, "48px 24px"],
@@ -64,6 +64,7 @@ const Hero = ({ title, description, background, presentation }) => (
     >
       {description}
     </Markdown>
+    {children}
   </div>
 )
 
@@ -78,4 +79,5 @@ Hero.propTypes = {
     hotspot: PropTypes.object,
   }).isRequired,
   presentation: PropTypes.oneOf(["narrow", "wide"]).isRequired,
+  children: PropTypes.node,
 }
