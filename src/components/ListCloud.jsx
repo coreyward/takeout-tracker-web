@@ -43,15 +43,33 @@ const ListCloud = ({ title, description, lists }) => (
             textDecoration: "none",
             textAlign: "center",
             textShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
+            overflow: "hidden",
+            "--rotation": "1deg",
             ":hover": {
+              ".background": {
+                transform: "scale(1.2) rotate(var(--rotation))",
+              },
               ".colorFilter": {
                 background: "transparent",
               },
+            },
+            ":nth-child(2n+1)": {
+              "--rotation": "-2deg",
+            },
+            ":nth-child(3n+2)": {
+              "--rotation": "2deg",
+            },
+            ":nth-child(5n+3)": {
+              "--rotation": "-3deg",
+            },
+            ":nth-child(7n+5)": {
+              "--rotation": "3deg",
             },
           }}
         >
           <Image
             {...background}
+            className="background"
             alt=""
             width={300}
             height={150}
@@ -63,7 +81,10 @@ const ListCloud = ({ title, description, lists }) => (
               height: "100%",
               objectFit: "cover",
               objectPosition: "center",
-              filter: "color(#f00)",
+              transformOrigin: [background.hotspot.x, background.hotspot.y]
+                .map(n => `${Math.round(n * 100)}%`)
+                .join(" "),
+              transition: "transform 2s cubic-bezier(0.25, 0, 0.15, 1)",
             }}
           />
 
@@ -87,7 +108,7 @@ const ListCloud = ({ title, description, lists }) => (
               height: "100%",
               background: theme.n10,
               mixBlendMode: "color",
-              transition: "background 250ms",
+              transition: "background 1s",
             }}
           />
 
