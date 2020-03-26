@@ -23,7 +23,7 @@ const ListCloud = ({ title, description, lists }) => (
         marginTop: 16,
       }}
     >
-      {lists.map(({ _key, name, slug, background }) => (
+      {lists.map(({ _key, name, slug, background, author }) => (
         <Link
           key={_key}
           to={slug.current}
@@ -51,6 +51,9 @@ const ListCloud = ({ title, description, lists }) => (
               },
               ".colorFilter": {
                 background: "transparent",
+              },
+              ".authorAvatar": {
+                filter: "grayscale(0%)",
               },
             },
             ":nth-child(2n+1)": {
@@ -119,6 +122,39 @@ const ListCloud = ({ title, description, lists }) => (
             }}
           >
             {preventWidows(name)}
+            {author && (
+              <div
+                css={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 12,
+                  color: theme.n80,
+                  marginTop: 8,
+                }}
+              >
+                {author.avatar && (
+                  <Image
+                    {...author.avatar}
+                    className="authorAvatar"
+                    width={20}
+                    height={20}
+                    alt={author.name}
+                    css={{
+                      display: "block",
+                      width: 20,
+                      borderRadius: 24,
+                      boxShadow: `0 2px 3px 0px ${hexToRgb(theme.n10, 0.4)}`,
+                      boxSizing: "content-box",
+                      filter: "grayscale(100%)",
+                      transition: "filter 500ms",
+                      marginRight: 8,
+                    }}
+                  />
+                )}
+                <div css={{ letterSpacing: "0.01em" }}>by {author.name}</div>
+              </div>
+            )}
           </div>
         </Link>
       ))}
@@ -143,6 +179,12 @@ ListCloud.propTypes = {
             .isRequired,
         }).isRequired,
       }).isRequired,
+      author: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        avatar: PropTypes.shape({
+          asset: PropTypes.object.isRequired,
+        }),
+      }),
     })
   ).isRequired,
 }

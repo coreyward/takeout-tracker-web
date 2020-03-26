@@ -71,6 +71,13 @@ export const query = graphql`
             background {
               ...Image
             }
+            author {
+              name
+              url
+              avatar {
+                ...Image
+              }
+            }
           }
         }
       }
