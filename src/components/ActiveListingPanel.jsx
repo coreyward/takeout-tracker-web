@@ -111,7 +111,7 @@ ActiveListingPanel.propTypes = {
 
 const ActiveRestaurantDetails = ({
   address,
-  closedForBusiness,
+  openForBusiness,
   confirmedAt,
   hours,
   menuUrl,
@@ -129,14 +129,14 @@ const ActiveRestaurantDetails = ({
   <div css={{ fontSize: 14 }}>
     <PolicyInfo
       css={{ marginBottom: 16 }}
-      closedForBusiness={closedForBusiness}
+      closedForBusiness={!openForBusiness}
       confirmedAt={confirmedAt}
       hours={hours}
       takeoutOptions={takeoutOptions}
       policyNotes={policyNotes}
     />
 
-    {!closedForBusiness && (
+    {openForBusiness && (
       <OrderInfo
         address={address}
         menuUrl={menuUrl}
@@ -169,7 +169,7 @@ const ActiveRestaurantDetails = ({
 
 ActiveRestaurantDetails.propTypes = {
   address: PropTypes.string,
-  closedForBusiness: PropTypes.bool.isRequired,
+  openForBusiness: PropTypes.bool.isRequired,
   confirmedAt: PropTypes.string.isRequired,
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,
