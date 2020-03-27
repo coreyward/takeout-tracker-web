@@ -8,17 +8,21 @@ const MapMarker = ({ id, $hover, active, dispatch }) => {
       height="28"
       viewBox="0 0 22 27"
       fill="none"
-      css={{
-        position: "relative",
-        transform: `translate(-10px, -28px) scale(${active ? 1.5 : 1})`,
-        cursor: "pointer",
-        zIndex: $hover ? 4 : active ? 3 : 2,
-        filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.5))",
-        transformOrigin: "bottom center",
-        transition: `transform 450ms ${
-          active ? "cubic-bezier(0, 3.5, 0.88, 0.82)" : "ease-out"
-        }`,
-      }}
+      css={[
+        {
+          position: "relative",
+          transform: `translate3d(-10px, -28px, 0) scale(1)`,
+          cursor: "pointer",
+          zIndex: $hover ? 4 : active ? 3 : 2,
+          filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.5))",
+          transformOrigin: "bottom center",
+          transition: `transform 450ms ease-out`,
+        },
+        active && {
+          transform: `translate(-10px, -28px) scale(1.5)`,
+          transition: "transform 450ms cubic-bezier(0, 3.5, 0.88, 0.82)",
+        },
+      ]}
       onClick={() => {
         dispatch({ action: "activateListing", value: id })
       }}
