@@ -127,6 +127,33 @@ const ActiveRestaurantDetails = ({
   website,
 }) => (
   <div css={{ fontSize: 14 }}>
+    {unverified && (
+      <div
+        css={{
+          display: "flex",
+          alignItems: "center",
+          marginTop: -8,
+          marginBottom: 16,
+          border: `1px solid ${hexToRgb("#887e4f", 0.5)}`,
+          borderRadius: 3,
+          padding: 16,
+          lineHeight: 1.4,
+          color: "#887e4f",
+        }}
+      >
+        <Icons.Warning
+          css={{
+            marginRight: 24,
+            flex: "0 0 16px",
+            transform: "scale(1.5)",
+            transformOrigin: "left center",
+          }}
+        />
+        The information in this listing is user-reported only and has not been
+        verified.
+      </div>
+    )}
+
     <PolicyInfo
       css={{ marginBottom: 16 }}
       closedForBusiness={!openForBusiness}
@@ -149,19 +176,10 @@ const ActiveRestaurantDetails = ({
 
     {tags && tags.length > 0 && <Tags tags={tags} css={{ marginTop: 16 }} />}
 
-    {(sourceUrls?.length > 0 || sourceNotes || unverified) && (
+    {(sourceUrls?.length > 0 || sourceNotes) && (
       <div css={{ marginTop: 16 }}>
         <h4 css={{ ...theme.t4, color: theme.n40 }}>Sources</h4>
-        <SourcesList
-          urls={sourceUrls}
-          notes={
-            unverified ? (
-              <div>{sourceNotes} Includes user-reported data (unverified).</div>
-            ) : (
-              sourceNotes
-            )
-          }
-        />
+        <SourcesList urls={sourceUrls} notes={sourceNotes} />
       </div>
     )}
   </div>
