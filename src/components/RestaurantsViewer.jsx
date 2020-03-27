@@ -1,7 +1,8 @@
-import React, { useReducer, useMemo, useRef } from "react"
+import React, { useReducer, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Fuse from "fuse.js"
+import { uniqueId } from "lodash-es"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
 import RestaurantCard from "components/RestaurantCard"
@@ -32,9 +33,9 @@ const RestaurantsViewer = ({
     mode: defaultViewMode || "card",
     searchQuery: defaultSearchQuery || "",
     filters: new Set(defaultFilters),
+    filterBarKey: uniqueId(),
   })
   const fuse = useMemo(() => new Fuse(restaurants, fuseConfig), [restaurants])
-  const searchRef = useRef()
 
   const filteredRestaurants = useMemo(
     () =>
@@ -73,6 +74,7 @@ const RestaurantsViewer = ({
       id="restaurants-list"
     >
       <FilterBar
+        key={`filter-bar-${state.filterBarKey}`}
         listTitle={title}
         defaultSearchQuery={defaultSearchQuery}
         mode={state.mode}
@@ -170,8 +172,7 @@ const RestaurantsViewer = ({
               searchQuery={state.searchQuery}
               showingAll={showingAll}
               resetSearch={() => {
-                dispatch({ action: "setSearchQuery", value: "" })
-                searchRef.current.value = ""
+                dispatch({ action: "clearSearchQuery" })
               }}
             />
           )}
@@ -283,6 +284,14 @@ const reducer = (state, { action, value, ...props }) => {
         searchQuery: value,
       }
 
+    case "clearSearchQuery":
+      return {
+        ...state,
+        page: 1,
+        searchQuery: "",
+        filterBarKey: uniqueId(),
+      }
+
     case "setPage":
       return {
         ...state,
@@ -351,7 +360,13 @@ const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
     )}
 
     <div css={{ marginTop: 16, fontSize: 12 }}>
-      <a href="" onClick={resetSearch}>
+      <a
+        href="#reset"
+        onClick={e => {
+          e.preventDefault()
+          resetSearch(e)
+        }}
+      >
         Reset search
       </a>
     </div>
