@@ -92,7 +92,7 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
         </h3>
 
         <OpenStatusIndicator
-          hours={listing.openForBusiness ? listing.hours : []}
+          hours={listing.openForBusiness && listing.hours}
           css={{ marginLeft: 16, marginRight: 8 }}
         />
       </div>

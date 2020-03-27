@@ -14,8 +14,7 @@ const OpenStatusIndicator = ({ hours, className }) => {
   const [open, setOpen] = useState(null)
 
   useEffect(() => {
-    if (hours.length === 0) {
-      // Always show closed for empty hours
+    if (hours === false) {
       setOpen(false)
       return
     } else if (!hours.some(hrs => /\d/.test(hrs))) {
@@ -75,6 +74,9 @@ const OpenStatusIndicator = ({ hours, className }) => {
 export default OpenStatusIndicator
 
 OpenStatusIndicator.propTypes = {
-  hours: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hours: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
   className: PropTypes.string,
 }

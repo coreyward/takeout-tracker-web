@@ -45,7 +45,7 @@ const RestaurantListItem = React.memo(
             {name}
           </h3>
           <OpenStatusIndicator
-            hours={openForBusiness ? hours : []}
+            hours={openForBusiness && hours}
             css={{ marginRight: 8 }}
           />
         </div>
