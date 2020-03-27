@@ -41,7 +41,7 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
         WebkitOverflowScrolling: "touch",
         transform: `translateX(${animation === "out" ? "-100%" : 0})`,
         opacity: animation === "out" ? 0 : 1,
-        animation: `${slideAnimation[animation]} 500ms`,
+        animation: `${slideAnimation[animation]} 250ms ease-out`,
       }}
     >
       <div
