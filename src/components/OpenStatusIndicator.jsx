@@ -5,12 +5,13 @@ import theme from "styles/theme"
 import { Tooltip } from "@material-ui/core"
 
 const colors = {
+  default: theme.n40,
   open: theme.green,
   closed: "#D14C5C",
 }
 
 const OpenStatusIndicator = ({ hours, className }) => {
-  const [open, setOpen] = useState()
+  const [open, setOpen] = useState(null)
 
   useEffect(() => {
     // Don't show status for unrecognizable hours strings
@@ -33,11 +34,17 @@ const OpenStatusIndicator = ({ hours, className }) => {
 
   if (typeof open === "undefined") return null
 
-  const indicatorColor = open ? colors.open : colors.closed
+  const indicatorColor = open
+    ? colors.open
+    : open === null
+    ? colors.default
+    : colors.closed
 
   return (
     <Tooltip
-      title={open ? "Open Now" : "Currently Closed"}
+      title={
+        open ? "Open Now" : open === null ? "Unknown Hours" : "Currently Closed"
+      }
       arrow
       placement="top"
     >
@@ -51,6 +58,7 @@ const OpenStatusIndicator = ({ hours, className }) => {
           background: indicatorColor,
           boxShadow: `0px 0px 4px ${indicatorColor}`,
           borderRadius: 3,
+          transition: "background 250ms, box-shadow 250ms",
         }}
         className={className}
       />
