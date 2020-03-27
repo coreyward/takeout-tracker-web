@@ -187,4 +187,8 @@ describe("hoursCover", () => {
   test("exclusive of closing-at time", () => {
     expect(hoursCover(["1pm–3pm"], tuesdayAt3pm)).toBeFalsy()
   })
+
+  test("empty array does not cover", () => {
+    expect(hoursCover([], tuesdayAt3pm)).toBe(false)
+  })
 })
