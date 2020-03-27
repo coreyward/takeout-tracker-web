@@ -7,10 +7,24 @@ import hexToRgb from "lib/hexToRgb"
 export const MODES = {
   CARD: "card",
   TILE: "tile",
+  MAP: "map",
 }
 
 const ModeSelector = ({ activeMode, setMode, className }) => (
-  <div css={{ background: theme.n20, display: "flex" }} className={className}>
+  <div
+    css={{
+      background: theme.n20,
+      display: "flex",
+      borderRadius: 2,
+      overflow: "hidden",
+    }}
+    className={className}
+  >
+    <ModeButton
+      active={activeMode === MODES.MAP}
+      icon={Icons.MapMarker}
+      onClick={() => setMode(MODES.MAP)}
+    />
     <ModeButton
       active={activeMode === MODES.CARD}
       icon={Icons.Cards}
