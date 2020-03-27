@@ -5,12 +5,19 @@ import Fuse from "fuse.js"
 import theme from "styles/theme"
 import RestaurantTile from "components/RestaurantTile"
 import RestaurantCard from "components/RestaurantCard"
+import RestaurantListItem from "components/RestaurantListItem"
 import { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import FilterBar from "components/FilterBar"
 import { hoursCover } from "lib/parseHours"
 import Map from "components/Map"
 import ActiveListingPanel from "components/ActiveListingPanel"
+
+const restaurantComponents = {
+  [MODES.CARD]: RestaurantCard,
+  [MODES.TILE]: RestaurantTile,
+  [MODES.MAP]: RestaurantListItem,
+}
 
 const RestaurantsViewer = ({
   title,
@@ -49,8 +56,7 @@ const RestaurantsViewer = ({
     state.page * state.perPage
   )
 
-  const RestaurantComponent =
-    state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
+  const RestaurantComponent = restaurantComponents[state.mode]
 
   return (
     <div
@@ -101,13 +107,28 @@ const RestaurantsViewer = ({
             gridArea: "list",
             overflowY: state.activeListing ? "hidden" : "auto",
             WebkitOverflowScrolling: "touch",
-            padding: "var(--pagePadding)",
-            paddingTop: 0,
+            padding:
+              state.mode === MODES.MAP
+                ? "0 1px 0 0"
+                : "0 var(--pagePadding) var(--pagePadding) var(--pagePadding)",
+            ":before": {
+              content: "''",
+              display: "block",
+              position: "sticky",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 50,
+              zIndex: 2,
+              pointerEvents: "none",
+              background: `linear-gradient(to top, transparent, ${theme.n10})`,
+            },
             ":after": {
               content: "''",
               display: "block",
               position: "sticky",
-              bottom: "calc(-1 * var(--pagePadding))",
+              bottom:
+                state.mode === MODES.MAP ? 0 : "calc(-1 * var(--pagePadding))",
               left: 0,
               right: 0,
               height: 50,
@@ -122,10 +143,11 @@ const RestaurantsViewer = ({
               css={{
                 display: "grid",
                 gridTemplateColumns: "1fr",
-                gap: 24,
+                gap: state.mode !== MODES.MAP && 24,
+                marginTop: -30,
                 [theme.mobile]: {
                   gridTemplateColumns: "1fr",
-                  gap: 16,
+                  gap: state.mode !== MODES.MAP ? 8 : 16,
                 },
               }}
             >
@@ -211,7 +233,7 @@ const filters = {
 RestaurantsViewer.propTypes = {
   title: PropTypes.string.isRequired,
   restaurants: PropTypes.arrayOf(
-    PropTypes.shape(RestaurantCard.propTypes).isRequired
+    PropTypes.shape(RestaurantListItem.propTypes).isRequired
   ).isRequired,
   defaultSearchQuery: PropTypes.string,
   defaultFilters: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(filters))),
