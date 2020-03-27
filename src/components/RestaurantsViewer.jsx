@@ -10,6 +10,7 @@ import Pagination from "components/Pagination"
 import FilterBar from "components/FilterBar"
 import { hoursCover } from "lib/parseHours"
 import Map from "components/Map"
+import ActiveListingPanel from "components/ActiveListingPanel"
 
 const RestaurantsViewer = ({
   title,
@@ -43,6 +44,11 @@ const RestaurantsViewer = ({
     ? filters.inView(state.mapBounds)(filteredRestaurants)
     : filteredRestaurants
 
+  const currentRestaurants = restaurantsInView.slice(
+    (state.page - 1) * state.perPage,
+    state.page * state.perPage
+  )
+
   const RestaurantComponent =
     state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
 
@@ -68,13 +74,14 @@ const RestaurantsViewer = ({
         dispatch={dispatch}
       />
 
-      {state.activeListing && (
-        <ActiveListing
-          listing={filteredRestaurants.find(
-            ({ _key }) => _key === state.activeListing
-          )}
-        />
-      )}
+      <ActiveListingPanel
+        dispatch={dispatch}
+        listing={
+          state.activeListing
+            ? restaurants.find(({ _key }) => _key === state.activeListing)
+            : null
+        }
+      />
 
       <div
         css={{
@@ -105,6 +112,7 @@ const RestaurantsViewer = ({
               right: 0,
               height: 50,
               zIndex: 2,
+              pointerEvents: "none",
               background: `linear-gradient(to bottom, transparent, ${theme.n10})`,
             },
           }}
@@ -121,14 +129,18 @@ const RestaurantsViewer = ({
                 },
               }}
             >
-              {restaurantsInView
-                .slice(
-                  (state.page - 1) * state.perPage,
-                  state.page * state.perPage
-                )
-                .map(location => (
-                  <RestaurantComponent key={location._key} {...location} />
-                ))}
+              {currentRestaurants.map(location => (
+                <RestaurantComponent
+                  key={location._key}
+                  {...location}
+                  onClick={() => {
+                    dispatch({
+                      action: "activateListing",
+                      value: location._key,
+                    })
+                  }}
+                />
+              ))}
             </div>
           ) : (
             <NoResults
@@ -146,7 +158,7 @@ const RestaurantsViewer = ({
         <Pagination
           currentPage={state.page}
           perPage={state.perPage}
-          totalCount={filteredRestaurants.length}
+          totalCount={restaurantsInView.length}
           setPage={n => dispatch({ action: "setPage", value: n })}
           css={{
             gridArea: "pagination",
@@ -165,7 +177,7 @@ const RestaurantsViewer = ({
           }}
         >
           <Map
-            locations={restaurantsInView}
+            locations={currentRestaurants}
             onChange={({ center, bounds }) => {
               dispatch({
                 action: "setMapGeometry",
@@ -294,30 +306,6 @@ const initialState = {
   page: 1,
   perPage: 30,
   activeListing: null,
-}
-
-const ActiveListing = ({ listing: { openForBusiness, ...listing } }) => (
-  <div
-    css={{
-      position: "absolute",
-      top: 80,
-      left: 0,
-      padding: "var(--pagePadding)",
-      paddingTop: 0,
-      width: "var(--listWidth)",
-      bottom: 0,
-      background: theme.n10,
-      zIndex: 3,
-      overflowY: "auto",
-      WebkitOverflowScrolling: "touch",
-    }}
-  >
-    <RestaurantTile {...listing} closedForBusiness={!openForBusiness} />
-  </div>
-)
-
-ActiveListing.propTypes = {
-  listing: PropTypes.shape(RestaurantTile.propTypes).isRequired,
 }
 
 const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
