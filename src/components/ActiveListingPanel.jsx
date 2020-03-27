@@ -91,12 +91,10 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
           {listing.name}
         </h3>
 
-        {listing.openForBusiness && (
-          <OpenStatusIndicator
-            hours={listing.hours}
-            css={{ marginLeft: 16, marginRight: 8 }}
-          />
-        )}
+        <OpenStatusIndicator
+          hours={listing.openForBusiness ? listing.hours : []}
+          css={{ marginLeft: 16, marginRight: 8 }}
+        />
       </div>
 
       <ActiveRestaurantDetails {...listing} />
