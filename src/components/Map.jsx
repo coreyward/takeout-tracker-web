@@ -24,7 +24,7 @@ const Map = ({ locations, onChange, activeListing, dispatch }) => (
       defaultCenter={{ lat: 30.303003, lng: -97.736713 }}
       defaultZoom={11}
       onChange={onChange}
-      options={mapOptions}
+      options={createMapOptions}
       hoverDistance={14}
       distanceToMouse={distanceToMouse}
     >
@@ -73,8 +73,12 @@ const distanceToMouse = (markerPos, mousePos, markerProps) => {
   )
 }
 
-const mapOptions = {
+const createMapOptions = maps => ({
   gestureHandling: "greedy",
+  zoomControlOptions: {
+    position: maps.ControlPosition.LEFT_BOTTOM,
+  },
+  fullscreenControl: false,
   styles: [
     {
       featureType: "transit",
@@ -195,4 +199,4 @@ const mapOptions = {
       stylers: [{ color: "#17263c" }],
     },
   ],
-}
+})
