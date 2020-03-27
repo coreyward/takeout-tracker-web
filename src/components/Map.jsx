@@ -182,7 +182,7 @@ const mapOptions = {
     {
       featureType: "water",
       elementType: "geometry",
-      stylers: [{ color: "#17263c" }],
+      stylers: [{ color: theme.n10 }],
     },
     {
       featureType: "water",
