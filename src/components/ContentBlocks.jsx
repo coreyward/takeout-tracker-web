@@ -34,7 +34,7 @@ const connectors = {
       {
         data: allSanityRestaurant(
           filter: { locations: { elemMatch: { _key: { ne: null } } } }
-          sort: { fields: title }
+          sort: { fields: confirmedAt, order: DESC }
         ) {
           restaurants: nodes {
             ...Restaurant
