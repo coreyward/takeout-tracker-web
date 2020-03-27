@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
 import Tags from "components/Tags"
@@ -16,6 +16,7 @@ const RestaurantCard = React.memo(
     hours,
     menuUrl,
     name,
+    onClick,
     orderingNotes,
     orderPhone,
     orderUrl,
@@ -59,9 +60,12 @@ const RestaurantCard = React.memo(
             flexDirection: "column",
             justifyContent: "space-between",
           }}
-          onClick={useCallback(() => {
-            setOpen(prev => !prev)
-          }, [])}
+          onClick={
+            onClick ||
+            (() => {
+              setOpen(prev => !prev)
+            })
+          }
         >
           <div
             css={{
@@ -166,6 +170,7 @@ RestaurantCard.propTypes = {
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,
   name: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   orderingNotes: PropTypes.string,
   orderPhone: PropTypes.string,
   orderUrl: PropTypes.string,
