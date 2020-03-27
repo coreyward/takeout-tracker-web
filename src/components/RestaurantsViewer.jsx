@@ -318,7 +318,7 @@ const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
     }}
   >
     <h2 css={{ ...theme.t2 }}>
-      No results found{searchQuery && `for “${searchQuery}”`}
+      No results found{searchQuery && ` for “${searchQuery}”`}
     </h2>
 
     {!showingAll && (
