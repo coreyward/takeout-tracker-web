@@ -48,7 +48,7 @@ const RestaurantTile = React.memo(
         }}
       >
         {name}
-        {!closedForBusiness && <OpenStatusIndicator hours={hours} />}
+        <OpenStatusIndicator hours={closedForBusiness ? [] : hours} />
       </h3>
 
       <SourcesDropdown

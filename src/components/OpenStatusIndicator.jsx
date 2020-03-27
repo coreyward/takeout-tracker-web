@@ -14,8 +14,14 @@ const OpenStatusIndicator = ({ hours, className }) => {
   const [open, setOpen] = useState(null)
 
   useEffect(() => {
-    // Don't show status for unrecognizable hours strings
-    if (!hours.some(hrs => /\d/.test(hrs))) return
+    if (hours.length === 0) {
+      // Always show closed for empty hours
+      setOpen(false)
+      return
+    } else if (!hours.some(hrs => /\d/.test(hrs))) {
+      // Don't show status for unrecognizable hours strings
+      return
+    }
 
     const refreshStatus = () => setOpen(hoursCover(hours))
 
