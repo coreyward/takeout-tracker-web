@@ -1,19 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import theme from "styles/theme"
 import Layout from "components/Layout"
 import { renderContentBlocks } from "components/ContentBlocks"
 import PageContext from "context/PageContext"
 
 const Page = ({ data: { page }, location: { state } }) => {
   return (
-    <Layout
-      css={{
-        "--pagePadding": "24px",
-        [theme.mobile]: { "--pagePadding": "16px" },
-      }}
-    >
+    <Layout>
       <PageContext.Provider value={state}>
         {renderContentBlocks(page.contentBlocks)}
       </PageContext.Provider>

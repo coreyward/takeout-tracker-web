@@ -89,6 +89,8 @@ export const globalStyles = [
       fontKerning: "normal",
       WebkitFontSmoothing: "antialiased",
       MozOsxFontSmoothing: "grayscale",
+
+      scrollSnapType: "y proximity",
     },
 
     [["h1", "h2", "h3", "h4", "h5", "h6"]]: {

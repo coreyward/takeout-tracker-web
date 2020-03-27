@@ -18,6 +18,17 @@ export const fragments = graphql`
     takeoutOptions
     unverified
     website
+    locations {
+      _key
+      address
+      hours
+      openForBusiness
+      phoneNumber
+      geoLocation {
+        lat
+        lng
+      }
+    }
   }
 
   fragment Image on SanityImage {
