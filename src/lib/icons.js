@@ -10,6 +10,7 @@ import { ReactComponent as Info } from "images/Info.svg"
 import { ReactComponent as Instagram } from "images/Instagram.svg"
 import { ReactComponent as LeftChevron } from "images/LeftChevron.svg"
 import { ReactComponent as Link } from "images/Link.svg"
+import { ReactComponent as MapMarker } from "images/MapMarker.svg"
 import { ReactComponent as Menu } from "images/Menu.svg"
 import { ReactComponent as Phone } from "images/Phone.svg"
 import { ReactComponent as Pin } from "images/Pin.svg"
@@ -31,6 +32,7 @@ const Icons = {
   Instagram,
   LeftChevron,
   Link,
+  MapMarker,
   Menu,
   Phone,
   Pin,
