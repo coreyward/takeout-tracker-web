@@ -9,6 +9,7 @@ import { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import FilterBar from "components/FilterBar"
 import { hoursCover } from "lib/parseHours"
+import Map from "components/Map"
 
 const RestaurantsViewer = ({
   title,
@@ -38,11 +39,27 @@ const RestaurantsViewer = ({
     [fuse, state.searchQuery, state.filters, restaurants]
   )
 
+  const restaurantsInView = state.mapBounds
+    ? filters.inView(state.mapBounds)(filteredRestaurants)
+    : filteredRestaurants
+
   const RestaurantComponent =
     state.mode === MODES.CARD ? RestaurantCard : RestaurantTile
 
   return (
-    <div css={{ padding: "var(--pagePadding)" }} id="restaurants-list">
+    <div
+      css={{
+        height: "100vh",
+        scrollSnapAlign: "start",
+        gridTemplateRows: "80px 1fr",
+        position: "relative",
+        "--listWidth": "400px",
+        [theme.tablet]: {
+          "--listWidth": "300px",
+        },
+      }}
+      id="restaurants-list"
+    >
       <FilterBar
         listTitle={title}
         defaultSearchQuery={defaultSearchQuery}
@@ -51,47 +68,115 @@ const RestaurantsViewer = ({
         dispatch={dispatch}
       />
 
-      {filteredRestaurants.length > 0 ? (
-        <div
-          css={{
-            position: "relative",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: 24,
-            [theme.mobile]: {
-              gridTemplateColumns: "1fr",
-              gap: 16,
-            },
-          }}
-        >
-          {filteredRestaurants
-            .slice((state.page - 1) * state.perPage, state.page * state.perPage)
-            .map(location => (
-              <RestaurantComponent key={location._id} {...location} />
-            ))}
-        </div>
-      ) : (
-        <NoResults
-          listTitle={title}
-          searchQuery={state.searchQuery}
-          showingAll={showingAll}
-          resetSearch={() => {
-            dispatch({ action: "setSearchQuery", value: "" })
-            searchRef.current.value = ""
-          }}
+      {state.activeListing && (
+        <ActiveListing
+          listing={filteredRestaurants.find(
+            ({ _key }) => _key === state.activeListing
+          )}
         />
       )}
 
-      <Pagination
-        currentPage={state.page}
-        perPage={state.perPage}
-        totalCount={filteredRestaurants.length}
-        setPage={n => dispatch({ action: "setPage", value: n })}
+      <div
         css={{
-          maxWidth: 225,
-          margin: "24px auto",
+          display: "grid",
+          gridTemplateColumns: "var(--listWidth) 1fr",
+          gridTemplateRows: "1fr 100px",
+          gridTemplateAreas: `
+            "list map"
+            "pagination map"
+          `,
+          height: "calc(100vh - 80px)",
         }}
-      />
+      >
+        <div
+          css={{
+            position: "relative",
+            gridArea: "list",
+            overflowY: state.activeListing ? "hidden" : "auto",
+            WebkitOverflowScrolling: "touch",
+            padding: "var(--pagePadding)",
+            paddingTop: 0,
+            ":after": {
+              content: "''",
+              display: "block",
+              position: "sticky",
+              bottom: "calc(-1 * var(--pagePadding))",
+              left: 0,
+              right: 0,
+              height: 50,
+              zIndex: 2,
+              background: `linear-gradient(to bottom, transparent, ${theme.n10})`,
+            },
+          }}
+        >
+          {restaurantsInView.length > 0 ? (
+            <div
+              css={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 24,
+                [theme.mobile]: {
+                  gridTemplateColumns: "1fr",
+                  gap: 16,
+                },
+              }}
+            >
+              {restaurantsInView
+                .slice(
+                  (state.page - 1) * state.perPage,
+                  state.page * state.perPage
+                )
+                .map(location => (
+                  <RestaurantComponent key={location._key} {...location} />
+                ))}
+            </div>
+          ) : (
+            <NoResults
+              listTitle={title}
+              searchQuery={state.searchQuery}
+              showingAll={showingAll}
+              resetSearch={() => {
+                dispatch({ action: "setSearchQuery", value: "" })
+                searchRef.current.value = ""
+              }}
+            />
+          )}
+        </div>
+
+        <Pagination
+          currentPage={state.page}
+          perPage={state.perPage}
+          totalCount={filteredRestaurants.length}
+          setPage={n => dispatch({ action: "setPage", value: n })}
+          css={{
+            gridArea: "pagination",
+            width: "100%",
+            maxWidth: 225,
+            margin: "24px auto",
+          }}
+        />
+        <div
+          css={{
+            gridArea: "map",
+            height: "100%",
+            padding: "var(--pagePadding)",
+            paddingTop: 0,
+            paddingLeft: 0,
+          }}
+        >
+          <Map
+            locations={restaurantsInView}
+            onChange={({ center, bounds }) => {
+              dispatch({
+                action: "setMapGeometry",
+                value: { center, bounds },
+              })
+            }}
+            activeListing={state.activeListing}
+            dispatch={dispatch}
+          />
+        </div>
+      </div>
     </div>
   )
 }
@@ -99,8 +184,16 @@ const RestaurantsViewer = ({
 export default RestaurantsViewer
 
 const filters = {
-  hideClosed: list => list.filter(entry => !entry.closedForBusiness),
+  hideClosed: list => list.filter(entry => entry.openForBusiness),
   currentlyOpen: list => list.filter(entry => hoursCover(entry.hours)),
+  inView: bounds => list =>
+    list.filter(
+      ({ geoLocation: { lat, lng } }) =>
+        lng > bounds.nw.lng &&
+        lng < bounds.se.lng &&
+        lat < bounds.nw.lat &&
+        lat > bounds.se.lat
+    ),
 }
 
 RestaurantsViewer.propTypes = {
@@ -169,6 +262,26 @@ const reducer = (state, { action, value, ...props }) => {
         perPage: value,
       }
 
+    case "setMapGeometry":
+      return {
+        ...state,
+        mapBounds: value.bounds,
+        mapCenter: value.center,
+        page: 1,
+      }
+
+    case "activateListing":
+      return {
+        ...state,
+        activeListing: value,
+      }
+
+    case "clearActiveListing":
+      return {
+        ...state,
+        activeListing: null,
+      }
+
     default:
       return state
   }
@@ -180,6 +293,31 @@ const initialState = {
   searchQuery: "",
   page: 1,
   perPage: 30,
+  activeListing: null,
+}
+
+const ActiveListing = ({ listing: { openForBusiness, ...listing } }) => (
+  <div
+    css={{
+      position: "absolute",
+      top: 80,
+      left: 0,
+      padding: "var(--pagePadding)",
+      paddingTop: 0,
+      width: "var(--listWidth)",
+      bottom: 0,
+      background: theme.n10,
+      zIndex: 3,
+      overflowY: "auto",
+      WebkitOverflowScrolling: "touch",
+    }}
+  >
+    <RestaurantTile {...listing} closedForBusiness={!openForBusiness} />
+  </div>
+)
+
+ActiveListing.propTypes = {
+  listing: PropTypes.shape(RestaurantTile.propTypes).isRequired,
 }
 
 const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
@@ -191,7 +329,9 @@ const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
       borderRadius: 3,
     }}
   >
-    <h2 css={{ ...theme.t2 }}>No results found for “{searchQuery}”</h2>
+    <h2 css={{ ...theme.t2 }}>
+      No results found{searchQuery && `for “${searchQuery}”`}
+    </h2>
 
     {!showingAll && (
       <div css={{ marginTop: 16 }}>

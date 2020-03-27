@@ -32,7 +32,10 @@ const connectors = {
     const context = useContext(PageContext) || {}
     const { data } = useStaticQuery(graphql`
       {
-        data: allSanityRestaurant(sort: { fields: title }) {
+        data: allSanityRestaurant(
+          filter: { locations: { elemMatch: { _key: { ne: null } } } }
+          sort: { fields: title }
+        ) {
           restaurants: nodes {
             ...Restaurant
           }
@@ -40,9 +43,16 @@ const connectors = {
       }
     `)
 
+    const locations = data.restaurants.flatMap(({ locations, ...base }) =>
+      locations.map(loc => ({
+        ...base,
+        ...loc,
+      }))
+    )
+
     return (
       <RestaurantsViewer
-        restaurants={data.restaurants}
+        restaurants={locations}
         defaultSearchQuery={context.searchQuery || defaultSearchQuery}
         showingAll={true}
         {...props}

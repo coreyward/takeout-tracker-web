@@ -15,6 +15,12 @@ const List = ({
     list: { name, description, background, presentation, author, restaurants },
   },
 }) => {
+  const locations = restaurants.flatMap(({ locations, ...base }) =>
+    locations.map(loc => ({
+      ...base,
+      ...loc,
+    }))
+  )
   return (
     <Layout
       title={name}
@@ -65,7 +71,7 @@ const List = ({
       </Hero>
       <RestaurantsViewer
         title={name}
-        restaurants={restaurants}
+        restaurants={locations}
         defaultFilters={["hideClosed"]}
         defaultViewMode={MODES.TILE}
         showingAll={false}

@@ -37,12 +37,9 @@ const FilterBar = ({
   return (
     <div
       css={{
-        margin: "0 calc(-1 * var(--pagePadding)) 8px",
         padding: "16px var(--pagePadding)",
         display: "flex",
         justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
         background: theme.n10,
         zIndex: 5,
         boxShadow: `0 1px 10px ${hexToRgb(theme.n10, 0.5)}`,

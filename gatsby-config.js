@@ -8,7 +8,12 @@ module.exports = {
     {
       resolve: "gatsby-plugin-env-variables",
       options: {
-        whitelist: ["SANITY_PROJECT_ID", "SANITY_DATASET", "CRISP_WEBSITE_ID"],
+        whitelist: [
+          "SANITY_PROJECT_ID",
+          "SANITY_DATASET",
+          "CRISP_WEBSITE_ID",
+          "GOOGLE_MAPS_API_KEY",
+        ],
       },
     },
     {

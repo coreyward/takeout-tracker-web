@@ -3,12 +3,12 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Global } from "@emotion/core"
 import Helmet from "react-helmet"
-import { globalStyles } from "styles/theme"
+import theme, { globalStyles } from "styles/theme"
 import Header from "components/Header"
 import AnnouncementBanner from "components/AnnouncementBanner"
 
 const Layout = ({ title, description, children, className }) => {
-  const metaTitle = `${title ? `${title} - ` : ""}Austin Takeout Tracker`
+  const metaTitle = `${title ? `${title} - ` : ""} Takeout Tracker`
   const metaDesc = description
 
   const { announcement } = useStaticQuery(graphql`
@@ -75,11 +75,20 @@ const Layout = ({ title, description, children, className }) => {
         <meta name="theme-color" content="#182c44"></meta>
       </Helmet>
 
-      {announcement.nodes.length > 0 && (
-        <AnnouncementBanner copy={announcement.nodes[0].copy} />
-      )}
-      <Header />
-      <main className={className}>{children}</main>
+      <div
+        css={{
+          "--pagePadding": "24px",
+          [theme.mobile]: { "--pagePadding": "16px" },
+        }}
+        className={className}
+      >
+        {announcement.nodes.length > 0 && (
+          <AnnouncementBanner copy={announcement.nodes[0].copy} />
+        )}
+
+        <Header />
+        <main>{children}</main>
+      </div>
     </>
   )
 }

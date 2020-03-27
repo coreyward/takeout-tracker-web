@@ -47,12 +47,14 @@
     "gatsby-plugin-svgr": "^2.0.2",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-sanity": "^5.0.1",
+    "google-map-react": "^1.1.7",
     "lodash-es": "^4.17.15",
     "markdown-to-jsx": "^6.9.4",
     "moment": "^2.24.0",
     "react": "^16.8",
     "react-dom": "^16.8",
     "react-helmet": "^5.2.0",
+    "react-scrolllock": "^5.0.1",
     "react-window": "^1.8.5"
   },
   "scripts": {
