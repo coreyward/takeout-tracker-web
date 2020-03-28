@@ -33,7 +33,14 @@ const connectors = {
     const { data } = useStaticQuery(graphql`
       {
         data: allSanityRestaurant(
-          filter: { locations: { elemMatch: { _key: { ne: null } } } }
+          filter: {
+            locations: {
+              elemMatch: {
+                _key: { ne: null }
+                geoLocation: { lat: { gt: -180, lt: 180 } }
+              }
+            }
+          }
           sort: { fields: confirmedAt, order: DESC }
         ) {
           restaurants: nodes {
