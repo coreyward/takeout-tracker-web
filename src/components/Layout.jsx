@@ -50,11 +50,11 @@ const Layout = ({ title, description, children, className }) => {
         />
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="800" />
-        <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:image"
           content="https://www.takeouttracker.com/twitter-og-v1.jpg"
         />
+        <meta property="twitter:card" content="summary_large_image" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
