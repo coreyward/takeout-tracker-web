@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
 import { keyframes } from "@emotion/core"
-import RestaurantTile from "components/RestaurantTile"
 import PolicyInfo from "components/PolicyInfo"
 import OrderInfo from "components/OrderInfo"
 import SourcesList from "components/SourcesList"
@@ -103,11 +102,6 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
 }
 
 export default ActiveListingPanel
-
-ActiveListingPanel.propTypes = {
-  listing: PropTypes.shape(RestaurantTile.propTypes).isRequired,
-  dispatch: PropTypes.func.isRequired,
-}
 
 const ActiveRestaurantDetails = ({
   address,
@@ -214,6 +208,11 @@ ActiveRestaurantDetails.propTypes = {
   ),
   unverified: PropTypes.bool,
   website: PropTypes.string,
+}
+
+ActiveListingPanel.propTypes = {
+  listing: PropTypes.shape(ActiveRestaurantDetails.propTypes),
+  dispatch: PropTypes.func.isRequired,
 }
 
 const slideAnimation = {
