@@ -12,11 +12,22 @@ const GridView = ({
   state,
   dispatch,
   currentRestaurants,
-  restaurantCount,
   filterBar,
   noResults,
 }) => {
   const RestaurantComponent = restaurantComponents[state.mode]
+
+  const perPage =
+    state.searchQuery.length > 0 ? 30 : state.mode === MODES.TILE ? 60 : 100
+
+  const paginatedRestaurants = (state.searchQuery.length === 0
+    ? [...currentRestaurants].sort((a, b) => {
+        const aName = a.name.toUpperCase()
+        const bName = b.name.toUpperCase()
+        return aName > bName ? 1 : bName > aName ? -1 : 0
+      })
+    : currentRestaurants
+  ).slice((state.page - 1) * perPage, state.page * perPage)
 
   return (
     <div css={{ padding: "var(--pagePadding)" }} id="restaurants-list">
@@ -29,9 +40,10 @@ const GridView = ({
         },
       })}
 
-      {currentRestaurants.length > 0
-        ? Object.values(
-            currentRestaurants.reduce((acc, r) => {
+      {paginatedRestaurants.length > 0 ? (
+        state.searchQuery.length === 0 ? (
+          Object.values(
+            paginatedRestaurants.reduce((acc, r) => {
               let char = r.name.slice(0, 1).toUpperCase()
               if (/\d/.test(char)) char = "#"
               if (!acc.hasOwnProperty(char))
@@ -71,12 +83,32 @@ const GridView = ({
               </div>
             </div>
           ))
-        : noResults}
+        ) : (
+          <div
+            css={{
+              position: "relative",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: 24,
+              [theme.mobile]: {
+                gridTemplateColumns: "1fr",
+                gap: 16,
+              },
+            }}
+          >
+            {paginatedRestaurants.map(location => (
+              <RestaurantComponent key={location._key} {...location} />
+            ))}
+          </div>
+        )
+      ) : (
+        noResults
+      )}
 
       <Pagination
         currentPage={state.page}
-        perPage={state.perPage}
-        totalCount={restaurantCount}
+        perPage={perPage}
+        totalCount={currentRestaurants.length}
         setPage={n => dispatch({ action: "setPage", value: n })}
         css={{
           maxWidth: 225,
@@ -93,7 +125,6 @@ GridView.propTypes = {
   state: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   currentRestaurants: PropTypes.array.isRequired,
-  restaurantCount: PropTypes.number.isRequired,
   filterBar: PropTypes.node.isRequired,
   noResults: PropTypes.node,
 }
