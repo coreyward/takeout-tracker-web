@@ -171,10 +171,12 @@ const reducer = (state, { action, value, ...props }) => {
         ...state,
         mapBounds: value.bounds,
         mapCenter: value.center,
+        mapZoom: value.zoom,
         page: 1,
       }
 
     case "activateListing":
+      window.scrollTo({ top: document.body.offsetHeight, behavior: "smooth" })
       return {
         ...state,
         activeListing: value,

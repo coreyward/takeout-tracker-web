@@ -3,7 +3,7 @@ import expandQueries from "lib/expandQueries"
 
 const breakpoints = {
   tablet: "@media (max-width: 900px)",
-  mobile: "@media (max-width: 569px)",
+  mobile: "@media (max-width: 600px)",
   smallMobile: "@media (max-width: 370px)",
 }
 
