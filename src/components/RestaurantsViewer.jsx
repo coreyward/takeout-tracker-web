@@ -18,6 +18,7 @@ const RestaurantsViewer = ({
   defaultFilters,
   defaultViewMode,
   showingAll,
+  preserveOrder,
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
@@ -76,6 +77,7 @@ const RestaurantsViewer = ({
       currentRestaurants={currentRestaurants}
       filterBar={filterBar}
       noResults={noResults}
+      preserveOrder={preserveOrder}
     />
   )
 }
@@ -104,6 +106,7 @@ RestaurantsViewer.propTypes = {
   defaultFilters: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(filters))),
   defaultViewMode: PropTypes.oneOf(Object.values(MODES)),
   showingAll: PropTypes.bool,
+  preserveOrder: PropTypes.bool,
 }
 
 const fuseConfig = {
