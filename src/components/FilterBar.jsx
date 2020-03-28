@@ -13,6 +13,7 @@ const FilterBar = ({
   mode,
   filters,
   dispatch,
+  className,
 }) => {
   const searchRef = useRef()
 
@@ -51,6 +52,7 @@ const FilterBar = ({
           padding: "8px var(--pagePadding)",
         },
       }}
+      className={className}
     >
       <div css={{ flex: "1 1 auto", marginRight: 24 }}>
         <div
@@ -157,5 +159,6 @@ FilterBar.propTypes = {
   defaultSearchQuery: PropTypes.string,
   mode: PropTypes.oneOf(Object.values(MODES)),
   filters: PropTypes.instanceOf(Set).isRequired,
+  className: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 }
