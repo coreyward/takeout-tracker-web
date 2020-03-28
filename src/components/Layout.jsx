@@ -34,10 +34,16 @@ const Layout = ({ title, description, children, className }) => {
         <meta name="description" content={metaDesc} />
         <meta
           property="og:image"
-          content="https://www.takeouttracker.com/opengraph-v2.jpg"
+          content="https://www.takeouttracker.com/opengraph-v3.jpg"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta
+          property="og:image"
+          content="https://www.takeouttracker.com/twitter-og-v1.jpg"
+        />
+        <meta property="og:image:width" content="1012" />
+        <meta property="og:image:height" content="506" />
         <meta
           property="og:image"
           content="https://www.takeouttracker.com/tile.png"
@@ -45,6 +51,10 @@ const Layout = ({ title, description, children, className }) => {
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="800" />
         <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:image"
+          content="https://www.takeouttracker.com/twitter-og-v1.jpg"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
