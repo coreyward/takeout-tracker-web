@@ -45,12 +45,6 @@ const Layout = ({ title, description, children, className }) => {
         <meta property="og:image:width" content="1012" />
         <meta property="og:image:height" content="506" />
         <meta
-          property="og:image"
-          content="https://www.takeouttracker.com/tile.png"
-        />
-        <meta property="og:image:width" content="800" />
-        <meta property="og:image:height" content="800" />
-        <meta
           property="twitter:image"
           content="https://www.takeouttracker.com/twitter-og-v1.jpg"
         />
