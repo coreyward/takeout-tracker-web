@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import theme from "styles/theme"
 import { keyframes } from "@emotion/core"
+import { useMediaQuery } from "@material-ui/core"
+import ScrollLock from "react-scrolllock"
 import PolicyInfo from "components/PolicyInfo"
 import OrderInfo from "components/OrderInfo"
 import SourcesList from "components/SourcesList"
@@ -11,6 +13,7 @@ import hexToRgb from "lib/hexToRgb"
 import Icons from "lib/icons"
 
 const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
+  const mobile = useMediaQuery(theme.mobile)
   const prevListingRef = useRef(currentListing)
 
   useEffect(() => {
@@ -25,79 +28,96 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
   if (!listing) return null
 
   return (
-    <div
-      css={{
-        position: "absolute",
-        top: 79,
-        left: "calc(0.5 * var(--pagePadding))",
-        padding: "var(--pagePadding)",
-        paddingTop: 0,
-        width: "var(--listWidth)",
-        bottom: 0,
-        background: theme.n10,
-        zIndex: 3,
-        overflowY: "auto",
-        WebkitOverflowScrolling: "touch",
-        transform: `translateX(${animation === "out" ? "-100%" : 0})`,
-        opacity: animation === "out" ? 0 : 1,
-        animation: `${slideAnimation[animation]} 250ms ease-out`,
-      }}
-    >
+    <ScrollLock isActive={mobile && currentListing}>
       <div
         css={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px calc(0.5 * var(--pagePadding))",
-          margin: "0 calc(-0.5 * var(--pagePadding)) var(--pagePadding)",
-          position: "sticky",
-          top: 0,
-          borderRadius: 3,
-          boxShadow: `0 2px 4px ${hexToRgb(theme.n10, 0.5)}`,
-          background: hexToRgb("#17273A", 0.9),
-          backdropFilter: "blur(3px)",
-          zIndex: 4,
+          position: "absolute",
+          top: 79,
+          left: "calc(0.5 * var(--pagePadding))",
+          padding: "var(--pagePadding)",
+          paddingTop: 0,
+          width: "var(--listWidth)",
+          bottom: 0,
+          background: theme.n10,
+          zIndex: 3,
+          overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
+          transform: `translateX(${animation === "out" ? "-100%" : 0})`,
+          opacity: animation === "out" ? 0 : 1,
+          animation: `${slideAnimation[animation]} 250ms ease-out`,
+          [theme.mobile]: {
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100%",
+          },
         }}
       >
-        <button
+        <div
           css={{
-            background: theme.n30,
-            padding: 8,
-            border: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px calc(0.5 * var(--pagePadding))",
+            margin: "0 calc(-0.5 * var(--pagePadding)) var(--pagePadding)",
+            position: "sticky",
+            top: 0,
             borderRadius: 3,
-            cursor: "pointer",
-            transition: "background 250ms",
-            ":hover": {
-              background: theme.n20,
+            boxShadow: `0 2px 4px ${hexToRgb(theme.n10, 0.5)}`,
+            background: hexToRgb("#17273A", 0.9),
+            backdropFilter: "blur(3px)",
+            zIndex: 4,
+            [theme.mobile]: {
+              padding: 12,
+              margin: "0 calc(-1 * var(--pagePadding)) var(--pagePadding)",
+              borderRadius: 0,
             },
-            marginRight: 16,
-            outline: 0,
-          }}
-          onClick={() => {
-            dispatch({ action: "clearActiveListing" })
           }}
         >
-          <Icons.LeftChevron css={{ display: "block", color: theme.n80 }} />
-        </button>
+          <button
+            css={{
+              background: theme.n30,
+              padding: 8,
+              border: 0,
+              borderRadius: 3,
+              cursor: "pointer",
+              transition: "background 250ms",
+              ":hover": {
+                background: theme.n20,
+              },
+              marginRight: 16,
+              outline: 0,
+            }}
+            onClick={() => {
+              dispatch({ action: "clearActiveListing" })
+            }}
+          >
+            <Icons.LeftChevron css={{ display: "block", color: theme.n80 }} />
+          </button>
 
-        <h3
-          css={{
-            color: theme.n80,
-            fontSize: 24,
-            fontWeight: 500,
-          }}
-        >
-          {listing.name}
-        </h3>
+          <h3
+            css={{
+              color: theme.n80,
+              fontSize: 24,
+              fontWeight: 500,
+              [theme.mobile]: {
+                fontSize: 18,
+              },
+            }}
+          >
+            {listing.name}
+          </h3>
 
-        <OpenStatusIndicator
-          hours={listing.openForBusiness && listing.hours}
-          css={{ marginLeft: 16, marginRight: 8 }}
-        />
+          <OpenStatusIndicator
+            hours={listing.openForBusiness && listing.hours}
+            css={{ marginLeft: 16, marginRight: 8 }}
+          />
+        </div>
+
+        <ActiveRestaurantDetails {...listing} />
       </div>
-
-      <ActiveRestaurantDetails {...listing} />
-    </div>
+    </ScrollLock>
   )
 }
 
