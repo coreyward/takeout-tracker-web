@@ -4,11 +4,9 @@ export const fragments = graphql`
   fragment Restaurant on SanityRestaurant {
     _id
     confirmedAt
-    hours
     menuUrl
     name: title
     orderingNotes
-    orderPhone
     orderUrl
     policyNotes
     sourceNotes
@@ -22,7 +20,7 @@ export const fragments = graphql`
       address
       hours
       openForBusiness
-      phoneNumber
+      orderPhone: phoneNumber
       geoLocation {
         lat
         lng
