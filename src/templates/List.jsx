@@ -21,6 +21,7 @@ const List = ({
       ...loc,
     }))
   )
+
   return (
     <Layout
       title={name}
@@ -75,6 +76,7 @@ const List = ({
         defaultFilters={["hideClosed"]}
         defaultViewMode={MODES.TILE}
         showingAll={false}
+        preserveOrder
       />
     </Layout>
   )
@@ -100,7 +102,15 @@ List.propTypes = {
         }),
         url: PropTypes.string.isRequired,
       }),
-      restaurants: RestaurantsViewer.propTypes.restaurants,
+      restaurants: PropTypes.arrayOf(
+        PropTypes.shape({
+          address: PropTypes.string,
+          name: PropTypes.string.isRequired,
+          hours: PropTypes.arrayOf(PropTypes.string),
+          tags: PropTypes.arrayOf(PropTypes.string),
+          confirmedAt: PropTypes.string.isRequired,
+        }).isRequired
+      ).isRequired,
     }).isRequired,
   }).isRequired,
 }

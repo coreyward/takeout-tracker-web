@@ -14,13 +14,16 @@ const GridView = ({
   currentRestaurants,
   filterBar,
   noResults,
+  preserveOrder,
 }) => {
   const RestaurantComponent = restaurantComponents[state.mode]
 
   const perPage =
     state.searchQuery.length > 0 ? 30 : state.mode === MODES.TILE ? 60 : 100
 
-  const paginatedRestaurants = (state.searchQuery.length === 0
+  const isAlphabetical = !preserveOrder && state.searchQuery.length === 0
+
+  const paginatedRestaurants = (isAlphabetical
     ? [...currentRestaurants].sort((a, b) => {
         const aName = a.name.toUpperCase()
         const bName = b.name.toUpperCase()
@@ -41,7 +44,7 @@ const GridView = ({
       })}
 
       {paginatedRestaurants.length > 0 ? (
-        state.searchQuery.length === 0 ? (
+        isAlphabetical ? (
           Object.values(
             paginatedRestaurants.reduce((acc, r) => {
               let char = r.name.slice(0, 1).toUpperCase()
@@ -127,6 +130,7 @@ GridView.propTypes = {
   currentRestaurants: PropTypes.array.isRequired,
   filterBar: PropTypes.node.isRequired,
   noResults: PropTypes.node,
+  preserveOrder: PropTypes.bool,
 }
 
 const restaurantComponents = {
