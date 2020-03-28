@@ -11,6 +11,7 @@ import OpenStatusIndicator from "components/OpenStatusIndicator"
 
 const RestaurantCard = React.memo(
   ({
+    address,
     openForBusiness,
     confirmedAt,
     hours,
@@ -67,41 +68,52 @@ const RestaurantCard = React.memo(
             })
           }
         >
-          <div
-            css={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <h3
+          <div>
+            <div
               css={{
-                color: theme.n80,
-                fontSize: 16,
-                fontWeight: 500,
-                marginRight: 36,
-                marginBottom: 16,
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              {name}
-              <OpenStatusIndicator hours={openForBusiness && hours} />
-            </h3>
+              <h3
+                css={{
+                  color: theme.n80,
+                  fontSize: 16,
+                  fontWeight: 500,
+                  marginRight: 36,
+                }}
+              >
+                {name}
+                <OpenStatusIndicator hours={openForBusiness && hours} />
+              </h3>
 
-            <StatusIcons
-              openForBusiness={openForBusiness}
-              offersDelivery={
-                !!(
-                  takeoutOptions &&
-                  takeoutOptions.find(x => deliveryOptions.includes(x))
-                )
-              }
-              acceptsOnlineOrders={!!orderUrl}
-              acceptsPhoneOrders={!!orderPhone}
-              userReported={unverified}
-              css={{ marginTop: 2, color: theme.n40 }}
-            />
+              <StatusIcons
+                openForBusiness={openForBusiness}
+                offersDelivery={
+                  !!(
+                    takeoutOptions &&
+                    takeoutOptions.find(x => deliveryOptions.includes(x))
+                  )
+                }
+                acceptsOnlineOrders={!!orderUrl}
+                acceptsPhoneOrders={!!orderPhone}
+                userReported={unverified}
+                css={{ marginTop: 2, color: theme.n40 }}
+              />
+            </div>
+
+            {address && (
+              <div css={{ fontSize: 12, marginTop: 4, color: theme.n50 }}>
+                {address.includes(",")
+                  ? address.slice(0, address.indexOf(","))
+                  : address}
+              </div>
+            )}
           </div>
 
-          {tags && tags.length > 0 && <Tags tags={tags} />}
+          {tags && tags.length > 0 && (
+            <Tags tags={tags} css={{ marginTop: 16 }} />
+          )}
         </div>
 
         {open && (
@@ -165,6 +177,7 @@ RestaurantCard.displayName = "RestaurantCard"
 export default RestaurantCard
 
 RestaurantCard.propTypes = {
+  address: PropTypes.string,
   openForBusiness: PropTypes.bool.isRequired,
   confirmedAt: PropTypes.string.isRequired,
   hours: PropTypes.arrayOf(PropTypes.string),
