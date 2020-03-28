@@ -29,7 +29,7 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
       css={{
         position: "absolute",
         top: 79,
-        left: 0,
+        left: "calc(0.5 * var(--pagePadding))",
         padding: "var(--pagePadding)",
         paddingTop: 0,
         width: "var(--listWidth)",

@@ -1,15 +1,14 @@
 import React, { useReducer, useMemo } from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
 import Fuse from "fuse.js"
 import { uniqueId } from "lodash-es"
-import theme from "styles/theme"
 import RestaurantListItem from "components/RestaurantListItem"
 import { MODES } from "components/ModeSelector"
 import FilterBar from "components/FilterBar"
 import { hoursCover } from "lib/parseHours"
 import MapView from "components/MapView"
 import GridView from "components/GridView"
+import NoResults from "components/NoResults"
 
 const RestaurantsViewer = ({
   title,
@@ -200,45 +199,4 @@ const initialState = {
   page: 1,
   activeListing: null,
   mapBounds: null,
-}
-
-const NoResults = ({ searchQuery, showingAll, listTitle, resetSearch }) => (
-  <div
-    css={{
-      background: theme.n20,
-      padding: "48px 24px",
-      textAlign: "center",
-      borderRadius: 3,
-    }}
-  >
-    <h2 css={{ ...theme.t2 }}>
-      No results found{searchQuery && ` for “${searchQuery}”`}
-    </h2>
-
-    {!showingAll && (
-      <div css={{ marginTop: 16 }}>
-        Currently only viewing restaurants in {listTitle}.{" "}
-        <Link to="/#restaurants-list">See all restaurants instead.</Link>
-      </div>
-    )}
-
-    <div css={{ marginTop: 16, fontSize: 12 }}>
-      <a
-        href="#reset"
-        onClick={e => {
-          e.preventDefault()
-          resetSearch(e)
-        }}
-      >
-        Reset search
-      </a>
-    </div>
-  </div>
-)
-
-NoResults.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  showingAll: PropTypes.bool.isRequired,
-  listTitle: PropTypes.string.isRequired,
-  resetSearch: PropTypes.func.isRequired,
 }

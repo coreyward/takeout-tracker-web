@@ -9,8 +9,11 @@ const Map = ({ locations, onChange, activeListing, dispatch }) => (
     css={{
       width: "100%",
       height: "100%",
-      borderRadius: 3,
+      borderRadius: 8,
       overflow: "hidden",
+      position: "relative",
+      zIndex: 2,
+      boxShadow: `-8px 0 12px -6px ${theme.n10}`,
       [[".gm-style-iw", ".gm-style-iw-t"]]: { display: "none" },
     }}
     onClick={e => {
