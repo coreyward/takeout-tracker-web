@@ -3,7 +3,6 @@ import { graphql } from "gatsby"
 export const fragments = graphql`
   fragment Restaurant on SanityRestaurant {
     _id
-    closedForBusiness
     confirmedAt
     hours
     menuUrl

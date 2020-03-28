@@ -8,7 +8,7 @@ import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 
 const PolicyInfo = ({
-  closedForBusiness,
+  openForBusiness,
   confirmedAt,
   hours,
   takeoutOptions,
@@ -52,11 +52,7 @@ const PolicyInfo = ({
         as of <TimeAgo time={confirmedAt} />
       </IconRow>
 
-      {closedForBusiness ? (
-        <IconRow icon={Icons.Clock}>
-          <strong>Closed Temporarily</strong>
-        </IconRow>
-      ) : (
+      {openForBusiness ? (
         <>
           {hours && hours.length > 0 && (
             <IconRow icon={Icons.Clock}>
@@ -72,6 +68,10 @@ const PolicyInfo = ({
             {deliveryModes.length > 0 ? deliveryModes : "No delivery"}
           </IconRow>
         </>
+      ) : (
+        <IconRow icon={Icons.Clock}>
+          <strong>Closed Temporarily</strong>
+        </IconRow>
       )}
 
       {policyNotes && policyNotes.length > 0 && (
@@ -84,7 +84,7 @@ const PolicyInfo = ({
 export default PolicyInfo
 
 PolicyInfo.propTypes = {
-  closedForBusiness: PropTypes.bool,
+  openForBusiness: PropTypes.bool,
   confirmedAt: PropTypes.string,
   hours: PropTypes.arrayOf(PropTypes.string),
   takeoutOptions: PropTypes.arrayOf(PropTypes.string),

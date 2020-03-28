@@ -7,7 +7,7 @@ const StatusIcons = ({
   offersDelivery,
   acceptsOnlineOrders,
   acceptsPhoneOrders,
-  closedForBusiness,
+  openForBusiness,
   userReported,
   className,
 }) => (
@@ -18,9 +18,7 @@ const StatusIcons = ({
         icon={Icons.Warning}
       />
     )}
-    {closedForBusiness ? (
-      <Indicator tip="Temporarily Closed" icon={Icons.Closed} />
-    ) : (
+    {openForBusiness ? (
       <>
         {offersDelivery && (
           <Indicator tip="Delivery Available" icon={Icons.Delivery} />
@@ -32,6 +30,8 @@ const StatusIcons = ({
           <Indicator tip="Order by Phone" icon={Icons.Phone} />
         )}
       </>
+    ) : (
+      <Indicator tip="Temporarily Closed" icon={Icons.Closed} />
     )}
   </div>
 )
@@ -42,7 +42,7 @@ StatusIcons.propTypes = {
   offersDelivery: PropTypes.bool,
   acceptsOnlineOrders: PropTypes.bool,
   acceptsPhoneOrders: PropTypes.bool,
-  closedForBusiness: PropTypes.bool,
+  openForBusiness: PropTypes.bool,
   userReported: PropTypes.bool,
   className: PropTypes.string,
 }
