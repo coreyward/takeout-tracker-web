@@ -74,7 +74,7 @@ const List = ({
         title={name}
         restaurants={locations}
         defaultFilters={["hideClosed"]}
-        defaultViewMode={MODES.TILE}
+        defaultViewMode={MODES.MAP}
         showingAll={false}
         preserveOrder
       />
