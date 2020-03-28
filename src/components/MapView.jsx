@@ -6,6 +6,7 @@ import { MODES } from "components/ModeSelector"
 import Pagination from "components/Pagination"
 import Map from "components/Map"
 import ActiveListingPanel from "components/ActiveListingPanel"
+import cloneElement from "lib/cloneElement"
 
 const PER_PAGE = 30
 
@@ -55,44 +56,51 @@ const MapView = ({
           "pagination map"
         `,
           height: "calc(100vh - 80px)",
+          marginLeft: "calc(0.5 * var(--pagePadding))",
         }}
       >
         <div
-          css={{
-            position: "relative",
-            gridArea: "list",
-            overflowY: state.activeListing ? "hidden" : "auto",
-            WebkitOverflowScrolling: "touch",
-            padding:
-              state.mode === MODES.MAP
-                ? "0 1px 0 0"
-                : "0 var(--pagePadding) var(--pagePadding) var(--pagePadding)",
-            ":before": {
-              content: "''",
-              display: "block",
-              position: "sticky",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 50,
-              zIndex: 2,
-              pointerEvents: "none",
-              background: `linear-gradient(to top, transparent, ${theme.n10})`,
+          css={[
+            {
+              position: "relative",
+              gridArea: "list",
+              overflowY: state.activeListing ? "hidden" : "auto",
+              WebkitOverflowScrolling: "touch",
+              padding:
+                state.mode === MODES.MAP
+                  ? "0 1px 0 0"
+                  : "0 var(--pagePadding) var(--pagePadding) var(--pagePadding)",
             },
-            ":after": {
-              content: "''",
-              display: "block",
-              position: "sticky",
-              bottom:
-                state.mode === MODES.MAP ? 0 : "calc(-1 * var(--pagePadding))",
-              left: 0,
-              right: 0,
-              height: 50,
-              zIndex: 2,
-              pointerEvents: "none",
-              background: `linear-gradient(to bottom, transparent, ${theme.n10})`,
+            paginatedRestaurants.length > 0 && {
+              ":before": {
+                content: "''",
+                display: "block",
+                position: "sticky",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 50,
+                zIndex: 2,
+                pointerEvents: "none",
+                background: `linear-gradient(to top, transparent, ${theme.n10})`,
+              },
+              ":after": {
+                content: "''",
+                display: "block",
+                position: "sticky",
+                bottom:
+                  state.mode === MODES.MAP
+                    ? 0
+                    : "calc(-1 * var(--pagePadding))",
+                left: 0,
+                right: 0,
+                height: 50,
+                zIndex: 2,
+                pointerEvents: "none",
+                background: `linear-gradient(to bottom, transparent, ${theme.n10})`,
+              },
             },
-          }}
+          ]}
         >
           {paginatedRestaurants.length > 0 ? (
             <div
@@ -121,7 +129,9 @@ const MapView = ({
               ))}
             </div>
           ) : (
-            noResults
+            cloneElement(noResults, {
+              css: { marginRight: "calc(0.5 * var(--pagePadding))" },
+            })
           )}
         </div>
 

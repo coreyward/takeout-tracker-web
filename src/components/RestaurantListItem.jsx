@@ -18,7 +18,6 @@ const RestaurantListItem = React.memo(
           borderBottom: `1px solid ${theme.n20}`,
           transition: "background 250ms",
           opacity: openForBusiness ? 1 : 0.5,
-          boxShadow: `inset -12px 0 10px -12px ${theme.n10}`,
           ":hover": {
             background: hexToRgb(theme.n20, 0.5),
           },
