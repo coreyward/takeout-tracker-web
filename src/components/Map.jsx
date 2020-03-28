@@ -46,6 +46,7 @@ const Map = ({
           <MapMarker
             key={loc._key}
             id={loc._key}
+            name={loc.name}
             lat={loc.geoLocation.lat}
             lng={loc.geoLocation.lng}
             active={loc._key === activeListing}

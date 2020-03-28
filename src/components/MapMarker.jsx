@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const MapMarker = ({ id, $hover, active, dispatch }) => {
+const MapMarker = ({ id, name, $hover, active, dispatch }) => {
   return (
     <svg
       width="20"
@@ -24,7 +24,7 @@ const MapMarker = ({ id, $hover, active, dispatch }) => {
         },
       ]}
       onClick={() => {
-        dispatch({ action: "activateListing", value: id })
+        dispatch({ action: "activateListing", value: id, name })
       }}
     >
       <path
@@ -50,6 +50,7 @@ export default MapMarker
 
 MapMarker.propTypes = {
   id: PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   $hover: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,

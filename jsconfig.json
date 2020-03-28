@@ -8,6 +8,7 @@
       "hooks/*": ["src/hooks/*"],
       "images/*": ["src/images/*"],
       "lib/*": ["src/lib/*"],
+      "reducers/*": ["src/reducers/*"],
       "styles/*": ["src/styles/*"]
     },
     "target": "es6",

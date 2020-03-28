@@ -146,6 +146,7 @@ const MapView = ({
                         dispatch({
                           action: "activateListing",
                           value: location._key,
+                          name: location.name,
                         })
                       }}
                     />
