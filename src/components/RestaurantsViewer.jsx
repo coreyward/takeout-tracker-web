@@ -40,19 +40,10 @@ const RestaurantsViewer = ({
     )
   }, [fuse, state.searchQuery, state.filters, restaurants])
 
-  const restaurantsInView =
+  const currentRestaurants =
     state.mode === MODES.MAP && state.mapBounds
       ? filters.inView(state.mapBounds)(filteredRestaurants)
       : filteredRestaurants
-
-  const currentRestaurants = (state.mode !== MODES.MAP
-    ? [...restaurantsInView].sort((a, b) => {
-        const aName = a.name.toUpperCase()
-        const bName = b.name.toUpperCase()
-        return aName > bName ? 1 : bName > aName ? -1 : 0
-      })
-    : restaurantsInView
-  ).slice((state.page - 1) * state.perPage, state.page * state.perPage)
 
   const filterBar = (
     <FilterBar
@@ -83,7 +74,6 @@ const RestaurantsViewer = ({
       state={state}
       dispatch={dispatch}
       currentRestaurants={currentRestaurants}
-      restaurantCount={restaurantsInView.length}
       filterBar={filterBar}
       noResults={noResults}
     />
@@ -133,6 +123,7 @@ const reducer = (state, { action, value, ...props }) => {
     case "setViewMode":
       return {
         ...state,
+        page: 1,
         mode: value,
         mapBounds: value === MODES.MAP ? state.mapBounds : null,
       }
@@ -173,13 +164,6 @@ const reducer = (state, { action, value, ...props }) => {
         page: value,
       }
 
-    case "setPerPage":
-      return {
-        ...state,
-        page: 1,
-        perPage: value,
-      }
-
     case "setMapGeometry":
       return {
         ...state,
@@ -211,7 +195,6 @@ const initialState = {
   mode: MODES.CARD,
   searchQuery: "",
   page: 1,
-  perPage: 30,
   activeListing: null,
   mapBounds: null,
 }
