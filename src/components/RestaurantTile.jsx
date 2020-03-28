@@ -11,7 +11,7 @@ import OpenStatusIndicator from "components/OpenStatusIndicator"
 
 const RestaurantTile = React.memo(
   ({
-    closedForBusiness,
+    openForBusiness,
     confirmedAt,
     hours,
     menuUrl,
@@ -30,12 +30,12 @@ const RestaurantTile = React.memo(
     <div
       css={{
         position: "relative",
-        background: closedForBusiness ? "#122031" : theme.n20,
+        background: openForBusiness ? theme.n20 : "#122031",
         color: theme.n70,
         padding: 24,
         borderRadius: 3,
         fontSize: 12,
-        opacity: closedForBusiness ? 0.75 : 1,
+        opacity: openForBusiness ? 1 : 0.75,
       }}
     >
       <h3
@@ -48,7 +48,7 @@ const RestaurantTile = React.memo(
         }}
       >
         {name}
-        <OpenStatusIndicator hours={!closedForBusiness && hours} />
+        <OpenStatusIndicator hours={openForBusiness && hours} />
       </h3>
 
       <SourcesDropdown
@@ -59,14 +59,14 @@ const RestaurantTile = React.memo(
 
       <PolicyInfo
         css={{ marginBottom: 16 }}
-        closedForBusiness={closedForBusiness}
+        openForBusiness={openForBusiness}
         confirmedAt={confirmedAt}
         hours={hours}
         takeoutOptions={takeoutOptions}
         policyNotes={policyNotes}
       />
 
-      {!closedForBusiness && (
+      {openForBusiness && (
         <OrderInfo
           menuUrl={menuUrl}
           website={website}
@@ -92,7 +92,7 @@ RestaurantTile.displayName = "RestaurantTile"
 export default RestaurantTile
 
 RestaurantTile.propTypes = {
-  closedForBusiness: PropTypes.bool.isRequired,
+  openForBusiness: PropTypes.bool.isRequired,
   confirmedAt: PropTypes.string.isRequired,
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,

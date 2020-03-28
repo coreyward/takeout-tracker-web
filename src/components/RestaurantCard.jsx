@@ -11,7 +11,7 @@ import OpenStatusIndicator from "components/OpenStatusIndicator"
 
 const RestaurantCard = React.memo(
   ({
-    closedForBusiness,
+    openForBusiness,
     confirmedAt,
     hours,
     menuUrl,
@@ -39,7 +39,7 @@ const RestaurantCard = React.memo(
         ref={ref}
         css={{
           position: "relative",
-          background: closedForBusiness ? "#122031" : theme.n20,
+          background: openForBusiness ? theme.n20 : "#122031",
           color: theme.n70,
           borderRadius: 3,
           fontSize: 12,
@@ -83,11 +83,11 @@ const RestaurantCard = React.memo(
               }}
             >
               {name}
-              <OpenStatusIndicator hours={!closedForBusiness && hours} />
+              <OpenStatusIndicator hours={openForBusiness && hours} />
             </h3>
 
             <StatusIcons
-              closedForBusiness={closedForBusiness}
+              openForBusiness={openForBusiness}
               offersDelivery={
                 !!(
                   takeoutOptions &&
@@ -119,14 +119,14 @@ const RestaurantCard = React.memo(
           >
             <PolicyInfo
               css={{ marginBottom: 16 }}
-              closedForBusiness={closedForBusiness}
+              openForBusiness={openForBusiness}
               confirmedAt={confirmedAt}
               hours={hours}
               takeoutOptions={takeoutOptions}
               policyNotes={policyNotes}
             />
 
-            {!closedForBusiness && (
+            {openForBusiness && (
               <OrderInfo
                 menuUrl={menuUrl}
                 website={website}
@@ -165,7 +165,7 @@ RestaurantCard.displayName = "RestaurantCard"
 export default RestaurantCard
 
 RestaurantCard.propTypes = {
-  closedForBusiness: PropTypes.bool.isRequired,
+  openForBusiness: PropTypes.bool.isRequired,
   confirmedAt: PropTypes.string.isRequired,
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,

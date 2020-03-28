@@ -156,7 +156,7 @@ const ActiveRestaurantDetails = ({
 
     <PolicyInfo
       css={{ marginBottom: 16 }}
-      closedForBusiness={!openForBusiness}
+      openForBusiness={openForBusiness}
       confirmedAt={confirmedAt}
       hours={hours}
       takeoutOptions={takeoutOptions}
