@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
+import Markdown from "markdown-to-jsx"
 import theme from "styles/theme"
 import Tags from "components/Tags"
 import SourcesList from "components/SourcesList"
@@ -17,6 +18,7 @@ const RestaurantCard = React.memo(
     hours,
     menuUrl,
     name,
+    copy,
     onClick,
     orderingNotes,
     orderPhone,
@@ -109,6 +111,15 @@ const RestaurantCard = React.memo(
                   : address}
               </div>
             )}
+
+            {copy && (
+              <Markdown
+                css={{ fontSize: 14, lineHeight: 1.4, margin: "8px 0 16px" }}
+                options={{ forceBlock: true }}
+              >
+                {copy}
+              </Markdown>
+            )}
           </div>
 
           {tags && tags.length > 0 && (
@@ -183,6 +194,7 @@ RestaurantCard.propTypes = {
   hours: PropTypes.arrayOf(PropTypes.string),
   menuUrl: PropTypes.string,
   name: PropTypes.string.isRequired,
+  copy: PropTypes.string,
   onClick: PropTypes.func,
   orderingNotes: PropTypes.string,
   orderPhone: PropTypes.string,

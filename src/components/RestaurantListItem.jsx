@@ -4,9 +4,19 @@ import theme from "styles/theme"
 import Tags from "components/Tags"
 import OpenStatusIndicator from "components/OpenStatusIndicator"
 import hexToRgb from "lib/hexToRgb"
+import Markdown from "markdown-to-jsx"
 
 const RestaurantListItem = React.memo(
-  ({ address, className, hours, name, onClick, openForBusiness, tags }) => {
+  ({
+    address,
+    className,
+    hours,
+    name,
+    copy,
+    onClick,
+    openForBusiness,
+    tags,
+  }) => {
     return (
       <div
         css={{
@@ -55,6 +65,15 @@ const RestaurantListItem = React.memo(
           </div>
         )}
 
+        {copy && (
+          <Markdown
+            css={{ fontSize: 14, lineHeight: 1.4, margin: "8px 0 16px" }}
+            options={{ forceBlock: true }}
+          >
+            {copy}
+          </Markdown>
+        )}
+
         {tags && tags.length > 0 && <Tags tags={tags.slice(0, 4)} />}
       </div>
     )
@@ -70,6 +89,7 @@ RestaurantListItem.propTypes = {
   className: PropTypes.string,
   hours: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
+  copy: PropTypes.string,
   onClick: PropTypes.func,
   openForBusiness: PropTypes.bool.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),

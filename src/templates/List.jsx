@@ -15,12 +15,14 @@ const List = ({
     list: { name, description, background, presentation, author, restaurants },
   },
 }) => {
-  const locations = restaurants.flatMap(({ locations, ...base }) =>
-    locations.map(loc => ({
+  const locations = restaurants.flatMap(({ restaurant, copy, ...props }) => {
+    const { locations, ...base } = restaurant || props
+    return locations.map(loc => ({
       ...base,
       ...loc,
+      copy,
     }))
-  )
+  })
 
   return (
     <Layout
@@ -133,6 +135,12 @@ export const query = graphql`
       }
       restaurants {
         ...Restaurant
+        ... on SanityListItem {
+          restaurant {
+            ...Restaurant
+          }
+          copy
+        }
       }
     }
   }
