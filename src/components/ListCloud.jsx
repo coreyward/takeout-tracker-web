@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Markdown from "markdown-to-jsx"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import theme from "styles/theme"
 import Image from "components/Image"
 import hexToRgb from "lib/hexToRgb"
@@ -11,9 +11,11 @@ const ListCloud = ({ title, description, lists }) => (
   <div css={{ padding: "var(--pagePadding)" }}>
     <h2 css={{ ...theme.t2, color: theme.n80, marginBottom: 8 }}>{title}</h2>
 
-    <Markdown options={{ forceBlock: true }} css={{ margin: 0 }}>
-      {description}
-    </Markdown>
+    {description && (
+      <Markdown options={{ forceBlock: true }} css={{ margin: 0 }}>
+        {description}
+      </Markdown>
+    )}
 
     <div
       css={{
@@ -188,3 +190,28 @@ ListCloud.propTypes = {
     })
   ).isRequired,
 }
+
+export const query = graphql`
+  fragment ListCloud on SanityListCloud {
+    _key
+    _type
+    title
+    description
+    lists {
+      _key: _id
+      name
+      slug {
+        current
+      }
+      background {
+        ...Image
+      }
+      author {
+        name
+        avatar {
+          ...Image
+        }
+      }
+    }
+  }
+`
