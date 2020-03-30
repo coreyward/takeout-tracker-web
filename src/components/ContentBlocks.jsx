@@ -27,7 +27,9 @@ export const renderContentBlocks = contentBlocks =>
 /* eslint-disable react/prop-types, react/display-name */
 const connectors = {
   Hero,
-  ListCloud,
+
+  ListCloud: props => <ListCloud {...props} truncate />,
+
   RestaurantsViewer: ({ defaultSearchQuery, ...props }) => {
     const context = useContext(PageContext) || {}
     const { data } = useStaticQuery(graphql`

@@ -6,8 +6,9 @@ import theme from "styles/theme"
 import Image from "components/Image"
 import hexToRgb from "lib/hexToRgb"
 import preventWidows from "lib/preventWidows"
+import Icons from "lib/icons"
 
-const ListCloud = ({ title, description, lists }) => (
+const ListCloud = ({ title, description, lists, truncate }) => (
   <div css={{ padding: "var(--pagePadding)" }}>
     <h2 css={{ ...theme.t2, color: theme.n80, marginBottom: 8 }}>{title}</h2>
 
@@ -29,48 +30,77 @@ const ListCloud = ({ title, description, lists }) => (
         <Link
           key={_key}
           to={slug.current}
-          css={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: 125,
-            background: `url(${background.asset.metadata.preview})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            padding: "16px 24px",
-            color: theme.n80,
-            fontSize: 20,
-            fontWeight: 500,
-            textDecoration: "none",
-            textAlign: "center",
-            textShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
-            overflow: "hidden",
-            "--rotation": "1deg",
-            ":hover": {
-              ".background": {
-                transform: "scale(1.2) rotate(var(--rotation))",
+          css={[
+            {
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: 125,
+              background: `url(${background.asset.metadata.preview})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              padding: "16px 24px",
+              color: theme.n80,
+              fontSize: 20,
+              fontWeight: 500,
+              textDecoration: "none",
+              textAlign: "center",
+              textShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
+              overflow: "hidden",
+              "--rotation": "1deg",
+              ":hover": {
+                ".background": {
+                  transform: "scale(1.2) rotate(var(--rotation))",
+                },
+                ".colorFilter": {
+                  background: "transparent",
+                },
+                ".authorAvatar": {
+                  filter: "grayscale(0%)",
+                },
               },
-              ".colorFilter": {
-                background: "transparent",
+              ":nth-of-type(2n+1)": {
+                "--rotation": "-2deg",
               },
-              ".authorAvatar": {
-                filter: "grayscale(0%)",
+              ":nth-of-type(3n+2)": {
+                "--rotation": "2deg",
+              },
+              ":nth-of-type(5n+3)": {
+                "--rotation": "-3deg",
+              },
+              ":nth-of-type(7n+5)": {
+                "--rotation": "3deg",
               },
             },
-            ":nth-of-type(2n+1)": {
-              "--rotation": "-2deg",
+
+            truncate && {
+              // Hide extras, avoid widows
+              ":nth-of-type(n+10)": {
+                display: "none",
+              },
+              "@media (max-width: 1579px) and (min-width: 1272px)": {
+                ":nth-of-type(n+8)": {
+                  display: "none",
+                },
+              },
+              "@media (max-width: 1271px) and (min-width: 964px)": {
+                ":nth-of-type(n+9)": {
+                  display: "none",
+                },
+              },
+              "@media (max-width: 963px) and (min-width: 656px)": {
+                ":nth-of-type(n+6)": {
+                  display: "none",
+                },
+              },
+              "@media (max-width: 655px)": {
+                ":nth-of-type(n+4)": {
+                  display: "none",
+                },
+              },
             },
-            ":nth-of-type(3n+2)": {
-              "--rotation": "2deg",
-            },
-            ":nth-of-type(5n+3)": {
-              "--rotation": "-3deg",
-            },
-            ":nth-of-type(7n+5)": {
-              "--rotation": "3deg",
-            },
-          }}
+          ]}
         >
           <Image
             {...background}
@@ -160,6 +190,44 @@ const ListCloud = ({ title, description, lists }) => (
           </div>
         </Link>
       ))}
+
+      {truncate && (
+        <Link
+          to="/lists/"
+          css={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 125,
+            background: hexToRgb(theme.n20, 0.5),
+            padding: "16px 24px",
+            color: theme.n80,
+            fontSize: 20,
+            fontWeight: 500,
+            textDecoration: "none",
+            textAlign: "center",
+            textShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
+            overflow: "hidden",
+            transition: "background 250ms",
+            "--rotation": "1deg",
+            ":hover": {
+              background: theme.n20,
+              svg: {
+                transform: "translateX(8px) rotateY(180deg)",
+              },
+            },
+          }}
+        >
+          See all curated lists
+          <Icons.LeftChevron
+            css={{
+              transform: "rotateY(180deg)",
+              marginLeft: 8,
+              transition: "transform 250ms ease-out",
+            }}
+          />
+        </Link>
+      )}
     </div>
   </div>
 )
