@@ -72,6 +72,8 @@ const Header = () => (
         },
       }}
     >
+      <Link to="/lists/">Lists</Link>
+
       <ExternalLink
         href="https://forms.gle/m4xj7dkCcnQgT6XV7"
         css={{
