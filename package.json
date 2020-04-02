@@ -59,6 +59,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
+    "prebuild": "node geocode-locations.js",
     "build": "gatsby build",
     "clean": "gatsby clean",
     "test": "jest"
