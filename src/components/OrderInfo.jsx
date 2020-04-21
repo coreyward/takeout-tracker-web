@@ -9,11 +9,14 @@ const OrderInfo = ({
   address,
   menuUrl,
   website,
+  instagramHandle,
   orderUrl,
   orderPhone,
   orderingNotes,
 }) =>
-  [menuUrl, website, orderUrl, orderPhone, orderingNotes].some(x => x) && (
+  [menuUrl, website, instagramHandle, orderUrl, orderPhone, orderingNotes].some(
+    x => x
+  ) && (
     <div>
       <h4
         css={{
@@ -48,6 +51,14 @@ const OrderInfo = ({
             {orderPhone}
           </IconButton>
         )}
+        {instagramHandle && (
+          <IconButton
+            icon={Icons.Instagram}
+            href={"https://www.instagram.com/" + instagramHandle}
+          >
+            Instagram
+          </IconButton>
+        )}
       </div>
       {address && <IconRow icon={Icons.MapMarker}>{address}</IconRow>}
       {orderingNotes && <IconRow icon={Icons.Info}>{orderingNotes}</IconRow>}
@@ -60,6 +71,7 @@ OrderInfo.propTypes = {
   address: PropTypes.string,
   menuUrl: PropTypes.string,
   website: PropTypes.string,
+  instagramHandle: PropTypes.string,
   orderUrl: PropTypes.string,
   orderPhone: PropTypes.string,
   orderingNotes: PropTypes.node,

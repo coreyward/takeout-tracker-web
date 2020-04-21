@@ -17,6 +17,7 @@ const RestaurantCard = React.memo(
     confirmedAt,
     hours,
     menuUrl,
+    instagramHandle,
     name,
     copy,
     onClick,
@@ -154,6 +155,7 @@ const RestaurantCard = React.memo(
                 menuUrl={menuUrl}
                 website={website}
                 orderUrl={orderUrl}
+                instagramHandle={instagramHandle}
                 orderPhone={orderPhone}
                 orderingNotes={orderingNotes}
               />
@@ -199,6 +201,7 @@ RestaurantCard.propTypes = {
   orderingNotes: PropTypes.string,
   orderPhone: PropTypes.string,
   orderUrl: PropTypes.string,
+  instagramHandle: PropTypes.string,
   policyNotes: PropTypes.string,
   sourceNotes: PropTypes.string,
   sourceUrls: PropTypes.arrayOf(PropTypes.string),

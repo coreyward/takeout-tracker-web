@@ -132,6 +132,7 @@ const ActiveRestaurantDetails = ({
   orderingNotes,
   orderPhone,
   orderUrl,
+  instagramHandle,
   policyNotes,
   sourceNotes,
   sourceUrls,
@@ -183,6 +184,7 @@ const ActiveRestaurantDetails = ({
         menuUrl={menuUrl}
         website={website}
         orderUrl={orderUrl}
+        instagramHandle={instagramHandle}
         orderPhone={orderPhone}
         orderingNotes={orderingNotes}
       />
@@ -209,6 +211,7 @@ ActiveRestaurantDetails.propTypes = {
   orderingNotes: PropTypes.string,
   orderPhone: PropTypes.string,
   orderUrl: PropTypes.string,
+  instagramHandle: PropTypes.string,
   policyNotes: PropTypes.string,
   sourceNotes: PropTypes.string,
   sourceUrls: PropTypes.arrayOf(PropTypes.string),
