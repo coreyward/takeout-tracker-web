@@ -5,15 +5,8 @@ import theme from "styles/theme"
 import IconButton from "components/IconButton"
 import IconRow from "components/IconRow"
 
-const OrderInfo = ({
-  address,
-  menuUrl,
-  website,
-  orderUrl,
-  orderPhone,
-  orderingNotes,
-}) =>
-  [menuUrl, website, orderUrl, orderPhone, orderingNotes].some(x => x) && (
+const OrderInfo = ({ address, menuUrl, orderUrl, orderPhone, orderingNotes }) =>
+  [menuUrl, orderUrl, orderPhone, orderingNotes].some(x => x) && (
     <div>
       <h4
         css={{
@@ -28,11 +21,6 @@ const OrderInfo = ({
         {menuUrl && (
           <IconButton icon={Icons.Menu} href={menuUrl}>
             Menu
-          </IconButton>
-        )}
-        {website && (
-          <IconButton icon={Icons.Website} href={website}>
-            Website
           </IconButton>
         )}
         {orderUrl && (
@@ -59,7 +47,6 @@ export default OrderInfo
 OrderInfo.propTypes = {
   address: PropTypes.string,
   menuUrl: PropTypes.string,
-  website: PropTypes.string,
   orderUrl: PropTypes.string,
   orderPhone: PropTypes.string,
   orderingNotes: PropTypes.node,

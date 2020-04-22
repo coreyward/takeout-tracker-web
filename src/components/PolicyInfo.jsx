@@ -4,6 +4,7 @@ import moment from "moment"
 import { Tooltip } from "@material-ui/core"
 import IconRow from "components/IconRow"
 import Icons from "lib/icons"
+import IconButton from "components/IconButton"
 import TimeAgo from "components/TimeAgo"
 import theme from "styles/theme"
 
@@ -14,6 +15,8 @@ const PolicyInfo = ({
   takeoutOptions,
   policyNotes,
   className,
+  website,
+  instagramHandle,
 }) => {
   const diningModes = takeoutOptions
     .filter(opt => !deliveryOptions.includes(opt))
@@ -73,7 +76,19 @@ const PolicyInfo = ({
           <strong>Closed Temporarily</strong>
         </IconRow>
       )}
-
+      {website && (
+        <IconButton icon={Icons.Website} href={website}>
+          Website
+        </IconButton>
+      )}
+      {instagramHandle && (
+        <IconButton
+          icon={Icons.Instagram}
+          href={"https://www.instagram.com/" + instagramHandle}
+        >
+          Instagram
+        </IconButton>
+      )}
       {policyNotes && policyNotes.length > 0 && (
         <IconRow icon={Icons.Info}>{policyNotes}</IconRow>
       )}
@@ -90,6 +105,8 @@ PolicyInfo.propTypes = {
   takeoutOptions: PropTypes.arrayOf(PropTypes.string),
   policyNotes: PropTypes.string,
   className: PropTypes.string,
+  instagramHandle: PropTypes.string,
+  website: PropTypes.string,
 }
 
 const stalenessColors = {

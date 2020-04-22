@@ -20,6 +20,7 @@ const RestaurantTile = React.memo(
     orderingNotes,
     orderPhone,
     orderUrl,
+    instagramHandle,
     policyNotes,
     sourceNotes,
     sourceUrls,
@@ -62,6 +63,8 @@ const RestaurantTile = React.memo(
         css={{ marginBottom: 16 }}
         openForBusiness={openForBusiness}
         confirmedAt={confirmedAt}
+        website={website}
+        instagramHandle={instagramHandle}
         hours={hours}
         takeoutOptions={takeoutOptions}
         policyNotes={policyNotes}
@@ -71,7 +74,6 @@ const RestaurantTile = React.memo(
         <OrderInfo
           address={address}
           menuUrl={menuUrl}
-          website={website}
           orderUrl={orderUrl}
           orderPhone={orderPhone}
           orderingNotes={orderingNotes}
@@ -103,6 +105,7 @@ RestaurantTile.propTypes = {
   orderingNotes: PropTypes.string,
   orderPhone: PropTypes.string,
   orderUrl: PropTypes.string,
+  instagramHandle: PropTypes.string,
   policyNotes: PropTypes.string,
   sourceNotes: PropTypes.string,
   sourceUrls: PropTypes.arrayOf(PropTypes.string),

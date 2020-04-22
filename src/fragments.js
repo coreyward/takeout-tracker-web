@@ -4,6 +4,7 @@ export const fragments = graphql`
   fragment Restaurant on SanityRestaurant {
     _id
     confirmedAt
+    instagramHandle
     menuUrl
     name: title
     orderingNotes
