@@ -173,6 +173,8 @@ const ActiveRestaurantDetails = ({
       css={{ marginBottom: 16 }}
       openForBusiness={openForBusiness}
       confirmedAt={confirmedAt}
+      website={website}
+      instagramHandle={instagramHandle}
       hours={hours}
       takeoutOptions={takeoutOptions}
       policyNotes={policyNotes}
@@ -182,9 +184,7 @@ const ActiveRestaurantDetails = ({
       <OrderInfo
         address={address}
         menuUrl={menuUrl}
-        website={website}
         orderUrl={orderUrl}
-        instagramHandle={instagramHandle}
         orderPhone={orderPhone}
         orderingNotes={orderingNotes}
       />

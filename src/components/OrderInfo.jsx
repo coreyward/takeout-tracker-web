@@ -5,18 +5,8 @@ import theme from "styles/theme"
 import IconButton from "components/IconButton"
 import IconRow from "components/IconRow"
 
-const OrderInfo = ({
-  address,
-  menuUrl,
-  website,
-  instagramHandle,
-  orderUrl,
-  orderPhone,
-  orderingNotes,
-}) =>
-  [menuUrl, website, instagramHandle, orderUrl, orderPhone, orderingNotes].some(
-    x => x
-  ) && (
+const OrderInfo = ({ address, menuUrl, orderUrl, orderPhone, orderingNotes }) =>
+  [menuUrl, orderUrl, orderPhone, orderingNotes].some(x => x) && (
     <div>
       <h4
         css={{
@@ -33,11 +23,6 @@ const OrderInfo = ({
             Menu
           </IconButton>
         )}
-        {website && (
-          <IconButton icon={Icons.Website} href={website}>
-            Website
-          </IconButton>
-        )}
         {orderUrl && (
           <IconButton icon={Icons.Cart} href={orderUrl}>
             Order Online
@@ -51,14 +36,6 @@ const OrderInfo = ({
             {orderPhone}
           </IconButton>
         )}
-        {instagramHandle && (
-          <IconButton
-            icon={Icons.Instagram}
-            href={"https://www.instagram.com/" + instagramHandle}
-          >
-            Instagram
-          </IconButton>
-        )}
       </div>
       {address && <IconRow icon={Icons.MapMarker}>{address}</IconRow>}
       {orderingNotes && <IconRow icon={Icons.Info}>{orderingNotes}</IconRow>}
@@ -70,8 +47,6 @@ export default OrderInfo
 OrderInfo.propTypes = {
   address: PropTypes.string,
   menuUrl: PropTypes.string,
-  website: PropTypes.string,
-  instagramHandle: PropTypes.string,
   orderUrl: PropTypes.string,
   orderPhone: PropTypes.string,
   orderingNotes: PropTypes.node,
