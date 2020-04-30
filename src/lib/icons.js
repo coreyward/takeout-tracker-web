@@ -26,20 +26,25 @@ import { ReactComponent as Cocktail } from "images/Cocktail.svg"
 import { ReactComponent as ForSale } from "images/ForSale.svg"
 
 const Icons = {
+  Beer,
   Book,
   Cards,
   Cart,
   CheckCircle,
   Clock,
   Closed,
+  Cocktail,
   Delivery,
   Dining,
+  ForSale,
+  Groceries,
   Info,
   Instagram,
   LeftChevron,
   Link,
   MapMarker,
   Menu,
+  Merch,
   Phone,
   Pin,
   Tag,
@@ -47,11 +52,6 @@ const Icons = {
   Warning,
   Website,
   Wine,
-  Beer,
-  Groceries,
-  Merch,
-  Cocktail,
-  ForSale,
 }
 
 export default Icons

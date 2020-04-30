@@ -29,11 +29,6 @@ const PolicyInfo = ({
     .map(opt => serviceLabels[opt])
     .join(" or ")
 
-  const salesModes = alsoOffering
-    .filter(opt => salesOptions.includes(opt))
-    .map(opt => salesOptionLabels[opt])
-    .join(" ")
-
   const boozeOfferings = alsoOffering.filter(item =>
     BOOZE_OPTIONS.includes(item)
   )
@@ -103,7 +98,9 @@ const PolicyInfo = ({
         </IconRow>
       )}
 
-      {salesModes && <IconRow icon={Icons.Groceries}>{salesModes}</IconRow>}
+      {alsoOffering.includes("groceries") && (
+        <IconRow icon={Icons.Groceries}>Groceries</IconRow>
+      )}
 
       {website && (
         <IconButton icon={Icons.Website} href={website}>
@@ -158,10 +155,6 @@ export const serviceLabels = {
   "delivery-ubereats": "UberEats",
 }
 
-export const salesOptionLabels = {
-  groceries: "Groceries",
-}
-
 export const deliveryOptions = [
   "delivery",
   "delivery-favor",
@@ -170,7 +163,5 @@ export const deliveryOptions = [
   "delivery-grubhub",
   "delivery-ubereats",
 ]
-
-export const salesOptions = ["groceries"]
 
 const BOOZE_OPTIONS = ["beer", "wine", "cocktails"]

@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 export const fragments = graphql`
   fragment Restaurant on SanityRestaurant {
     _id
+    alsoOffering
     confirmedAt
     instagramHandle
     menuUrl
@@ -27,7 +28,6 @@ export const fragments = graphql`
         lng
       }
     }
-    alsoOffering
   }
 
   fragment Image on SanityImage {
