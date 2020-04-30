@@ -18,6 +18,12 @@ import { ReactComponent as Tag } from "images/Tag.svg"
 import { ReactComponent as Tiles } from "images/Tiles.svg"
 import { ReactComponent as Warning } from "images/Warning.svg"
 import { ReactComponent as Website } from "images/Website.svg"
+import { ReactComponent as Wine } from "images/Wine.svg"
+import { ReactComponent as Beer } from "images/Beer.svg"
+import { ReactComponent as Groceries } from "images/Groceries.svg"
+import { ReactComponent as Merch } from "images/Merch.svg"
+import { ReactComponent as Cocktail } from "images/Cocktail.svg"
+import { ReactComponent as ForSale } from "images/ForSale.svg"
 
 const Icons = {
   Book,
@@ -40,6 +46,12 @@ const Icons = {
   Tiles,
   Warning,
   Website,
+  Wine,
+  Beer,
+  Groceries,
+  Merch,
+  Cocktail,
+  ForSale,
 }
 
 export default Icons
