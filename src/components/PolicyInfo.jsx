@@ -17,6 +17,7 @@ const PolicyInfo = ({
   className,
   website,
   instagramHandle,
+  alsoOffering = [],
 }) => {
   const diningModes = takeoutOptions
     .filter(opt => !deliveryOptions.includes(opt))
@@ -27,6 +28,15 @@ const PolicyInfo = ({
     .filter(opt => deliveryOptions.includes(opt))
     .map(opt => serviceLabels[opt])
     .join(" or ")
+
+  const salesModes = alsoOffering
+    .filter(opt => salesOptions.includes(opt))
+    .map(opt => salesOptionLabels[opt])
+    .join(" ")
+
+  const boozeOfferings = alsoOffering.filter(item =>
+    BOOZE_OPTIONS.includes(item)
+  )
 
   const hoursAgo = Math.abs(moment(confirmedAt).diff(moment(), "hours"))
   const [, staleBreakpount] = Object.entries(stalenessColors)
@@ -76,6 +86,25 @@ const PolicyInfo = ({
           <strong>Closed Temporarily</strong>
         </IconRow>
       )}
+
+      {boozeOfferings.length > 0 && (
+        <IconRow
+          icon={
+            boozeOfferings.includes("cocktails")
+              ? Icons.Cocktail
+              : boozeOfferings.includes("wine")
+              ? Icons.Wine
+              : Icons.Beer
+          }
+        >
+          {boozeOfferings
+            .map(item => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`)
+            .join(", ")}
+        </IconRow>
+      )}
+
+      {salesModes && <IconRow icon={Icons.Groceries}>{salesModes}</IconRow>}
+
       {website && (
         <IconButton icon={Icons.Website} href={website}>
           Website
@@ -107,6 +136,7 @@ PolicyInfo.propTypes = {
   className: PropTypes.string,
   instagramHandle: PropTypes.string,
   website: PropTypes.string,
+  alsoOffering: PropTypes.arrayOf(PropTypes.string),
 }
 
 const stalenessColors = {
@@ -128,6 +158,10 @@ export const serviceLabels = {
   "delivery-ubereats": "UberEats",
 }
 
+export const salesOptionLabels = {
+  groceries: "Groceries",
+}
+
 export const deliveryOptions = [
   "delivery",
   "delivery-favor",
@@ -136,3 +170,7 @@ export const deliveryOptions = [
   "delivery-grubhub",
   "delivery-ubereats",
 ]
+
+export const salesOptions = ["groceries"]
+
+const BOOZE_OPTIONS = ["beer", "wine", "cocktails"]
