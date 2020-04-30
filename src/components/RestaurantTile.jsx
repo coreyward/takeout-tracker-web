@@ -12,6 +12,7 @@ import OpenStatusIndicator from "components/OpenStatusIndicator"
 const RestaurantTile = React.memo(
   ({
     address,
+    alsoOffering,
     openForBusiness,
     confirmedAt,
     hours,
@@ -68,6 +69,7 @@ const RestaurantTile = React.memo(
         hours={hours}
         takeoutOptions={takeoutOptions}
         policyNotes={policyNotes}
+        alsoOffering={alsoOffering}
       />
 
       {openForBusiness && (
@@ -122,6 +124,9 @@ RestaurantTile.propTypes = {
       "delivery-grubhub",
       "delivery-ubereats",
     ])
+  ),
+  alsoOffering: PropTypes.arrayOf(
+    PropTypes.oneOf(["beer", "wine", "cocktails", "groceries", "merch"])
   ),
   unverified: PropTypes.bool,
   website: PropTypes.string,

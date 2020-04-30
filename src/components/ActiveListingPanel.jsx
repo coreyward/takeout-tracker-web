@@ -140,6 +140,7 @@ const ActiveRestaurantDetails = ({
   takeoutOptions,
   unverified,
   website,
+  alsoOffering,
 }) => (
   <div css={{ fontSize: 14 }}>
     {unverified && (
@@ -178,6 +179,7 @@ const ActiveRestaurantDetails = ({
       hours={hours}
       takeoutOptions={takeoutOptions}
       policyNotes={policyNotes}
+      alsoOffering={alsoOffering}
     />
 
     {openForBusiness && (
@@ -228,6 +230,9 @@ ActiveRestaurantDetails.propTypes = {
       "delivery-grubhub",
       "delivery-ubereats",
     ])
+  ),
+  alsoOffering: PropTypes.arrayOf(
+    PropTypes.oneOf(["beer", "wine", "cocktails", "groceries", "merch"])
   ),
   unverified: PropTypes.bool,
   website: PropTypes.string,
