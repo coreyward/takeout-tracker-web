@@ -27,6 +27,7 @@ export const fragments = graphql`
         lng
       }
     }
+    alsoOffering
   }
 
   fragment Image on SanityImage {
