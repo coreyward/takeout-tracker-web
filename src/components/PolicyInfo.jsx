@@ -17,6 +17,7 @@ const PolicyInfo = ({
   className,
   website,
   instagramHandle,
+  alsoOffering = [],
 }) => {
   const diningModes = takeoutOptions
     .filter(opt => !deliveryOptions.includes(opt))
@@ -27,6 +28,10 @@ const PolicyInfo = ({
     .filter(opt => deliveryOptions.includes(opt))
     .map(opt => serviceLabels[opt])
     .join(" or ")
+
+  const boozeOfferings = alsoOffering.filter(item =>
+    BOOZE_OPTIONS.includes(item)
+  )
 
   const hoursAgo = Math.abs(moment(confirmedAt).diff(moment(), "hours"))
   const [, staleBreakpount] = Object.entries(stalenessColors)
@@ -76,6 +81,27 @@ const PolicyInfo = ({
           <strong>Closed Temporarily</strong>
         </IconRow>
       )}
+
+      {boozeOfferings.length > 0 && (
+        <IconRow
+          icon={
+            boozeOfferings.includes("cocktails")
+              ? Icons.Cocktail
+              : boozeOfferings.includes("wine")
+              ? Icons.Wine
+              : Icons.Beer
+          }
+        >
+          {boozeOfferings
+            .map(item => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`)
+            .join(", ")}
+        </IconRow>
+      )}
+
+      {alsoOffering.includes("groceries") && (
+        <IconRow icon={Icons.Groceries}>Groceries</IconRow>
+      )}
+
       {website && (
         <IconButton icon={Icons.Website} href={website}>
           Website
@@ -107,6 +133,7 @@ PolicyInfo.propTypes = {
   className: PropTypes.string,
   instagramHandle: PropTypes.string,
   website: PropTypes.string,
+  alsoOffering: PropTypes.arrayOf(PropTypes.string),
 }
 
 const stalenessColors = {
@@ -136,3 +163,5 @@ export const deliveryOptions = [
   "delivery-grubhub",
   "delivery-ubereats",
 ]
+
+const BOOZE_OPTIONS = ["beer", "wine", "cocktails"]

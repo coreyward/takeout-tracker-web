@@ -31,6 +31,7 @@ const RestaurantCard = React.memo(
     takeoutOptions,
     unverified,
     website,
+    alsoOffering,
   }) => {
     const [open, setOpen] = useState(false)
 
@@ -150,6 +151,7 @@ const RestaurantCard = React.memo(
               hours={hours}
               takeoutOptions={takeoutOptions}
               policyNotes={policyNotes}
+              alsoOffering={alsoOffering}
             />
 
             {openForBusiness && (
@@ -218,6 +220,9 @@ RestaurantCard.propTypes = {
       "delivery-grubhub",
       "delivery-ubereats",
     ])
+  ),
+  alsoOffering: PropTypes.arrayOf(
+    PropTypes.oneOf(["beer", "wine", "cocktails", "groceries", "merch"])
   ),
   unverified: PropTypes.bool,
   website: PropTypes.string,
