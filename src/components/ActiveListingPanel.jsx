@@ -31,7 +31,7 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
     <ScrollLock isActive={mobile && currentListing}>
       <div
         css={{
-          position: "fixed",
+          position: "absolute",
           top: 79,
           left: "calc(0.5 * var(--pagePadding))",
           padding: "var(--pagePadding)",
@@ -46,6 +46,7 @@ const ActiveListingPanel = ({ listing: currentListing, dispatch }) => {
           opacity: animation === "out" ? 0 : 1,
           animation: `${slideAnimation[animation]} 250ms ease-out`,
           [theme.mobile]: {
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
