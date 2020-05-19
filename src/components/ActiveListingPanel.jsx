@@ -233,7 +233,14 @@ ActiveRestaurantDetails.propTypes = {
     ])
   ),
   alsoOffering: PropTypes.arrayOf(
-    PropTypes.oneOf(["beer", "wine", "cocktails", "groceries", "merch"])
+    PropTypes.oneOf([
+      "beer",
+      "wine",
+      "cocktails",
+      "groceries",
+      "merch",
+      "coffee",
+    ])
   ),
   unverified: PropTypes.bool,
   website: PropTypes.string,
