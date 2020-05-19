@@ -43,7 +43,7 @@ const connectors = {
               }
             }
           }
-          sort: { fields: confirmedAt, order: DESC }
+          sort: { fields: [featured, confirmedAt], order: [ASC, DESC] }
         ) {
           restaurants: nodes {
             ...Restaurant
