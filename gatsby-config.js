@@ -11,7 +11,6 @@ module.exports = {
         whitelist: [
           "SANITY_PROJECT_ID",
           "SANITY_DATASET",
-          "CRISP_WEBSITE_ID",
           "GOOGLE_MAPS_API_KEY",
         ],
       },
