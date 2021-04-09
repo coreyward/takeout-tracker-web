@@ -116,9 +116,11 @@ const ListCloud = ({ title, description, lists, truncate }) => (
               height: "100%",
               objectFit: "cover",
               objectPosition: "center",
-              transformOrigin: [background.hotspot.x, background.hotspot.y]
-                .map(n => `${Math.round(n * 100)}%`)
-                .join(" "),
+              transformOrigin:
+                background.hotspot &&
+                [background.hotspot.x, background.hotspot.y]
+                  .map(n => `${Math.round(n * 100)}%`)
+                  .join(" "),
               transition: "transform 2s cubic-bezier(0.25, 0, 0.15, 1)",
             }}
           />
