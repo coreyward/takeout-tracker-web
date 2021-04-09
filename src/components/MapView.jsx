@@ -219,10 +219,6 @@ MapView.propTypes = {
 }
 
 const TabBar = ({ mapOpen, setMapOpen }) => {
-  useEffect(() => {
-    window.$crisp.push(["config", "hide:on:mobile", !mapOpen])
-  }, [mapOpen])
-
   return (
     <div
       css={{
