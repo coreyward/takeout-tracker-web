@@ -145,6 +145,7 @@ const stalenessColors = {
 
 export const serviceLabels = {
   "dine-in": "Dine-In",
+  "patio-dining": "Patio Dining",
   takeout: "Takeout",
   curbside: "Curbside Takeout",
   delivery: "By Restaurant",
