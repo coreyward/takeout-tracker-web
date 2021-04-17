@@ -222,6 +222,7 @@ ActiveRestaurantDetails.propTypes = {
   takeoutOptions: PropTypes.arrayOf(
     PropTypes.oneOf([
       "dine-in",
+      "patio-dining",
       "takeout",
       "curbside",
       "delivery",
