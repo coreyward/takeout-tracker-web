@@ -90,7 +90,9 @@ export const globalStyles = [
       WebkitFontSmoothing: "antialiased",
       MozOsxFontSmoothing: "grayscale",
 
-      scrollSnapType: "y proximity",
+      // Disable scroll-snap due to overly aggressive behavior in Safari (macOS and iOS)
+      // that prevents access to the top of the page entirely.
+      // scrollSnapType: "y proximity",
     },
 
     [["h1", "h2", "h3", "h4", "h5", "h6"]]: {

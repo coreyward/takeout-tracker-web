@@ -29,7 +29,7 @@ const MapView = ({
     <div
       css={{
         height: "100vh",
-        scrollSnapAlign: "start",
+        scrollSnapAlign: "start", // Note: scroll-snapping on the parent is disabled in theme.js
         gridTemplateRows: "80px 1fr",
         position: "relative",
         "--listWidth": "400px",
